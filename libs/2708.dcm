@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0  Date: Fri 21 Sep 2012 10:20:32 PM EEST
+#
+$CMP 2708
+D EPROM 1024 x 8-bit
+K EPROM 1024 x 8-bit
+$ENDCMP
+#
+#End Doc Library

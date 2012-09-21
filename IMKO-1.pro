@@ -1,4 +1,4 @@
-update=Fri 21 Sep 2012 07:57:13 PM EEST
+update=Fri 21 Sep 2012 10:46:24 PM EEST
 version=1
 last_client=cvpcb
 [general]
@@ -32,11 +32,12 @@ LibName8=led
 LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
-LibDir=
+LibName12=w_capacitors
+LibDir=../../../../../home/dimitar/Electronics/lowvoltage-git/IMKO-1-Computer/libs
 [eeschema]
 version=1
-LibDir=../../../../../home/dimitar/Electronics/lowvoltage-git/IMKO-1-Computer/libs
-NetFmtName=
+LibDir=libs
+NetFmtName=Pcbnew
 HPGLSpd=20
 HPGLDm=15
 HPGLNum=1
@@ -77,6 +78,7 @@ LibName29=contrib
 LibName30=valves
 LibName31=micro-intel
 LibName32=o_memory
+LibName33=2708
 [cvpcb]
 version=1
 NetIExt=net

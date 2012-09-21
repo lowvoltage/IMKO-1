@@ -1,4 +1,4 @@
-# EESchema Netlist Version 1.1 created  Fri 21 Sep 2012 09:04:45 PM EEST
+# EESchema Netlist Version 1.1 created  Sat 22 Sep 2012 12:35:17 AM EEST
 (
  ( /5059FA06 micro-intel-DIL40  U1 8080 {Lib=8080}
   (    1 ? )
@@ -11,7 +11,7 @@
   (    8 /D2 )
   (    9 /D1 )
   (   10 /D0 )
-  (   11 ? )
+  (   11 -5V )
   (   12 /RESET )
   (   13 ? )
   (   14 ? )
@@ -28,7 +28,7 @@
   (   25 ? )
   (   26 ? )
   (   27 ? )
-  (   28 ? )
+  (   28 +12V )
   (   29 ? )
   (   30 ? )
   (   31 ? )
@@ -43,7 +43,7 @@
   (   40 ? )
  )
  ( /5059FAC2 micro-intel-DIL28-6  U2 8228 {Lib=8228}
-  (    1 N-000065 )
+  (    1 N-000029 )
   (    2 /HLDA )
   (    3 /WR' )
   (    4 /DBIN )
@@ -79,9 +79,9 @@
   (    4 /READY )
   (    5 /SYNC )
   (    6 /PHI2-TTL )
-  (    7 N-000065 )
+  (    7 N-000029 )
   (    8 GND )
-  (    9 ? )
+  (    9 +12V )
   (   10 /PHI2 )
   (   11 /PHI1 )
   (   12 ? )
@@ -138,6 +138,126 @@
   (    1 VCC )
   (    2 GND )
  )
+ ( /505CBEB0 $noname  U7 2708 {Lib=2708}
+  (    1 /A7 )
+  (    2 /A6 )
+  (    3 /A5 )
+  (    4 /A4 )
+  (    5 /A3 )
+  (    6 /A2 )
+  (    7 /A1 )
+  (    8 /A0 )
+  (    9 /DB0 )
+  (   10 /DB1 )
+  (   11 /DB2 )
+  (   12 GND )
+  (   13 /DB3 )
+  (   14 /DB4 )
+  (   15 /DB5 )
+  (   16 /DB6 )
+  (   17 /DB7 )
+  (   18 GND )
+  (   19 +12V )
+  (   20 ? )
+  (   21 -5V )
+  (   22 /A9 )
+  (   23 /A8 )
+  (   24 VCC )
+ )
+ ( /505CC2A3 $noname  C6 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505CD1A0 $noname  U6 2708 {Lib=2708}
+  (    1 /A7 )
+  (    2 /A6 )
+  (    3 /A5 )
+  (    4 /A4 )
+  (    5 /A3 )
+  (    6 /A2 )
+  (    7 /A1 )
+  (    8 /A0 )
+  (    9 /DB0 )
+  (   10 /DB1 )
+  (   11 /DB2 )
+  (   12 GND )
+  (   13 /DB3 )
+  (   14 /DB4 )
+  (   15 /DB5 )
+  (   16 /DB6 )
+  (   17 /DB7 )
+  (   18 GND )
+  (   19 +12V )
+  (   20 ? )
+  (   21 -5V )
+  (   22 /A9 )
+  (   23 /A8 )
+  (   24 VCC )
+ )
+ ( /505CD1BF $noname  C5 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505CD8BD $noname  U5 2708 {Lib=2708}
+  (    1 /A7 )
+  (    2 /A6 )
+  (    3 /A5 )
+  (    4 /A4 )
+  (    5 /A3 )
+  (    6 /A2 )
+  (    7 /A1 )
+  (    8 /A0 )
+  (    9 /DB0 )
+  (   10 /DB1 )
+  (   11 /DB2 )
+  (   12 GND )
+  (   13 /DB3 )
+  (   14 /DB4 )
+  (   15 /DB5 )
+  (   16 /DB6 )
+  (   17 /DB7 )
+  (   18 GND )
+  (   19 +12V )
+  (   20 ? )
+  (   21 -5V )
+  (   22 /A9 )
+  (   23 /A8 )
+  (   24 VCC )
+ )
+ ( /505CD8DC $noname  C4 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505CD920 $noname  U4 2708 {Lib=2708}
+  (    1 /A7 )
+  (    2 /A6 )
+  (    3 /A5 )
+  (    4 /A4 )
+  (    5 /A3 )
+  (    6 /A2 )
+  (    7 /A1 )
+  (    8 /A0 )
+  (    9 /DB0 )
+  (   10 /DB1 )
+  (   11 /DB2 )
+  (   12 GND )
+  (   13 /DB3 )
+  (   14 /DB4 )
+  (   15 /DB5 )
+  (   16 /DB6 )
+  (   17 /DB7 )
+  (   18 GND )
+  (   19 +12V )
+  (   20 ? )
+  (   21 -5V )
+  (   22 /A9 )
+  (   23 /A8 )
+  (   24 VCC )
+ )
+ ( /505CD93F $noname  C3 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
 )
 *
 { Allowed footprints by component:
@@ -146,115 +266,250 @@ $component C1
  C?
  C1-1
 $endlist
+$component C6
+ SM*
+ C?
+ C1-1
+$endlist
+$component C5
+ SM*
+ C?
+ C1-1
+$endlist
+$component C4
+ SM*
+ C?
+ C1-1
+$endlist
+$component C3
+ SM*
+ C?
+ C1-1
+$endlist
 $endfootprintlist
 }
 { Pin List by Nets
-Net 1 "GND" "GND"
- C1 2
- U2 22
- U2 14
- U1 2
- U41 10
+Net 1 "-5V" "-5V"
+ U1 11
+ U7 21
+ U4 21
+ U5 21
+ U6 21
+Net 2 "VCC" "VCC"
+ U4 24
+ U2 28
+ U6 24
+ C6 1
+ U7 24
+ U1 20
+ C5 1
+ U5 24
+ U41 20
+ U40 20
+ C3 1
+ C4 1
+ U3 16
+ C1 1
+Net 3 "GND" "GND"
  U3 8
  U40 1
  U40 10
+ U6 12
+ C1 2
+ U4 12
+ C3 2
+ U7 12
+ U7 18
+ U41 10
+ U1 2
  U40 19
-Net 5 "VCC" "VCC"
- U1 20
- U2 28
- U41 20
- C1 1
- U3 16
- U40 20
-Net 8 "/INTA" "INTA"
- U40 15
- U2 23
-Net 13 "/WR'" "WR'"
- U2 3
- U1 18
-Net 14 "/D5" "D5"
- U1 4
- U2 19
-Net 15 "/D4" "D4"
- U1 3
- U2 6
-Net 16 "/D3" "D3"
- U1 7
- U2 10
-Net 17 "/D2" "D2"
- U1 8
- U2 12
-Net 18 "/HLDA" "HLDA"
- U1 21
- U2 2
- U40 4
-Net 19 "/D6" "D6"
- U2 21
- U1 5
-Net 20 "/DB7" "DB7"
- U41 18
- U2 7
-Net 21 "/DB6" "DB6"
- U41 17
- U2 20
-Net 22 "/DB5" "DB5"
+ U4 18
+ C5 2
+ U2 14
+ U5 18
+ C4 2
+ U2 22
+ U5 12
+ C6 2
+ U6 18
+Net 4 "+12V" "+12V"
+ U1 28
+ U5 19
+ U7 19
+ U4 19
+ U6 19
+ U3 9
+Net 5 "/DB4" "DB4"
+ U5 14
+ U4 14
+ U7 14
+ U41 15
+ U6 14
+ U2 5
+Net 6 "/DB2" "DB2"
+ U2 11
+ U4 11
+ U6 11
+ U5 11
+ U7 11
+ U41 13
+Net 7 "/DB3" "DB3"
+ U4 13
+ U5 13
+ U41 14
+ U6 13
+ U2 9
+ U7 13
+Net 8 "/DB5" "DB5"
+ U6 15
+ U5 15
  U2 18
  U41 16
-Net 23 "/DB4" "DB4"
- U2 5
- U41 15
-Net 24 "/DB3" "DB3"
- U2 9
- U41 14
-Net 25 "/DB2" "DB2"
- U2 11
- U41 13
-Net 26 "/DB1" "DB1"
- U2 16
- U41 12
-Net 27 "/DB0" "DB0"
+ U4 15
+ U7 15
+Net 9 "/DB6" "DB6"
+ U2 20
+ U6 16
+ U41 17
+ U7 16
+ U5 16
+ U4 16
+Net 10 "/DB7" "DB7"
+ U4 17
+ U7 17
+ U41 18
+ U2 7
+ U5 17
+ U6 17
+Net 12 "/DB0" "DB0"
+ U4 9
+ U5 9
+ U6 9
+ U7 9
  U2 13
  U41 11
-Net 28 "/D7" "D7"
- U1 6
- U2 8
-Net 30 "/RESET" "RESET"
- U40 2
- U3 1
- U1 12
-Net 31 "/PHI2-TTL" "PHI2-TTL"
- U3 6
- U40 13
-Net 32 "/WAIT" "WAIT"
- U1 24
- U40 6
-Net 33 "/INTE" "INTE"
- U1 16
- U40 8
-Net 51 "/D0" "D0"
- U1 10
- U2 15
-Net 58 "/D1" "D1"
- U2 17
- U1 9
-Net 65 "" ""
- U3 7
- U2 1
-Net 71 "/DBIN" "DBIN"
- U2 4
- U40 17
- U1 17
-Net 72 "/SYNC" "SYNC"
- U1 19
- U3 5
-Net 79 "/READY" "READY"
- U3 4
- U1 23
-Net 80 "/PHI1" "PHI1"
+Net 13 "/DB1" "DB1"
+ U7 10
+ U5 10
+ U41 12
+ U2 16
+ U6 10
+ U4 10
+Net 15 "/A2" "A2"
+ U6 6
+ U7 6
+ U5 6
+ U4 6
+Net 16 "/A0" "A0"
+ U5 8
+ U6 8
+ U7 8
+ U4 8
+Net 17 "/A1" "A1"
+ U4 7
+ U5 7
+ U6 7
+ U7 7
+Net 18 "/A3" "A3"
+ U7 5
+ U4 5
+ U5 5
+ U6 5
+Net 19 "/A4" "A4"
+ U5 4
+ U6 4
+ U7 4
+ U4 4
+Net 20 "/A5" "A5"
+ U7 3
+ U5 3
+ U6 3
+ U4 3
+Net 21 "/A6" "A6"
+ U4 2
+ U6 2
+ U5 2
+ U7 2
+Net 22 "/A7" "A7"
+ U7 1
+ U6 1
+ U5 1
+ U4 1
+Net 23 "/A8" "A8"
+ U5 23
+ U6 23
+ U4 23
+ U7 23
+Net 24 "/A9" "A9"
+ U7 22
+ U5 22
+ U6 22
+ U4 22
+Net 26 "/HLDA" "HLDA"
+ U40 4
+ U1 21
+ U2 2
+Net 27 "/PHI1" "PHI1"
  U1 22
  U3 11
-Net 81 "/PHI2" "PHI2"
- U1 15
+Net 28 "/READY" "READY"
+ U3 4
+ U1 23
+Net 29 "" ""
+ U3 7
+ U2 1
+Net 30 "/D0" "D0"
+ U1 10
+ U2 15
+Net 31 "/D1" "D1"
+ U2 17
+ U1 9
+Net 32 "/D2" "D2"
+ U2 12
+ U1 8
+Net 33 "/D3" "D3"
+ U1 7
+ U2 10
+Net 34 "/WR'" "WR'"
+ U1 18
+ U2 3
+Net 35 "/RESET" "RESET"
+ U40 2
+ U1 12
+ U3 1
+Net 37 "/SYNC" "SYNC"
+ U3 5
+ U1 19
+Net 41 "/PHI2" "PHI2"
  U3 10
+ U1 15
+Net 63 "/D4" "D4"
+ U2 6
+ U1 3
+Net 64 "/INTA" "INTA"
+ U40 15
+ U2 23
+Net 82 "/D5" "D5"
+ U2 19
+ U1 4
+Net 83 "/D6" "D6"
+ U2 21
+ U1 5
+Net 84 "/D7" "D7"
+ U2 8
+ U1 6
+Net 86 "/INTE" "INTE"
+ U1 16
+ U40 8
+Net 87 "/WAIT" "WAIT"
+ U1 24
+ U40 6
+Net 88 "/PHI2-TTL" "PHI2-TTL"
+ U40 13
+ U3 6
+Net 94 "/DBIN" "DBIN"
+ U1 17
+ U40 17
+ U2 4
 }
 #End
