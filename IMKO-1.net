@@ -1,0 +1,260 @@
+# EESchema Netlist Version 1.1 created  Fri 21 Sep 2012 09:04:45 PM EEST
+(
+ ( /5059FA06 micro-intel-DIL40  U1 8080 {Lib=8080}
+  (    1 ? )
+  (    2 GND )
+  (    3 /D4 )
+  (    4 /D5 )
+  (    5 /D6 )
+  (    6 /D7 )
+  (    7 /D3 )
+  (    8 /D2 )
+  (    9 /D1 )
+  (   10 /D0 )
+  (   11 ? )
+  (   12 /RESET )
+  (   13 ? )
+  (   14 ? )
+  (   15 /PHI2 )
+  (   16 /INTE )
+  (   17 /DBIN )
+  (   18 /WR' )
+  (   19 /SYNC )
+  (   20 VCC )
+  (   21 /HLDA )
+  (   22 /PHI1 )
+  (   23 /READY )
+  (   24 /WAIT )
+  (   25 ? )
+  (   26 ? )
+  (   27 ? )
+  (   28 ? )
+  (   29 ? )
+  (   30 ? )
+  (   31 ? )
+  (   32 ? )
+  (   33 ? )
+  (   34 ? )
+  (   35 ? )
+  (   36 ? )
+  (   37 ? )
+  (   38 ? )
+  (   39 ? )
+  (   40 ? )
+ )
+ ( /5059FAC2 micro-intel-DIL28-6  U2 8228 {Lib=8228}
+  (    1 N-000065 )
+  (    2 /HLDA )
+  (    3 /WR' )
+  (    4 /DBIN )
+  (    5 /DB4 )
+  (    6 /D4 )
+  (    7 /DB7 )
+  (    8 /D7 )
+  (    9 /DB3 )
+  (   10 /D3 )
+  (   11 /DB2 )
+  (   12 /D2 )
+  (   13 /DB0 )
+  (   14 GND )
+  (   15 /D0 )
+  (   16 /DB1 )
+  (   17 /D1 )
+  (   18 /DB5 )
+  (   19 /D5 )
+  (   20 /DB6 )
+  (   21 /D6 )
+  (   22 GND )
+  (   23 /INTA )
+  (   24 ? )
+  (   25 ? )
+  (   26 ? )
+  (   27 ? )
+  (   28 VCC )
+ )
+ ( /5059FAEE micro-intel-DIL16  U3 8224 {Lib=8224}
+  (    1 /RESET )
+  (    2 ? )
+  (    3 ? )
+  (    4 /READY )
+  (    5 /SYNC )
+  (    6 /PHI2-TTL )
+  (    7 N-000065 )
+  (    8 GND )
+  (    9 ? )
+  (   10 /PHI2 )
+  (   11 /PHI1 )
+  (   12 ? )
+  (   13 ? )
+  (   14 ? )
+  (   15 ? )
+  (   16 VCC )
+ )
+ ( /505A26D4 $noname  U40 74LS244 {Lib=74LS244}
+  (    1 GND )
+  (    2 /RESET )
+  (    3 ? )
+  (    4 /HLDA )
+  (    5 ? )
+  (    6 /WAIT )
+  (    7 ? )
+  (    8 /INTE )
+  (    9 ? )
+  (   10 GND )
+  (   11 ? )
+  (   12 ? )
+  (   13 /PHI2-TTL )
+  (   14 ? )
+  (   15 /INTA )
+  (   16 ? )
+  (   17 /DBIN )
+  (   18 ? )
+  (   19 GND )
+  (   20 VCC )
+ )
+ ( /505A2F14 $noname  U41 74LS245 {Lib=74LS245}
+  (    1 ? )
+  (    2 ? )
+  (    3 ? )
+  (    4 ? )
+  (    5 ? )
+  (    6 ? )
+  (    7 ? )
+  (    8 ? )
+  (    9 ? )
+  (   10 GND )
+  (   11 /DB0 )
+  (   12 /DB1 )
+  (   13 /DB2 )
+  (   14 /DB3 )
+  (   15 /DB4 )
+  (   16 /DB5 )
+  (   17 /DB6 )
+  (   18 /DB7 )
+  (   19 ? )
+  (   20 VCC )
+ )
+ ( /505CAC19 $noname  C1 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+)
+*
+{ Allowed footprints by component:
+$component C1
+ SM*
+ C?
+ C1-1
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "GND" "GND"
+ C1 2
+ U2 22
+ U2 14
+ U1 2
+ U41 10
+ U3 8
+ U40 1
+ U40 10
+ U40 19
+Net 5 "VCC" "VCC"
+ U1 20
+ U2 28
+ U41 20
+ C1 1
+ U3 16
+ U40 20
+Net 8 "/INTA" "INTA"
+ U40 15
+ U2 23
+Net 13 "/WR'" "WR'"
+ U2 3
+ U1 18
+Net 14 "/D5" "D5"
+ U1 4
+ U2 19
+Net 15 "/D4" "D4"
+ U1 3
+ U2 6
+Net 16 "/D3" "D3"
+ U1 7
+ U2 10
+Net 17 "/D2" "D2"
+ U1 8
+ U2 12
+Net 18 "/HLDA" "HLDA"
+ U1 21
+ U2 2
+ U40 4
+Net 19 "/D6" "D6"
+ U2 21
+ U1 5
+Net 20 "/DB7" "DB7"
+ U41 18
+ U2 7
+Net 21 "/DB6" "DB6"
+ U41 17
+ U2 20
+Net 22 "/DB5" "DB5"
+ U2 18
+ U41 16
+Net 23 "/DB4" "DB4"
+ U2 5
+ U41 15
+Net 24 "/DB3" "DB3"
+ U2 9
+ U41 14
+Net 25 "/DB2" "DB2"
+ U2 11
+ U41 13
+Net 26 "/DB1" "DB1"
+ U2 16
+ U41 12
+Net 27 "/DB0" "DB0"
+ U2 13
+ U41 11
+Net 28 "/D7" "D7"
+ U1 6
+ U2 8
+Net 30 "/RESET" "RESET"
+ U40 2
+ U3 1
+ U1 12
+Net 31 "/PHI2-TTL" "PHI2-TTL"
+ U3 6
+ U40 13
+Net 32 "/WAIT" "WAIT"
+ U1 24
+ U40 6
+Net 33 "/INTE" "INTE"
+ U1 16
+ U40 8
+Net 51 "/D0" "D0"
+ U1 10
+ U2 15
+Net 58 "/D1" "D1"
+ U2 17
+ U1 9
+Net 65 "" ""
+ U3 7
+ U2 1
+Net 71 "/DBIN" "DBIN"
+ U2 4
+ U40 17
+ U1 17
+Net 72 "/SYNC" "SYNC"
+ U1 19
+ U3 5
+Net 79 "/READY" "READY"
+ U3 4
+ U1 23
+Net 80 "/PHI1" "PHI1"
+ U1 22
+ U3 11
+Net 81 "/PHI2" "PHI2"
+ U1 15
+ U3 10
+}
+#End
