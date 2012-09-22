@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sat 22 Sep 2012 05:49:42 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sat 22 Sep 2012 07:37:27 PM EEST
 
 BeginCmp
 TimeStamp = /505CAC19;
@@ -38,6 +38,48 @@ EndCmp
 BeginCmp
 TimeStamp = /505CC2A3;
 Reference = C6;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1F33;
+Reference = C7;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1F85;
+Reference = C8;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1FE3;
+Reference = C9;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E2901;
+Reference = C10;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E2946;
+Reference = C11;
+ValeurCmp = 150nF;
+IdModule  = cnp_12mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E298B;
+Reference = C12;
 ValeurCmp = 150nF;
 IdModule  = cnp_12mm_disc;
 EndCmp
@@ -124,6 +166,48 @@ TimeStamp = /505CBEB0;
 Reference = U7;
 ValeurCmp = 2708;
 IdModule  = DIP-24__600_ELL;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1EEE;
+Reference = U27;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1F53;
+Reference = U28;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E1FB1;
+Reference = U29;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E28D0;
+Reference = U30;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E2915;
+Reference = U31;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /505E295A;
+Reference = U32;
+ValeurCmp = 2114;
+IdModule  = DIP-18__300;
 EndCmp
 
 BeginCmp

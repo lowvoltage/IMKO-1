@@ -1,4 +1,4 @@
-# EESchema Netlist Version 1.1 created  Sat 22 Sep 2012 05:49:34 PM EEST
+# EESchema Netlist Version 1.1 created  Sat 22 Sep 2012 09:53:20 PM EEST
 (
  ( /5059FA06 micro-intel-DIL40  U1 8080 {Lib=8080}
   (    1 /AA10 )
@@ -68,7 +68,7 @@
   (   23 /INTA )
   (   24 /~MEMR )
   (   25 ? )
-  (   26 ? )
+  (   26 /~MEMW )
   (   27 ? )
   (   28 VCC )
  )
@@ -86,8 +86,8 @@
   (   11 /PHI1 )
   (   12 ? )
   (   13 ? )
-  (   14 N-000003 )
-  (   15 N-000002 )
+  (   14 N-000089 )
+  (   15 N-000046 )
   (   16 VCC )
  )
  ( /505A26D4 $noname  U40 74LS244 {Lib=74LS244}
@@ -303,11 +303,11 @@
   (   20 VCC )
  )
  ( /505D18AC $noname  U35 74LS00 {Lib=74LS00}
-  (    1 N-000024 )
+  (    1 N-000008 )
   (    2 ? )
-  (    3 N-000020 )
-  (    4 N-000020 )
-  (    5 N-000020 )
+  (    3 N-000102 )
+  (    4 N-000102 )
+  (    5 N-000102 )
   (    6 /~CE_U41 )
   (    7 GND )
   (    8 ? )
@@ -319,12 +319,12 @@
   (   14 VCC )
  )
  ( /505D7884 $noname  X1 18MHz {Lib=CRYSTAL}
-  (    1 N-000004 )
-  (    2 N-000002 )
+  (    1 N-000090 )
+  (    2 N-000046 )
  )
  ( /505D789D $noname  C2 10pF {Lib=C}
-  (    1 N-000003 )
-  (    2 N-000004 )
+  (    1 N-000089 )
+  (    2 N-000090 )
  )
  ( /505D7DD9 $noname  R1 22k {Lib=R}
   (    1 VCC )
@@ -357,36 +357,180 @@
   (    4 /A13 )
   (    5 /A14 )
   (    6 /~A15 )
-  (    7 ? )
+  (    7 /CS_RAM2 )
   (    8 GND )
-  (    9 ? )
-  (   10 ? )
+  (    9 /CS_RAM1 )
+  (   10 /CS_RAM0 )
   (   11 ? )
-  (   12 N-000034 )
-  (   13 N-000035 )
-  (   14 N-000036 )
-  (   15 N-000037 )
+  (   12 N-000006 )
+  (   13 N-000004 )
+  (   14 N-000005 )
+  (   15 N-000001 )
   (   16 VCC )
  )
  ( /505DD251 $noname  U34 74LS32 {Lib=74LS32}
   (    1 /~MEMR )
-  (    2 N-000037 )
+  (    2 N-000001 )
   (    3 /~CS_EPR0 )
-  (    4 N-000035 )
+  (    4 N-000004 )
   (    5 /~MEMR )
   (    6 /~CS_EPR1 )
   (    7 GND )
   (    8 /~CS_EPR3 )
   (    9 /~MEMR )
-  (   10 N-000034 )
+  (   10 N-000006 )
   (   11 /~CS_EPR2 )
-  (   12 N-000036 )
+  (   12 N-000005 )
   (   13 /~MEMR )
   (   14 VCC )
  )
  ( /505E166D $noname  R4 1k {Lib=R}
   (    1 VCC )
-  (    2 N-000024 )
+  (    2 N-000008 )
+ )
+ ( /505E1EEE $noname  U27 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM0 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB7 )
+  (   12 /DB6 )
+  (   13 /DB5 )
+  (   14 /DB4 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E1F33 $noname  C7 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505E1F53 $noname  U28 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM1 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB7 )
+  (   12 /DB6 )
+  (   13 /DB5 )
+  (   14 /DB4 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E1F85 $noname  C8 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505E1FB1 $noname  U29 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM2 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB7 )
+  (   12 /DB6 )
+  (   13 /DB5 )
+  (   14 /DB4 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E1FE3 $noname  C9 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505E28D0 $noname  U32 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM0 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB3 )
+  (   12 /DB2 )
+  (   13 /DB1 )
+  (   14 /DB0 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E2901 $noname  C10 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505E2915 $noname  U31 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM1 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB3 )
+  (   12 /DB2 )
+  (   13 /DB1 )
+  (   14 /DB0 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E2946 $noname  C11 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /505E295A $noname  U30 2114 {Lib=2114}
+  (    1 /A6 )
+  (    2 /A5 )
+  (    3 /A4 )
+  (    4 /A3 )
+  (    5 /A0 )
+  (    6 /A1 )
+  (    7 /A2 )
+  (    8 /CS_RAM2 )
+  (    9 GND )
+  (   10 /~MEMW )
+  (   11 /DB3 )
+  (   12 /DB2 )
+  (   13 /DB1 )
+  (   14 /DB0 )
+  (   15 /A9 )
+  (   16 /A8 )
+  (   17 /A7 )
+  (   18 VCC )
+ )
+ ( /505E298B $noname  C12 150nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
  )
 )
 *
@@ -453,390 +597,548 @@ $component R4
  R?-*
  SM1206
 $endlist
+$component C7
+ SM*
+ C?
+ C1-1
+$endlist
+$component C8
+ SM*
+ C?
+ C1-1
+$endlist
+$component C9
+ SM*
+ C?
+ C1-1
+$endlist
+$component C10
+ SM*
+ C?
+ C1-1
+$endlist
+$component C11
+ SM*
+ C?
+ C1-1
+$endlist
+$component C12
+ SM*
+ C?
+ C1-1
+$endlist
 $endfootprintlist
 }
 { Pin List by Nets
-Net 2 "" ""
- U3 15
- X1 2
-Net 3 "" ""
- C2 1
- U3 14
-Net 4 "" ""
- C2 2
- X1 1
-Net 5 "VCC" "VCC"
- U2 28
- U39 20
- C3 1
- U7 24
- U1 20
- U33 16
- R1 1
- U35 14
- U34 14
- U3 16
- R2 1
- C4 1
- U4 24
- C5 1
- U41 20
- U5 24
- U40 20
- C6 1
- R4 1
- U6 24
- U38 20
- C1 1
-Net 6 "/RESIN" "RESIN"
- U3 2
- R1 2
-Net 7 "/RDYIN" "RDYIN"
- R2 2
- U3 3
-Net 9 "/HOLD" "HOLD"
- R3 1
- PLACEHOLDER1 1
- U1 13
-Net 10 "/INT" "INT"
- U1 14
- PLACEHOLDER1 3
-Net 19 "/STSTB" "STSTB"
- U2 1
- U3 7
-Net 20 "" ""
- U35 5
- U35 4
- U35 3
-Net 21 "GND" "GND"
- U33 8
- U2 14
- U41 10
- R3 2
- C1 2
- C6 2
- U2 22
- U40 1
- U7 12
- U34 7
- U40 10
- U1 2
- U7 18
- U40 19
- C3 2
- U39 10
- U38 10
- U3 8
- U35 7
- U4 12
- C4 2
- U5 18
- U4 18
- U6 18
- U6 12
- C5 2
- U5 12
-Net 22 "/~AA15" "~AA15"
- U35 11
- U38 13
-Net 23 "/AA15" "AA15"
- U1 36
- U35 13
- U35 12
-Net 24 "" ""
- U35 1
- R4 2
-Net 29 "/PHI2-TTL" "PHI2-TTL"
- U40 13
- U3 6
-Net 34 "" ""
- U33 12
- U34 10
-Net 35 "" ""
- U34 4
- U33 13
-Net 36 "" ""
- U33 14
- U34 12
-Net 37 "" ""
+Net 1 "" ""
  U33 15
  U34 2
-Net 38 "/A11" "A11"
- U38 3
- U33 2
-Net 39 "/~A15" "~A15"
- U33 6
- U38 7
-Net 40 "/~CS_EPR2" "~CS_EPR2"
- U5 20
- U34 11
-Net 41 "/~CS_EPR1" "~CS_EPR1"
- U6 20
- U34 6
-Net 42 "/~CS_EPR0" "~CS_EPR0"
- U7 20
- U34 3
-Net 43 "/~MEMR" "~MEMR"
- U34 1
- U34 9
- U2 24
- U34 5
- U34 13
-Net 44 "/~CE_U41" "~CE_U41"
- U41 19
+Net 2 "VCC" "VCC"
+ U2 28
+ U41 20
+ U1 20
+ U27 18
+ C3 1
+ U3 16
+ U40 20
+ R4 1
+ C5 1
+ C12 1
+ U39 20
+ C9 1
+ U7 24
+ U32 18
+ C1 1
+ U29 18
+ U6 24
+ C6 1
+ U28 18
+ C8 1
+ C7 1
+ U5 24
+ C4 1
+ R2 1
+ U34 14
+ U31 18
+ U38 20
+ R1 1
+ U30 18
+ U33 16
+ C10 1
+ C11 1
+ U4 24
+ U35 14
+Net 3 "GND" "GND"
+ U31 9
+ C12 2
+ C9 2
+ U6 18
+ U29 9
+ C8 2
+ C11 2
+ C3 2
+ C7 2
+ U28 9
+ U32 9
+ C10 2
+ U30 9
+ U40 10
+ U27 9
+ U41 10
+ U40 1
+ U34 7
+ R3 2
+ U38 10
+ U35 7
+ U33 8
+ U7 12
+ U39 10
+ U5 12
+ C4 2
+ U4 12
+ U5 18
+ C1 2
+ U6 12
+ U7 18
+ C6 2
+ U40 19
+ U2 14
+ U1 2
+ U4 18
+ U3 8
+ U2 22
+ C5 2
+Net 4 "" ""
+ U34 4
+ U33 13
+Net 5 "" ""
+ U34 12
+ U33 14
+Net 6 "" ""
+ U34 10
+ U33 12
+Net 7 "/CS_RAM0" "CS_RAM0"
+ U32 8
+ U33 10
+ U27 8
+Net 8 "" ""
+ R4 2
+ U35 1
+Net 9 "/~CE_U41" "~CE_U41"
  U35 6
-Net 45 "/~CS_EPR3" "~CS_EPR3"
- U34 8
- U4 20
-Net 46 "-5V" "-5V"
- U7 21
- U5 21
- U6 21
- U1 11
- U4 21
-Net 47 "+12V" "+12V"
- U5 19
- U1 28
- U4 19
- U6 19
- U3 9
- U7 19
-Net 48 "/DB1" "DB1"
- U5 10
- U41 12
- U7 10
- U2 16
- U6 10
- U4 10
-Net 49 "/DB0" "DB0"
- U4 9
- U6 9
- U2 13
- U41 11
- U5 9
- U7 9
-Net 50 "/A13" "A13"
- U38 5
- U33 4
-Net 51 "/DB2" "DB2"
- U6 11
- U5 11
- U7 11
- U41 13
- U4 11
- U2 11
-Net 52 "/DB3" "DB3"
- U41 14
- U5 13
- U7 13
- U2 9
- U6 13
- U4 13
-Net 53 "/DB4" "DB4"
- U5 14
- U7 14
- U2 5
- U6 14
- U4 14
- U41 15
-Net 54 "/DB5" "DB5"
- U7 15
+ U41 19
+Net 10 "/DB5" "DB5"
  U2 18
  U5 15
- U41 16
- U6 15
+ U28 13
+ U7 15
+ U27 13
  U4 15
-Net 55 "/DB6" "DB6"
- U7 16
- U6 16
- U2 20
- U4 16
- U5 16
- U41 17
-Net 56 "/DB7" "DB7"
- U2 7
- U41 18
- U7 17
- U4 17
- U6 17
- U5 17
-Net 57 "/INTA" "INTA"
- U2 23
- U40 15
-Net 58 "/RESET" "RESET"
- U1 12
- U3 1
- U40 2
-Net 77 "/INTE" "INTE"
- U40 8
- U1 16
-Net 78 "/WAIT" "WAIT"
- U1 24
- U40 6
-Net 82 "/D1" "D1"
- U2 17
- U1 9
-Net 83 "/PHI2" "PHI2"
- U1 15
- U3 10
-Net 84 "/PHI1" "PHI1"
- U1 22
- U3 11
-Net 85 "/READY" "READY"
- U3 4
- U1 23
-Net 86 "/DBIN" "DBIN"
- U1 17
- U2 4
- U40 17
-Net 87 "/HLDA" "HLDA"
- U39 1
- U38 19
- U39 19
- U38 1
- U1 21
- U40 4
- U2 2
-Net 88 "/WR'" "WR'"
- U2 3
- U1 18
-Net 89 "/SYNC" "SYNC"
- U3 5
- U1 19
-Net 90 "/D0" "D0"
- U2 15
- U1 10
-Net 91 "/D2" "D2"
- U1 8
- U2 12
-Net 92 "/D3" "D3"
- U1 7
- U2 10
-Net 93 "/D4" "D4"
- U1 3
- U2 6
-Net 94 "/D5" "D5"
- U1 4
- U2 19
-Net 95 "/D6" "D6"
- U1 5
- U2 21
-Net 96 "/D7" "D7"
- U1 6
- U2 8
-Net 97 "/A5" "A5"
- U39 16
- U4 3
- U5 3
- U6 3
- U7 3
-Net 98 "/A0" "A0"
- U39 9
- U4 8
- U5 8
- U6 8
- U7 8
-Net 99 "/A1" "A1"
- U4 7
- U6 7
- U39 12
- U5 7
- U7 7
-Net 100 "/A2" "A2"
+ U6 15
+ U29 13
+ U41 16
+Net 11 "/A3" "A3"
+ U7 5
+ U28 4
+ U30 4
+ U32 4
+ U4 5
+ U39 14
+ U5 5
+ U29 4
+ U6 5
+ U31 4
+ U27 4
+Net 12 "/A2" "A2"
+ U29 7
+ U31 7
+ U32 7
+ U28 7
  U7 6
+ U4 6
+ U30 7
+ U27 7
  U5 6
  U39 7
  U6 6
- U4 6
-Net 101 "/A3" "A3"
- U4 5
- U6 5
- U39 14
- U5 5
- U7 5
-Net 102 "/A4" "A4"
- U5 4
- U39 5
+Net 13 "/A1" "A1"
+ U32 6
+ U39 12
+ U27 6
+ U28 6
+ U29 6
+ U7 7
+ U30 6
+ U5 7
+ U6 7
+ U4 7
+ U31 6
+Net 14 "/A0" "A0"
+ U6 8
+ U29 5
+ U28 5
+ U4 8
+ U30 5
+ U31 5
+ U32 5
+ U39 9
+ U27 5
+ U7 8
+ U5 8
+Net 15 "/DB7" "DB7"
+ U7 17
+ U4 17
+ U27 11
+ U2 7
+ U5 17
+ U6 17
+ U29 11
+ U41 18
+ U28 11
+Net 16 "/DB6" "DB6"
+ U29 12
+ U41 17
+ U6 16
+ U5 16
+ U4 16
+ U2 20
+ U27 12
+ U28 12
+ U7 16
+Net 18 "/DB4" "DB4"
+ U29 14
+ U27 14
+ U7 14
+ U2 5
+ U4 14
+ U41 15
+ U6 14
+ U5 14
+ U28 14
+Net 19 "/~CS_EPR3" "~CS_EPR3"
+ U4 20
+ U34 8
+Net 20 "/~MEMR" "~MEMR"
+ U34 5
+ U2 24
+ U34 13
+ U34 9
+ U34 1
+Net 21 "/~CS_EPR2" "~CS_EPR2"
+ U34 11
+ U5 20
+Net 22 "/~CS_EPR0" "~CS_EPR0"
+ U34 3
+ U7 20
+Net 25 "/~CS_EPR1" "~CS_EPR1"
+ U6 20
+ U34 6
+Net 26 "/INTA" "INTA"
+ U2 23
+ U40 15
+Net 27 "/INTE" "INTE"
+ U40 8
+ U1 16
+Net 28 "/RESET" "RESET"
+ U3 1
+ U40 2
+ U1 12
+Net 29 "-5V" "-5V"
+ U7 21
+ U4 21
+ U5 21
+ U1 11
+ U6 21
+Net 30 "+12V" "+12V"
+ U5 19
+ U3 9
+ U6 19
+ U1 28
+ U7 19
+ U4 19
+Net 31 "/A4" "A4"
  U7 4
- U6 4
+ U29 3
+ U30 3
  U4 4
-Net 103 "/A6" "A6"
- U4 2
- U7 2
- U5 2
- U6 2
- U39 3
-Net 104 "/A7" "A7"
- U4 1
- U5 1
- U7 1
- U6 1
- U39 18
-Net 105 "/A8" "A8"
- U5 23
+ U39 5
+ U31 3
+ U28 3
+ U27 3
+ U5 4
+ U6 4
+ U32 3
+Net 32 "/A9" "A9"
+ U7 22
+ U30 15
+ U31 15
+ U38 12
+ U27 15
+ U4 22
+ U29 15
+ U5 22
+ U32 15
+ U28 15
+ U6 22
+Net 33 "/A8" "A8"
  U4 23
  U6 23
- U38 9
+ U5 23
+ U27 16
+ U32 16
+ U28 16
+ U30 16
  U7 23
-Net 106 "/A9" "A9"
- U6 22
- U4 22
- U5 22
- U38 12
- U7 22
-Net 107 "/AA7" "AA7"
- U39 2
- U1 33
-Net 108 "/AA5" "AA5"
- U1 31
- U39 4
-Net 109 "/AA3" "AA3"
- U1 29
- U39 6
-Net 110 "/AA1" "AA1"
- U1 26
- U39 8
-Net 111 "/AA0" "AA0"
- U39 11
- U1 25
+ U31 16
+ U38 9
+ U29 16
+Net 34 "/A7" "A7"
+ U30 17
+ U6 1
+ U7 1
+ U39 18
+ U31 17
+ U27 17
+ U4 1
+ U5 1
+ U29 17
+ U32 17
+ U28 17
+Net 35 "/A6" "A6"
+ U5 2
+ U28 1
+ U4 2
+ U39 3
+ U30 1
+ U32 1
+ U6 2
+ U29 1
+ U7 2
+ U27 1
+ U31 1
+Net 36 "/A5" "A5"
+ U5 3
+ U30 2
+ U4 3
+ U7 3
+ U39 16
+ U31 2
+ U27 2
+ U29 2
+ U28 2
+ U32 2
+ U6 3
+Net 37 "/~MEMW" "~MEMW"
+ U27 10
+ U30 10
+ U29 10
+ U28 10
+ U32 10
+ U2 26
+ U31 10
+Net 38 "/DB3" "DB3"
+ U4 13
+ U6 13
+ U5 13
+ U32 11
+ U2 9
+ U41 14
+ U31 11
+ U30 11
+ U7 13
+Net 39 "/DB2" "DB2"
+ U32 12
+ U41 13
+ U30 12
+ U31 12
+ U4 11
+ U5 11
+ U6 11
+ U2 11
+ U7 11
+Net 40 "/DB1" "DB1"
+ U30 13
+ U32 13
+ U4 10
+ U5 10
+ U2 16
+ U6 10
+ U31 13
+ U41 12
+ U7 10
+Net 41 "/DB0" "DB0"
+ U41 11
+ U31 14
+ U30 14
+ U4 9
+ U7 9
+ U2 13
+ U32 14
+ U5 9
+ U6 9
+Net 42 "/CS_RAM2" "CS_RAM2"
+ U33 7
+ U29 8
+ U30 8
+Net 43 "/CS_RAM1" "CS_RAM1"
+ U28 8
+ U31 8
+ U33 9
+Net 46 "" ""
+ U3 15
+ X1 2
+Net 67 "/WAIT" "WAIT"
+ U1 24
+ U40 6
+Net 68 "/READY" "READY"
+ U1 23
+ U3 4
+Net 69 "/WR'" "WR'"
+ U1 18
+ U2 3
+Net 70 "/HLDA" "HLDA"
+ U38 1
+ U38 19
+ U39 1
+ U39 19
+ U40 4
+ U1 21
+ U2 2
+Net 71 "/DBIN" "DBIN"
+ U40 17
+ U2 4
+ U1 17
+Net 72 "/SYNC" "SYNC"
+ U1 19
+ U3 5
+Net 73 "/PHI1" "PHI1"
+ U1 22
+ U3 11
+Net 74 "/PHI2" "PHI2"
+ U1 15
+ U3 10
+Net 75 "/D7" "D7"
+ U2 8
+ U1 6
+Net 76 "/D6" "D6"
+ U2 21
+ U1 5
+Net 77 "/D5" "D5"
+ U2 19
+ U1 4
+Net 78 "/D4" "D4"
+ U2 6
+ U1 3
+Net 79 "/D3" "D3"
+ U1 7
+ U2 10
+Net 80 "/D2" "D2"
+ U2 12
+ U1 8
+Net 81 "/D1" "D1"
+ U1 9
+ U2 17
+Net 82 "/D0" "D0"
+ U2 15
+ U1 10
+Net 84 "/PHI2-TTL" "PHI2-TTL"
+ U40 13
+ U3 6
+Net 85 "/STSTB" "STSTB"
+ U3 7
+ U2 1
+Net 87 "/~AA15" "~AA15"
+ U35 11
+ U38 13
+Net 89 "" ""
+ C2 1
+ U3 14
+Net 90 "" ""
+ X1 1
+ C2 2
+Net 91 "/~A15" "~A15"
+ U38 7
+ U33 6
+Net 92 "/RESIN" "RESIN"
+ U3 2
+ R1 2
+Net 98 "/INT" "INT"
+ PLACEHOLDER1 3
+ U1 14
+Net 100 "/HOLD" "HOLD"
+ PLACEHOLDER1 1
+ U1 13
+ R3 1
+Net 101 "/RDYIN" "RDYIN"
+ R2 2
+ U3 3
+Net 102 "" ""
+ U35 5
+ U35 4
+ U35 3
+Net 103 "/AA9" "AA9"
+ U38 8
+ U1 35
+Net 104 "/AA14" "AA14"
+ U1 39
+ U38 6
+Net 105 "/AA12" "AA12"
+ U38 4
+ U1 37
+Net 106 "/AA10" "AA10"
+ U1 1
+ U38 2
+Net 107 "/AA13" "AA13"
+ U38 15
+ U1 38
+Net 108 "/AA11" "AA11"
+ U1 40
+ U38 17
+Net 109 "/AA8" "AA8"
+ U1 34
+ U38 11
+Net 110 "/AA6" "AA6"
+ U39 17
+ U1 32
+Net 111 "/AA4" "AA4"
+ U39 15
+ U1 30
 Net 112 "/AA2" "AA2"
  U1 27
  U39 13
-Net 113 "/AA4" "AA4"
- U39 15
- U1 30
-Net 114 "/AA6" "AA6"
- U1 32
- U39 17
-Net 115 "/AA11" "AA11"
- U1 40
- U38 17
-Net 116 "/AA13" "AA13"
- U1 38
- U38 15
-Net 117 "/AA10" "AA10"
- U38 2
- U1 1
-Net 118 "/AA12" "AA12"
- U38 4
- U1 37
-Net 119 "/AA14" "AA14"
- U1 39
- U38 6
-Net 120 "/AA9" "AA9"
- U38 8
- U1 35
-Net 121 "/AA8" "AA8"
- U1 34
- U38 11
-Net 122 "/A10" "A10"
- U38 18
- U33 1
-Net 123 "/A12" "A12"
- U38 16
- U33 3
-Net 124 "/A14" "A14"
- U38 14
+Net 113 "/AA0" "AA0"
+ U1 25
+ U39 11
+Net 114 "/AA1" "AA1"
+ U1 26
+ U39 8
+Net 116 "/AA15" "AA15"
+ U1 36
+ U35 13
+ U35 12
+Net 117 "/AA3" "AA3"
+ U1 29
+ U39 6
+Net 118 "/A11" "A11"
+ U38 3
+ U33 2
+Net 119 "/A13" "A13"
+ U38 5
+ U33 4
+Net 120 "/A14" "A14"
  U33 5
+ U38 14
+Net 121 "/A12" "A12"
+ U33 3
+ U38 16
+Net 122 "/A10" "A10"
+ U33 1
+ U38 18
+Net 123 "/AA5" "AA5"
+ U1 31
+ U39 4
+Net 124 "/AA7" "AA7"
+ U39 2
+ U1 33
 }
 #End
