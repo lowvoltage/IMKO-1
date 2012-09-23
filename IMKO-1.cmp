@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sun 23 Sep 2012 06:53:51 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sun 23 Sep 2012 10:07:31 PM EEST
 
 BeginCmp
 TimeStamp = /505CAC19;
@@ -89,6 +89,13 @@ TimeStamp = /505F44C8;
 Reference = C33;
 ValeurCmp = ?;
 IdModule  = CP_5x6mm;
+EndCmp
+
+BeginCmp
+TimeStamp = /505F4D28;
+Reference = J2;
+ValeurCmp = CONN_EXPANSION;
+IdModule  = connect-VG64F/C;
 EndCmp
 
 BeginCmp
@@ -214,7 +221,7 @@ BeginCmp
 TimeStamp = /5059FAEE;
 Reference = U3;
 ValeurCmp = 8224;
-IdModule  = DIP-16__300_ELL;
+IdModule  = DIP-16__300;
 EndCmp
 
 BeginCmp

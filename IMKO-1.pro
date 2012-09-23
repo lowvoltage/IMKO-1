@@ -1,6 +1,6 @@
-update=Sun 23 Sep 2012 05:19:31 PM EEST
+update=Sun 23 Sep 2012 08:41:16 PM EEST
 version=1
-last_client=cvpcb
+last_client=eeschema
 [general]
 version=1
 [pcbnew]
@@ -35,6 +35,11 @@ LibName11=valves
 LibName12=w_capacitors
 LibName13=w_conn_strip
 LibDir=../../../../../home/dimitar/Electronics/lowvoltage-git/IMKO-1-Computer/libs
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
 [eeschema]
 version=1
 LibDir=libs
@@ -80,8 +85,4 @@ LibName30=valves
 LibName31=micro-intel
 LibName32=o_memory
 LibName33=2708
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
+LibName34=19inch
