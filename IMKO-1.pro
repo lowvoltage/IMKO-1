@@ -1,4 +1,4 @@
-update=Fri 21 Sep 2012 10:46:24 PM EEST
+update=Sun 23 Sep 2012 05:19:31 PM EEST
 version=1
 last_client=cvpcb
 [general]
@@ -33,6 +33,7 @@ LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
 LibName12=w_capacitors
+LibName13=w_conn_strip
 LibDir=../../../../../home/dimitar/Electronics/lowvoltage-git/IMKO-1-Computer/libs
 [eeschema]
 version=1
