@@ -39,11 +39,11 @@ EELAYER END
 $Descr A2 23386 16535
 encoding utf-8
 Sheet 1 1
-Title ""
-Date "23 sep 2012"
-Rev ""
-Comp ""
-Comment1 ""
+Title "IMKO-1 Personal Computer"
+Date "24 sep 2012"
+Rev "0.1"
+Comp "Released under the Creative Commons Attribution Share-Alike 3.0"
+Comment1 "Schematic and PCB capture by Dimitar Kovachev"
 Comment2 ""
 Comment3 ""
 Comment4 ""
@@ -1150,17 +1150,6 @@ Text Label 8000 10500 0    60   ~ 0
 HOLD
 Text Label 8050 10700 0    60   ~ 0
 INT
-$Comp
-L CONN_10 PLACEHOLDER1
-U 1 1 505D8F7E
-P 14650 12250
-F 0 "PLACEHOLDER1" H 14600 11600 60  0000 C CNN
-F 1 "CONN_10" V 14700 12250 60  0000 C CNN
-	1    14650 12250
-	1    0    0    -1  
-$EndComp
-Text Label 14100 12000 0    60   ~ 0
-INT
 Text Label 7000 13100 0    60   ~ 0
 STSTB
 $Comp
@@ -1241,21 +1230,21 @@ F 1 "74LS32" H 16050 11250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 16700 10800 0    60   ~ 0
-~CS_EPR3
-Text Label 950  9350 0    60   ~ 0
-~CS_EPR3
+~CS.EPROM3
+Text Label 1350 9350 2    60   ~ 0
+~CS.EPROM3
 Text Label 16700 11300 0    60   ~ 0
-~CS_EPR2
-Text Label 950  11250 0    60   ~ 0
-~CS_EPR2
-Text Label 950  13150 0    60   ~ 0
-~CS_EPR1
+~CS.EPROM2
+Text Label 1350 11250 2    60   ~ 0
+~CS.EPROM2
+Text Label 1350 13150 2    60   ~ 0
+~CS.EPROM1
 Text Label 16700 10300 0    60   ~ 0
-~CS_EPR1
+~CS.EPROM1
 Text Label 16700 9800 0    60   ~ 0
-~CS_EPR0
-Text Label 950  15050 0    60   ~ 0
-~CS_EPR0
+~CS.EPROM0
+Text Label 1350 15050 2    60   ~ 0
+~CS.EPROM0
 Text Label 5350 10300 0    60   ~ 0
 ~MEMR
 Text Label 15000 11400 0    60   ~ 0
@@ -1264,9 +1253,9 @@ NoConn ~ 7100 7750
 NoConn ~ 7100 7950
 NoConn ~ 8300 7850
 Text Label 12650 14100 0    60   ~ 0
-~CE_U41
+~CE.U41
 Text Label 8350 8300 0    60   ~ 0
-~CE_U41
+~CE.U41
 $Comp
 L R R4
 U 1 1 505E166D
@@ -1852,17 +1841,17 @@ Text Label 3550 4500 0    60   ~ 0
 Text Label 5750 4500 0    60   ~ 0
 ~MEMW
 Text Label 14700 10300 0    60   ~ 0
-CS_RAM0
+CS.RAM0
 Text Label 14700 10400 0    60   ~ 0
-CS_RAM1
+CS.RAM1
 Text Label 14700 10500 0    60   ~ 0
-CS_RAM2
+CS.RAM2
 Text Label 5600 4400 0    60   ~ 0
-CS_RAM2
+CS.RAM2
 Text Label 3400 4400 0    60   ~ 0
-CS_RAM1
+CS.RAM1
 Text Label 1200 4400 0    60   ~ 0
-CS_RAM0
+CS.RAM0
 $Comp
 L 74LS240 U36
 U 1 1 505E49DE
@@ -2024,8 +2013,6 @@ Wire Wire Line
 	10350 12000 10350 12300
 Wire Wire Line
 	21800 12650 21800 12550
-Wire Wire Line
-	14300 12000 14000 12000
 Wire Wire Line
 	8250 10700 7950 10700
 Wire Wire Line
@@ -3138,14 +3125,6 @@ Text Label 5450 8400 0    60   ~ 0
 DBINX
 Wire Wire Line
 	5800 8400 5450 8400
-NoConn ~ 14300 11900
-NoConn ~ 14300 12100
-NoConn ~ 14300 12200
-NoConn ~ 14300 12300
-NoConn ~ 14300 12400
-NoConn ~ 14300 12500
-NoConn ~ 14300 12600
-NoConn ~ 14300 12700
 Connection ~ 4450 12200
 $Comp
 L R R5
@@ -3754,7 +3733,6 @@ Wire Wire Line
 Wire Wire Line
 	21800 12000 21800 12050
 Connection ~ 21800 12000
-NoConn ~ 14300 11800
 Text Label 12650 11700 0    60   ~ 0
 HLDAX
 Wire Wire Line

@@ -95,7 +95,7 @@ BeginCmp
 TimeStamp = /505F4D28;
 Reference = J2;
 ValeurCmp = CONN_EXPANSION;
-IdModule  = connect-VG64F/C;
+IdModule  = c64acfd;
 EndCmp
 
 BeginCmp

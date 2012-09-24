@@ -33,8 +33,7 @@ LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
 LibName12=w_capacitors
-LibName13=w_conn_strip
-LibDir=../../../../../home/dimitar/Electronics/lowvoltage-git/IMKO-1-Computer/libs
+LibDir=./libs
 [cvpcb]
 version=1
 NetIExt=net
