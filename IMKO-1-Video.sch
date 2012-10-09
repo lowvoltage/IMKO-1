@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Tue 09 Oct 2012 11:59:32 PM EEST
+EESchema Schematic File Version 2  date Wed 10 Oct 2012 12:46:06 AM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -470,4 +470,40 @@ Wire Wire Line
 	5450 4350 5450 4400
 Wire Wire Line
 	5450 4800 5450 4850
+$Comp
+L 74LS00 U25
+U 1 1 50749ACA
+P 7800 3450
+F 0 "U25" H 7800 3500 60  0000 C CNN
+F 1 "74LS00" H 7800 3350 60  0000 C CNN
+	1    7800 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS00 U25
+U 2 1 50749AF2
+P 7800 3950
+F 0 "U25" H 7800 4000 60  0000 C CNN
+F 1 "74LS00" H 7800 3850 60  0000 C CNN
+	2    7800 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS00 U25
+U 3 1 50749B0E
+P 7800 4450
+F 0 "U25" H 7800 4500 60  0000 C CNN
+F 1 "74LS00" H 7800 4350 60  0000 C CNN
+	3    7800 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS00 U25
+U 4 1 50749B27
+P 7800 4950
+F 0 "U25" H 7800 5000 60  0000 C CNN
+F 1 "74LS00" H 7800 4850 60  0000 C CNN
+	4    7800 4950
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
