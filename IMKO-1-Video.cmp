@@ -1,0 +1,38 @@
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Tue 09 Oct 2012 11:01:55 PM EEST
+
+BeginCmp
+TimeStamp = /507470A6;
+Reference = R16;
+ValeurCmp = 1k;
+IdModule  = R5;
+EndCmp
+
+BeginCmp
+TimeStamp = /50747E39;
+Reference = U18;
+ValeurCmp = 82S129;
+IdModule  = DIP-16__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /50746D0E;
+Reference = U19;
+ValeurCmp = 74LS244;
+IdModule  = DIP-20__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /50746FB2;
+Reference = U20;
+ValeurCmp = 74LS244;
+IdModule  = DIP-20__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /507468D3;
+Reference = U26;
+ValeurCmp = 74LS374;
+IdModule  = DIP-20__300;
+EndCmp
+
+EndListe
