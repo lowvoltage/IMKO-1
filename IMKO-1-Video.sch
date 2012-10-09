@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Tue 09 Oct 2012 10:55:53 PM EEST
+EESchema Schematic File Version 2  date Tue 09 Oct 2012 11:59:32 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -30,6 +30,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:o_memory
+LIBS:IMKO-1-Video-cache
 EELAYER 27 0
 EELAYER END
 $Descr A2 23386 16535
@@ -196,9 +197,7 @@ Wire Wire Line
 Wire Wire Line
 	3200 7100 3500 7100
 Wire Wire Line
-	3200 7200 3900 7200
-Wire Wire Line
-	3900 7200 4450 7200
+	3200 7200 4450 7200
 Wire Wire Line
 	3200 7300 3500 7300
 Wire Wire Line
@@ -375,10 +374,10 @@ V.D0
 Text Label 3800 5950 0    60   ~ 0
 V.D4
 $Comp
-L GND #PWR?
+L GND #PWR07
 U 1 1 50747FE3
 P 4000 4600
-F 0 "#PWR?" H 4000 4600 30  0001 C CNN
+F 0 "#PWR07" H 4000 4600 30  0001 C CNN
 F 1 "GND" H 4000 4530 30  0001 C CNN
 	1    4000 4600
 	1    0    0    -1  
@@ -386,11 +385,7 @@ $EndComp
 Wire Wire Line
 	4050 4250 4000 4250
 Wire Wire Line
-	4000 4250 4000 4450
-Wire Wire Line
-	4000 4450 4000 4550
-Wire Wire Line
-	4000 4550 4000 4600
+	4000 4250 4000 4600
 Wire Wire Line
 	4050 4450 4000 4450
 Connection ~ 4000 4450
@@ -413,4 +408,66 @@ Text Label 3800 4050 0    60   ~ 0
 V.D5
 Text Label 3800 4150 0    60   ~ 0
 V.D6
+$Comp
+L C C15
+U 1 1 50748F6B
+P 6200 6600
+F 0 "C15" H 6250 6700 50  0000 L CNN
+F 1 "150nF" H 6250 6500 50  0000 L CNN
+	1    6200 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR08
+U 1 1 50748F84
+P 6200 6850
+F 0 "#PWR08" H 6200 6850 30  0001 C CNN
+F 1 "GND" H 6200 6780 30  0001 C CNN
+	1    6200 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR09
+U 1 1 50748F8A
+P 6200 6350
+F 0 "#PWR09" H 6200 6450 30  0001 C CNN
+F 1 "VCC" H 6200 6450 30  0000 C CNN
+	1    6200 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 6350 6200 6400
+Wire Wire Line
+	6200 6800 6200 6850
+$Comp
+L C C16
+U 1 1 50749031
+P 5450 4600
+F 0 "C16" H 5500 4700 50  0000 L CNN
+F 1 "150nF" H 5500 4500 50  0000 L CNN
+	1    5450 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR010
+U 1 1 50749037
+P 5450 4850
+F 0 "#PWR010" H 5450 4850 30  0001 C CNN
+F 1 "GND" H 5450 4780 30  0001 C CNN
+	1    5450 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR011
+U 1 1 5074903D
+P 5450 4350
+F 0 "#PWR011" H 5450 4450 30  0001 C CNN
+F 1 "VCC" H 5450 4450 30  0000 C CNN
+	1    5450 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5450 4350 5450 4400
+Wire Wire Line
+	5450 4800 5450 4850
 $EndSCHEMATC
