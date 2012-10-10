@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Wed 10 Oct 2012 09:46:06 PM EEST
+EESchema Schematic File Version 2  date Wed 10 Oct 2012 11:21:39 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -249,8 +249,6 @@ Wire Wire Line
 Connection ~ 3900 7200
 Text Notes 4250 7200 0    60   ~ 0
 TODO: To video RAM
-Text Notes 1450 7750 0    60   ~ 0
-TODO
 Wire Wire Line
 	2900 5950 3350 5950
 Wire Wire Line
@@ -686,4 +684,153 @@ Text Label 8050 7400 0    60   ~ 0
 U24.9
 Text Notes 11450 7600 0    60   ~ 0
 TODO: Name
+$Comp
+L 74LS32 U22
+U 1 1 5075CD80
+P 1650 8600
+F 0 "U22" H 1650 8650 60  0000 C CNN
+F 1 "74LS32" H 1650 8550 60  0000 C CNN
+	1    1650 8600
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS32 U22
+U 2 1 5075CD8D
+P 9200 4700
+F 0 "U22" H 9200 4750 60  0000 C CNN
+F 1 "74LS32" H 9200 4650 60  0000 C CNN
+	2    9200 4700
+	1    0    0    1   
+$EndComp
+$Comp
+L 74LS32 U22
+U 3 1 5075CDB4
+P 9600 3050
+F 0 "U22" H 9600 3100 60  0000 C CNN
+F 1 "74LS32" H 9600 3000 60  0000 C CNN
+	3    9600 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS32 U22
+U 4 1 5075CDCD
+P 9600 3500
+F 0 "U22" H 9600 3550 60  0000 C CNN
+F 1 "74LS32" H 9600 3450 60  0000 C CNN
+	4    9600 3500
+	1    0    0    -1  
+$EndComp
+Text Label 750  8500 0    60   ~ 0
+~MEMW
+Wire Wire Line
+	1050 8500 750  8500
+Wire Wire Line
+	7200 4850 6850 4850
+Text Label 6900 4850 0    60   ~ 0
+U42.Q
+Text Label 750  8700 0    60   ~ 0
+U42.Q
+Wire Wire Line
+	1400 7750 1750 7750
+Connection ~ 1750 7750
+Wire Wire Line
+	1050 8700 750  8700
+Text Label 1400 7750 0    60   ~ 0
+U20.EN
+Wire Wire Line
+	8400 4450 8500 4450
+Wire Wire Line
+	8500 4450 8500 4600
+Wire Wire Line
+	8500 4600 8600 4600
+Wire Wire Line
+	8600 4800 8500 4800
+Wire Wire Line
+	8500 4800 8500 4950
+Wire Wire Line
+	8500 4950 8400 4950
+Wire Wire Line
+	9800 4700 10200 4700
+Text Label 9850 4700 0    60   ~ 0
+U19.EN
+Text Label 3600 6200 0    60   ~ 0
+U19.EN
+Wire Wire Line
+	3600 6200 4000 6200
+Connection ~ 4000 6200
+Wire Wire Line
+	2250 8600 2700 8600
+Text Label 2300 8600 0    60   ~ 0
+U20.EN
+$Comp
+L C C17
+U 1 1 5075D6B0
+P 7950 3750
+F 0 "C17" H 8000 3850 50  0000 L CNN
+F 1 "150nF" H 8000 3650 50  0000 L CNN
+	1    7950 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR015
+U 1 1 5075D6B6
+P 7950 4000
+F 0 "#PWR015" H 7950 4000 30  0001 C CNN
+F 1 "GND" H 7950 3930 30  0001 C CNN
+	1    7950 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR016
+U 1 1 5075D6BC
+P 7950 3500
+F 0 "#PWR016" H 7950 3600 30  0001 C CNN
+F 1 "VCC" H 7950 3600 30  0000 C CNN
+	1    7950 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 3500 7950 3550
+Wire Wire Line
+	7950 3950 7950 4000
+Wire Wire Line
+	5250 3850 5800 3850
+Text Label 5350 3850 0    60   ~ 0
+PROM.D4
+Text Label 6750 4350 0    60   ~ 0
+PROM.D4
+Wire Wire Line
+	7200 4350 6750 4350
+$Comp
+L CP1 C18
+U 1 1 5075DBCD
+P 7450 3750
+F 0 "C18" H 7500 3850 50  0000 L CNN
+F 1 "68uF" H 7500 3650 50  0000 L CNN
+F 4 "10V" H 7600 3550 60  0000 C CNN "Field4"
+	1    7450 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCC #PWR?
+U 1 1 5075DBDA
+P 7450 3500
+F 0 "#PWR?" H 7450 3600 30  0001 C CNN
+F 1 "VCC" H 7450 3600 30  0000 C CNN
+	1    7450 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5075DBE0
+P 7450 4000
+F 0 "#PWR?" H 7450 4000 30  0001 C CNN
+F 1 "GND" H 7450 3930 30  0001 C CNN
+	1    7450 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7450 3550 7450 3500
+Wire Wire Line
+	7450 3950 7450 4000
 $EndSCHEMATC
