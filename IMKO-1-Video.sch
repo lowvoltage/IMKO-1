@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Wed 10 Oct 2012 11:21:39 PM EEST
+EESchema Schematic File Version 2  date Wed 10 Oct 2012 11:46:42 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -812,19 +812,19 @@ F 4 "10V" H 7600 3550 60  0000 C CNN "Field4"
 	1    0    0    -1  
 $EndComp
 $Comp
-L VCC #PWR?
+L VCC #PWR017
 U 1 1 5075DBDA
 P 7450 3500
-F 0 "#PWR?" H 7450 3600 30  0001 C CNN
+F 0 "#PWR017" H 7450 3600 30  0001 C CNN
 F 1 "VCC" H 7450 3600 30  0000 C CNN
 	1    7450 3500
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR?
+L GND #PWR018
 U 1 1 5075DBE0
 P 7450 4000
-F 0 "#PWR?" H 7450 4000 30  0001 C CNN
+F 0 "#PWR018" H 7450 4000 30  0001 C CNN
 F 1 "GND" H 7450 3930 30  0001 C CNN
 	1    7450 4000
 	1    0    0    -1  
@@ -833,4 +833,128 @@ Wire Wire Line
 	7450 3550 7450 3500
 Wire Wire Line
 	7450 3950 7450 4000
+Wire Wire Line
+	1350 3500 1100 3500
+Wire Wire Line
+	1350 3600 1100 3600
+Wire Wire Line
+	1100 3700 3200 3700
+Wire Wire Line
+	1350 3800 1100 3800
+Wire Wire Line
+	1100 3900 3200 3900
+Wire Wire Line
+	1100 4000 3200 4000
+Wire Wire Line
+	1100 4100 3200 4100
+Text Label 1100 3700 0    60   ~ 0
+VID.D2
+Text Label 1100 3500 0    60   ~ 0
+VID.D0
+Text Label 1100 3900 0    60   ~ 0
+VID.D4
+Text Label 1100 3600 0    60   ~ 0
+VID.D1
+Text Label 1100 3800 0    60   ~ 0
+VID.D3
+Text Label 1100 4000 0    60   ~ 0
+VID.D5
+Text Label 1100 4100 0    60   ~ 0
+VID.D6
+$Comp
+L R R23
+U 1 1 5075DEC0
+P 1450 4450
+F 0 "R23" V 1530 4450 50  0000 C CNN
+F 1 "1k" V 1450 4450 50  0000 C CNN
+	1    1450 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 4100 1450 4200
+Connection ~ 1450 4100
+$Comp
+L GND #PWR019
+U 1 1 5075E00A
+P 1450 4750
+F 0 "#PWR019" H 1450 4750 30  0001 C CNN
+F 1 "GND" H 1450 4680 30  0001 C CNN
+	1    1450 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 4750 1450 4700
+$Comp
+L R R24
+U 1 1 5075E0AA
+P 1650 4450
+F 0 "R24" V 1730 4450 50  0000 C CNN
+F 1 "1k" V 1650 4450 50  0000 C CNN
+	1    1650 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR020
+U 1 1 5075E0B1
+P 1650 4750
+F 0 "#PWR020" H 1650 4750 30  0001 C CNN
+F 1 "GND" H 1650 4680 30  0001 C CNN
+	1    1650 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 4750 1650 4700
+Wire Wire Line
+	1650 3900 1650 4200
+Connection ~ 1650 3900
+$Comp
+L R R25
+U 1 1 5075E1FD
+P 1850 4450
+F 0 "R25" V 1930 4450 50  0000 C CNN
+F 1 "1k" V 1850 4450 50  0000 C CNN
+	1    1850 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR021
+U 1 1 5075E203
+P 1850 4750
+F 0 "#PWR021" H 1850 4750 30  0001 C CNN
+F 1 "GND" H 1850 4680 30  0001 C CNN
+	1    1850 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1850 4750 1850 4700
+$Comp
+L R R26
+U 1 1 5075E2B7
+P 2050 4450
+F 0 "R26" V 2130 4450 50  0000 C CNN
+F 1 "1k" V 2050 4450 50  0000 C CNN
+	1    2050 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR022
+U 1 1 5075E2BD
+P 2050 4750
+F 0 "#PWR022" H 2050 4750 30  0001 C CNN
+F 1 "GND" H 2050 4680 30  0001 C CNN
+	1    2050 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 4750 2050 4700
+Wire Wire Line
+	1850 4200 1850 3700
+Connection ~ 1850 3700
+Wire Wire Line
+	2050 4000 2050 4200
+Connection ~ 2050 4000
+Wire Wire Line
+	4650 7600 4950 7600
+Text Label 4650 7600 0    60   ~ 0
+~VID.INI
 $EndSCHEMATC
