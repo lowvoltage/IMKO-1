@@ -1,4 +1,4 @@
-# EESchema Netlist Version 1.1 created  Wed 10 Oct 2012 12:46:09 AM EEST
+# EESchema Netlist Version 1.1 created  Wed 10 Oct 2012 09:27:57 PM EEST
 (
  ( /507468D3 $noname  U26 74LS374 {Lib=74LS374}
   (    1 GND )
@@ -23,7 +23,7 @@
   (   20 VCC )
  )
  ( /50746D0E $noname  U19 74LS244 {Lib=74LS244}
-  (    1 N-000047 )
+  (    1 N-000040 )
   (    2 /V.D6 )
   (    3 /VID.D4 )
   (    4 /V.D5 )
@@ -41,11 +41,11 @@
   (   16 /VID.D5 )
   (   17 /V.D4 )
   (   18 /VID.D6 )
-  (   19 N-000047 )
+  (   19 N-000040 )
   (   20 VCC )
  )
  ( /50746FB2 $noname  U20 74LS244 {Lib=74LS244}
-  (    1 N-000011 )
+  (    1 N-000060 )
   (    2 /DB6 )
   (    3 /VID.D4 )
   (    4 /DB5 )
@@ -63,7 +63,7 @@
   (   16 /VID.D5 )
   (   17 /DB4 )
   (   18 /VID.D6 )
-  (   19 N-000011 )
+  (   19 N-000060 )
   (   20 VCC )
  )
  ( /507470A6 $noname  R16 1k {Lib=R}
@@ -98,11 +98,58 @@
  )
  ( /50749ACA $noname  U25 74LS00 {Lib=74LS00}
   (    1 ? )
-  (    2 ? )
+  (    2 N-000036 )
+  (    3 N-000038 )
+  (    4 N-000038 )
+  (    5 N-000038 )
+  (    6 N-000037 )
+  (    7 GND )
+  (    8 ? )
+  (    9 ? )
+  (   10 ? )
+  (   11 ? )
+  (   12 ? )
+  (   13 ? )
+  (   14 VCC )
+ )
+ ( /5075AC5B $noname  U24 74LS163 {Lib=74LS163}
+  (    1 ? )
+  (    2 N-000037 )
+  (    3 GND )
+  (    4 GND )
+  (    5 GND )
+  (    6 VCC )
+  (    7 VCC )
+  (    8 GND )
+  (    9 /U24.9 )
+  (   10 VCC )
+  (   11 ? )
+  (   12 ? )
+  (   13 ? )
+  (   14 ? )
+  (   15 N-000020 )
+  (   16 VCC )
+ )
+ ( /5075B31A $noname  C14 68pF {Lib=C}
+  (    1 N-000037 )
+  (    2 N-000036 )
+ )
+ ( /5075B4FB $noname  R17 120 {Lib=R}
+  (    1 N-000036 )
+  (    2 N-000023 )
+ )
+ ( /5075B50A $noname  VR1 POT {Lib=POT}
+  (    1 N-000038 )
+  (    2 N-000038 )
+  (    3 N-000023 )
+ )
+ ( /5075BBEE $noname  U23 74LS86 {Lib=74LS86}
+  (    1 ? )
+  (    2 N-000026 )
   (    3 ? )
-  (    4 ? )
-  (    5 ? )
-  (    6 ? )
+  (    4 N-000020 )
+  (    5 N-000026 )
+  (    6 /U24.9 )
   (    7 GND )
   (    8 ? )
   (    9 ? )
@@ -136,111 +183,159 @@ $component U25
  14DIP300*
  SO14*
 $endlist
+$component C14
+ SM*
+ C?
+ C1-1
+$endlist
+$component R17
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
 $endfootprintlist
 }
 { Pin List by Nets
-Net 1 "GND" "GND"
+Net 1 "VCC" "VCC"
+ U24 10
+ C15 1
+ U20 20
+ U24 7
+ U26 20
+ U18 16
+ U23 14
+ U24 6
+ U25 14
+ R16 1
+ C16 1
+ U19 20
+ U24 16
+Net 2 "GND" "GND"
+ U23 7
+ U26 10
+ U18 8
+ U19 10
+ U26 1
+ U20 10
+ U24 4
+ U24 3
+ U24 8
+ C15 2
  U18 15
  U18 14
  U18 13
+ U24 5
  C16 2
- U19 10
- C15 2
- U18 8
- U20 10
- U26 10
  U25 7
- U26 1
-Net 2 "/V.D2" "V.D2"
- U18 7
- U19 13
- U26 2
-Net 3 "/V.D0" "V.D0"
+Net 11 "/V.D0" "V.D0"
  U19 15
  U18 5
  U26 12
-Net 5 "VCC" "VCC"
- C15 1
- C16 1
- U19 20
- U26 20
- U20 20
- U18 16
- R16 1
- U25 14
-Net 10 "/~VID.MEMW" "~VID.MEMW"
- R16 2
- U20 9
-Net 11 "" ""
- U20 19
- U20 1
-Net 12 "/VID.D4" "VID.D4"
- U20 3
- U19 3
-Net 13 "/VID.D0" "VID.D0"
- U19 5
- U20 5
-Net 14 "/VID.D2" "VID.D2"
- U19 7
- U20 7
-Net 27 "/V.D7" "V.D7"
- U26 19
- U19 11
-Net 28 "/V.D4" "V.D4"
- U26 15
- U19 17
- U18 3
-Net 29 "/VID.D1" "VID.D1"
- U20 12
- U19 12
-Net 30 "/V.D1" "V.D1"
+Net 12 "/V.D2" "V.D2"
+ U26 2
+ U19 13
+ U18 7
+Net 13 "/V.D1" "V.D1"
  U19 8
  U18 6
  U26 9
-Net 31 "/V.D3" "V.D3"
+Net 14 "/V.D3" "V.D3"
+ U19 6
  U18 4
  U26 6
- U19 6
-Net 32 "/V.D6" "V.D6"
- U19 2
- U18 1
- U26 16
-Net 33 "/V.D5" "V.D5"
- U18 2
- U19 4
+Net 15 "/V.D5" "V.D5"
  U26 5
-Net 34 "/DB4" "DB4"
- U26 14
- U20 17
-Net 35 "/DB0" "DB0"
- U26 13
- U20 15
-Net 37 "/DB1" "DB1"
- U20 8
- U26 8
-Net 38 "/DB3" "DB3"
- U26 7
- U20 6
-Net 39 "/DB5" "DB5"
- U26 4
- U20 4
-Net 40 "/DB2" "DB2"
- U20 13
- U26 3
-Net 41 "/DB6" "DB6"
- U20 2
- U26 17
-Net 43 "/VID.D3" "VID.D3"
- U20 14
- U19 14
-Net 44 "/VID.D5" "VID.D5"
- U20 16
- U19 16
-Net 45 "/VID.D6" "VID.D6"
- U19 18
- U20 18
-Net 47 "" ""
+ U19 4
+ U18 2
+Net 20 "" ""
+ U23 4
+ U24 15
+Net 23 "" ""
+ VR1 3
+ R17 2
+Net 25 "/U24.9" "U24.9"
+ U23 6
+ U24 9
+Net 26 "" ""
+ U23 5
+ U23 2
+Net 36 "" ""
+ R17 1
+ C14 2
+ U25 2
+Net 37 "" ""
+ U25 6
+ U24 2
+ C14 1
+Net 38 "" ""
+ U25 4
+ U25 5
+ VR1 1
+ VR1 2
+ U25 3
+Net 39 "/V.D4" "V.D4"
+ U26 15
+ U19 17
+ U18 3
+Net 40 "" ""
  U19 19
  U19 1
+Net 41 "/VID.D6" "VID.D6"
+ U19 18
+ U20 18
+Net 43 "/VID.D4" "VID.D4"
+ U19 3
+ U20 3
+Net 44 "/VID.D0" "VID.D0"
+ U20 5
+ U19 5
+Net 45 "/VID.D2" "VID.D2"
+ U20 7
+ U19 7
+Net 46 "/VID.D1" "VID.D1"
+ U20 12
+ U19 12
+Net 47 "/VID.D3" "VID.D3"
+ U20 14
+ U19 14
+Net 48 "/VID.D5" "VID.D5"
+ U20 16
+ U19 16
+Net 49 "/DB2" "DB2"
+ U26 3
+ U20 13
+Net 50 "/V.D7" "V.D7"
+ U19 11
+ U26 19
+Net 52 "/DB5" "DB5"
+ U20 4
+ U26 4
+Net 53 "/DB4" "DB4"
+ U26 14
+ U20 17
+Net 55 "/DB6" "DB6"
+ U26 17
+ U20 2
+Net 56 "/DB0" "DB0"
+ U26 13
+ U20 15
+Net 57 "/DB1" "DB1"
+ U20 8
+ U26 8
+Net 58 "/DB3" "DB3"
+ U20 6
+ U26 7
+Net 59 "/V.D6" "V.D6"
+ U18 1
+ U19 2
+ U26 16
+Net 60 "" ""
+ U20 19
+ U20 1
+Net 61 "/~VID.MEMW" "~VID.MEMW"
+ U20 9
+ R16 2
 }
 #End

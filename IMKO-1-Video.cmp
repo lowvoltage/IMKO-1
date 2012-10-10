@@ -1,17 +1,24 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Wed 10 Oct 2012 12:46:15 AM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Wed 10 Oct 2012 09:46:01 PM EEST
+
+BeginCmp
+TimeStamp = /5075B31A;
+Reference = C14;
+ValeurCmp = 68pF;
+IdModule  = cnp_12mm_disc;
+EndCmp
 
 BeginCmp
 TimeStamp = /50748F6B;
 Reference = C15;
 ValeurCmp = 150nF;
-IdModule  = C1;
+IdModule  = cnp_12mm_disc;
 EndCmp
 
 BeginCmp
 TimeStamp = /50749031;
 Reference = C16;
 ValeurCmp = 150nF;
-IdModule  = C1;
+IdModule  = cnp_12mm_disc;
 EndCmp
 
 BeginCmp
@@ -19,6 +26,13 @@ TimeStamp = /507470A6;
 Reference = R16;
 ValeurCmp = 1k;
 IdModule  = R5;
+EndCmp
+
+BeginCmp
+TimeStamp = /5075B4FB;
+Reference = R17;
+ValeurCmp = 120;
+IdModule  = R4;
 EndCmp
 
 BeginCmp
@@ -43,6 +57,20 @@ IdModule  = DIP-20__300;
 EndCmp
 
 BeginCmp
+TimeStamp = /5075BBEE;
+Reference = U23;
+ValeurCmp = 74LS86;
+IdModule  = DIP-14__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /5075AC5B;
+Reference = U24;
+ValeurCmp = 74LS163;
+IdModule  = DIP-16__300;
+EndCmp
+
+BeginCmp
 TimeStamp = /50749ACA;
 Reference = U25;
 ValeurCmp = 74LS00;
@@ -54,6 +82,13 @@ TimeStamp = /507468D3;
 Reference = U26;
 ValeurCmp = 74LS374;
 IdModule  = DIP-20__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /5075B50A;
+Reference = VR1;
+ValeurCmp = POT;
+IdModule  = RV2;
 EndCmp
 
 EndListe
