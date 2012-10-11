@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Wed 10 Oct 2012 11:35:06 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Thu 11 Oct 2012 10:19:00 PM EEST
 
 BeginCmp
 TimeStamp = /5075B31A;
@@ -50,6 +50,13 @@ IdModule  = R4;
 EndCmp
 
 BeginCmp
+TimeStamp = /50771E7D;
+Reference = R22;
+ValeurCmp = 2M7;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
 TimeStamp = /5075DEC0;
 Reference = R23;
 ValeurCmp = 1k;
@@ -75,6 +82,13 @@ TimeStamp = /5075E2B7;
 Reference = R26;
 ValeurCmp = 1k;
 IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50771E3D;
+Reference = U8;
+ValeurCmp = SFF96364;
+IdModule  = DIP-28__600;
 EndCmp
 
 BeginCmp
@@ -138,6 +152,13 @@ TimeStamp = /5075B50A;
 Reference = VR1;
 ValeurCmp = POT;
 IdModule  = RV2;
+EndCmp
+
+BeginCmp
+TimeStamp = /50771E58;
+Reference = X2;
+ValeurCmp = 1MHz;
+IdModule  = HC-33UV;
 EndCmp
 
 EndListe
