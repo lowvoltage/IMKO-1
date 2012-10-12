@@ -1,4 +1,4 @@
-update=Thu 11 Oct 2012 09:55:49 PM EEST
+update=Fri 12 Oct 2012 11:14:07 PM EEST
 last_client=eeschema
 [cvpcb]
 version=1
@@ -39,7 +39,7 @@ LibName12=libs/w_capacitors
 [eeschema]
 version=1
 LibDir=
-NetFmtName=
+NetFmtName=Pcbnew
 RptD_X=0
 RptD_Y=100
 RptLab=1
@@ -77,3 +77,4 @@ LibName29=contrib
 LibName30=valves
 LibName31=libs/o_memory
 LibName32=libs/SFF96364
+LibName33=libs/RO-3-2513
