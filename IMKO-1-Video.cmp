@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Thu 11 Oct 2012 10:19:00 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Fri 12 Oct 2012 07:47:34 PM EEST
 
 BeginCmp
 TimeStamp = /5075B31A;
@@ -36,6 +36,27 @@ IdModule  = CP10;
 EndCmp
 
 BeginCmp
+TimeStamp = /5078565B;
+Reference = D1;
+ValeurCmp = 1N4148;
+IdModule  = D4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50784D66;
+Reference = D2;
+ValeurCmp = 1N4148;
+IdModule  = D3;
+EndCmp
+
+BeginCmp
+TimeStamp = /5078556A;
+Reference = J9;
+ValeurCmp = CONN_VIDEO;
+IdModule  = SIL-2;
+EndCmp
+
+BeginCmp
 TimeStamp = /507470A6;
 Reference = R16;
 ValeurCmp = 1k;
@@ -46,6 +67,27 @@ BeginCmp
 TimeStamp = /5075B4FB;
 Reference = R17;
 ValeurCmp = 120;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /507858D1;
+Reference = R18;
+ValeurCmp = 470;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50784D75;
+Reference = R19;
+ValeurCmp = 1k;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50785226;
+Reference = R20;
+ValeurCmp = 240;
 IdModule  = R4;
 EndCmp
 
