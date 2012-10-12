@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Fri 12 Oct 2012 09:40:08 PM EEST
+EESchema Schematic File Version 2  date Fri 12 Oct 2012 10:30:28 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -823,13 +823,13 @@ Wire Wire Line
 Wire Wire Line
 	7450 3950 7450 4000
 Wire Wire Line
-	1350 3500 1100 3500
+	1100 3500 3200 3500
 Wire Wire Line
-	1350 3600 1100 3600
+	1100 3600 3200 3600
 Wire Wire Line
 	1100 3700 3200 3700
 Wire Wire Line
-	1350 3800 1100 3800
+	1100 3800 3200 3800
 Wire Wire Line
 	1100 3900 3200 3900
 Wire Wire Line
@@ -1241,4 +1241,129 @@ Wire Wire Line
 Wire Wire Line
 	12450 2300 14200 2300
 Connection ~ 12450 1600
+$Comp
+L 74LS374 U13
+U 1 1 50788120
+P 2300 1900
+F 0 "U13" H 2300 1900 60  0000 C CNN
+F 1 "74LS374" H 2350 1550 60  0000 C CNN
+	1    2300 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 1400 1200 1400
+Text Label 1200 1400 0    60   ~ 0
+VID.D6
+Wire Wire Line
+	1600 1500 1200 1500
+Text Label 1200 1500 0    60   ~ 0
+VID.D4
+Wire Wire Line
+	1600 1600 1200 1600
+Text Label 1200 1600 0    60   ~ 0
+VID.D2
+Wire Wire Line
+	1200 2000 1600 2000
+Text Label 1200 2000 0    60   ~ 0
+VID.D5
+Wire Wire Line
+	1600 2100 1200 2100
+Text Label 1200 2100 0    60   ~ 0
+VID.D0
+Wire Wire Line
+	1600 1900 1200 1900
+Text Label 1200 1900 0    60   ~ 0
+VID.D3
+Wire Wire Line
+	1600 1800 1200 1800
+Text Label 1200 1800 0    60   ~ 0
+VID.D1
+$Comp
+L GND #PWR028
+U 1 1 50788AE6
+P 1550 2450
+F 0 "#PWR028" H 1550 2450 30  0001 C CNN
+F 1 "GND" H 1550 2380 30  0001 C CNN
+	1    1550 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 2400 1550 2400
+Wire Wire Line
+	1550 2400 1550 2450
+NoConn ~ 1600 1700
+NoConn ~ 3000 1700
+Text Label 1150 2300 0    60   ~ 0
+VID.LOAD
+Wire Wire Line
+	1150 2300 1600 2300
+$Comp
+L R R27
+U 1 1 50789045
+P 2250 4450
+F 0 "R27" V 2330 4450 50  0000 C CNN
+F 1 "1k" V 2250 4450 50  0000 C CNN
+	1    2250 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 4200 2250 3500
+Connection ~ 2250 3500
+$Comp
+L GND #PWR029
+U 1 1 50789220
+P 2250 4750
+F 0 "#PWR029" H 2250 4750 30  0001 C CNN
+F 1 "GND" H 2250 4680 30  0001 C CNN
+	1    2250 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 4750 2250 4700
+$Comp
+L R R28
+U 1 1 5078930C
+P 2450 4450
+F 0 "R28" V 2530 4450 50  0000 C CNN
+F 1 "1k" V 2450 4450 50  0000 C CNN
+	1    2450 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 3600 2450 4200
+Connection ~ 2450 3600
+$Comp
+L GND #PWR030
+U 1 1 507894ED
+P 2450 4750
+F 0 "#PWR030" H 2450 4750 30  0001 C CNN
+F 1 "GND" H 2450 4680 30  0001 C CNN
+	1    2450 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 4750 2450 4700
+$Comp
+L R R29
+U 1 1 507895DC
+P 2650 4450
+F 0 "R29" V 2730 4450 50  0000 C CNN
+F 1 "1k" V 2650 4450 50  0000 C CNN
+	1    2650 4450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 3800 2650 4200
+Connection ~ 2650 3800
+$Comp
+L GND #PWR031
+U 1 1 507897C3
+P 2650 4750
+F 0 "#PWR031" H 2650 4750 30  0001 C CNN
+F 1 "GND" H 2650 4680 30  0001 C CNN
+	1    2650 4750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 4750 2650 4700
 $EndSCHEMATC
