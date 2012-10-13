@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Sat 13 Oct 2012 04:26:07 PM EEST
+EESchema Schematic File Version 2  date Sat 13 Oct 2012 05:30:10 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -2242,4 +2242,202 @@ Wire Wire Line
 	15250 10800 15600 10800
 Wire Wire Line
 	15250 10700 15600 10700
+$Comp
+L CONN_8 T1
+U 1 1 5079D7A5
+P 10600 9450
+F 0 "T1" V 10550 9450 60  0000 C CNN
+F 1 "CONN_8" V 10650 9450 60  0000 C CNN
+	1    10600 9450
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_10 T2
+U 1 1 5079D7B4
+P 10600 10750
+F 0 "T2" V 10550 10750 60  0000 C CNN
+F 1 "CONN_10" V 10650 10750 60  0000 C CNN
+	1    10600 10750
+	1    0    0    -1  
+$EndComp
+Text Label 10050 9100 0    60   ~ 0
+DB2
+Text Label 10050 9300 0    60   ~ 0
+DB3
+Text Label 10050 9400 0    60   ~ 0
+DB1
+Text Label 10050 9500 0    60   ~ 0
+DB0
+Text Label 10050 9600 0    60   ~ 0
+DB4
+Text Label 10050 9200 0    60   ~ 0
+DB5
+Text Label 10050 9700 0    60   ~ 0
+DB6
+Text Label 10050 9800 0    60   ~ 0
+DB7
+Wire Wire Line
+	10250 9100 10050 9100
+Wire Wire Line
+	10250 9200 10050 9200
+Wire Wire Line
+	10250 9300 10050 9300
+Wire Wire Line
+	10250 9400 10050 9400
+Wire Wire Line
+	10250 9500 10050 9500
+Wire Wire Line
+	10250 9600 10050 9600
+Wire Wire Line
+	10250 9700 10050 9700
+Wire Wire Line
+	10250 9800 10050 9800
+Wire Wire Line
+	10250 10300 10050 10300
+Text Label 10050 10300 0    60   ~ 0
+A0
+Text Label 10050 10400 0    60   ~ 0
+A1
+Text Label 10050 10500 0    60   ~ 0
+A2
+Text Label 10050 10600 0    60   ~ 0
+A3
+Text Label 10050 10700 0    60   ~ 0
+A4
+Text Label 10050 10800 0    60   ~ 0
+A5
+Text Label 10050 10900 0    60   ~ 0
+A6
+Text Label 10050 11000 0    60   ~ 0
+A7
+Text Label 10050 11100 0    60   ~ 0
+A8
+Text Label 10050 11200 0    60   ~ 0
+A9
+Wire Wire Line
+	10250 10400 10050 10400
+Wire Wire Line
+	10250 10500 10050 10500
+Wire Wire Line
+	10250 10600 10050 10600
+Wire Wire Line
+	10250 10700 10050 10700
+Wire Wire Line
+	10250 10800 10050 10800
+Wire Wire Line
+	10250 10900 10050 10900
+Wire Wire Line
+	10250 11000 10050 11000
+Wire Wire Line
+	10250 11100 10050 11100
+Wire Wire Line
+	10250 11200 10050 11200
+$Comp
+L CONN_4 T3
+U 1 1 5079DDF8
+P 10600 11600
+F 0 "T3" V 10550 11600 50  0000 C CNN
+F 1 "CONN_4" V 10650 11600 50  0000 C CNN
+	1    10600 11600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10250 11450 10000 11450
+Wire Wire Line
+	10250 11550 10000 11550
+Wire Wire Line
+	10250 11650 10000 11650
+Text Label 10000 11450 0    60   ~ 0
+U42.Q
+Text Label 10000 11550 0    60   ~ 0
+U42.NQ
+Text Label 10000 11650 0    60   ~ 0
+~MEMW
+Wire Wire Line
+	13850 10700 13650 10700
+Wire Wire Line
+	13850 10800 13650 10800
+Wire Wire Line
+	13850 10900 13650 10900
+Wire Wire Line
+	13850 11000 13650 11000
+Wire Wire Line
+	13850 11100 13650 11100
+Wire Wire Line
+	13850 11200 13650 11200
+Wire Wire Line
+	13850 11300 13650 11300
+Wire Wire Line
+	13850 11400 13650 11400
+Text Label 13700 11100 0    60   ~ 0
+A0
+Text Label 13700 11000 0    60   ~ 0
+A1
+Text Label 13700 10900 0    60   ~ 0
+A3
+Text Label 13700 11300 0    60   ~ 0
+A4
+Text Label 13700 11200 0    60   ~ 0
+A2
+Text Label 13700 10800 0    60   ~ 0
+A5
+Text Label 13700 11400 0    60   ~ 0
+A6
+Text Label 13700 10700 0    60   ~ 0
+A7
+NoConn ~ 10250 11750
+Wire Wire Line
+	15250 9600 16150 9600
+$Comp
+L C C13
+U 1 1 5079EC1D
+P 16450 9450
+F 0 "C13" V 16500 9550 50  0000 L CNN
+F 1 "110pF" V 16400 9500 50  0000 L CNN
+	1    16450 9450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R15
+U 1 1 5079F0A9
+P 16750 9100
+F 0 "R15" V 16830 9100 50  0000 C CNN
+F 1 "3k3" V 16750 9100 50  0000 C CNN
+	1    16750 9100
+	-1   0    0    1   
+$EndComp
+$Comp
+L R R14
+U 1 1 5079F280
+P 16450 9750
+F 0 "R14" V 16530 9750 50  0000 C CNN
+F 1 "5k1" V 16450 9750 50  0000 C CNN
+	1    16450 9750
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	16150 9450 16150 9750
+Wire Wire Line
+	16150 9450 16250 9450
+Wire Wire Line
+	16150 9750 16200 9750
+Connection ~ 16150 9600
+$Comp
+L VCC #PWR042
+U 1 1 5079F6C6
+P 16750 8800
+F 0 "#PWR042" H 16750 8900 30  0001 C CNN
+F 1 "VCC" H 16750 8900 30  0000 C CNN
+	1    16750 8800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	16750 8800 16750 8850
+Wire Wire Line
+	16750 9350 16750 9750
+Wire Wire Line
+	16750 9450 16650 9450
+Wire Wire Line
+	16750 9750 16700 9750
+Connection ~ 16750 9450
 $EndSCHEMATC
