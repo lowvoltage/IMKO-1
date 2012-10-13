@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sat 13 Oct 2012 09:16:45 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sun 14 Oct 2012 12:00:02 AM EEST
 
 BeginCmp
 TimeStamp = /505CAC19;
@@ -127,6 +127,27 @@ IdModule  = CP10;
 EndCmp
 
 BeginCmp
+TimeStamp = /5079BA70;
+Reference = C19;
+ValeurCmp = 10uF;
+IdModule  = CP9;
+EndCmp
+
+BeginCmp
+TimeStamp = /5079BA9D;
+Reference = C20;
+ValeurCmp = 10uF;
+IdModule  = CP9;
+EndCmp
+
+BeginCmp
+TimeStamp = /5079BAF8;
+Reference = C21;
+ValeurCmp = 10uF;
+IdModule  = CP9;
+EndCmp
+
+BeginCmp
 TimeStamp = /505F44C8;
 Reference = C33;
 ValeurCmp = ?;
@@ -145,6 +166,13 @@ TimeStamp = /50784D66;
 Reference = D2;
 ValeurCmp = 1N4148;
 IdModule  = D3;
+EndCmp
+
+BeginCmp
+TimeStamp = /5079D4A7;
+Reference = J1;
+ValeurCmp = CONN_POWER;
+IdModule  = IMKO-Power;
 EndCmp
 
 BeginCmp

@@ -1,6 +1,6 @@
-update=Sat 13 Oct 2012 06:08:28 PM EEST
+update=Sat 13 Oct 2012 11:27:35 PM EEST
 version=1
-last_client=eeschema
+last_client=cvpcb
 [general]
 version=1
 [pcbnew]
@@ -33,12 +33,8 @@ LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
 LibName12=w_capacitors
+LibName13=IMKO-footprints
 LibDir=./libs
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
 [eeschema]
 version=1
 LibDir=libs
@@ -84,3 +80,8 @@ LibName33=2708
 LibName34=19inch
 LibName35=RO-3-2513
 LibName36=SFF96364
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
