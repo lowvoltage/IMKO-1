@@ -1,4 +1,4 @@
-# EESchema Netlist Version 1.1 created  Sat 13 Oct 2012 12:18:32 PM EEST
+# EESchema Netlist Version 1.1 created  Sat 13 Oct 2012 12:37:16 PM EEST
 (
  ( /507468D3 $noname  U26 74LS374 {Lib=74LS374}
   (    1 GND )
@@ -238,24 +238,24 @@
   (    2 N-000051 )
  )
  ( /50784D66 $noname  D2 1N4148 {Lib=DIODE}
-  (    1 /SYNC )
+  (    1 /VSYNC )
   (    2 /~SFF.SYNC )
  )
  ( /50784D75 $noname  R19 1k {Lib=R}
   (    1 /~SFF.SYNC )
-  (    2 /SYNC )
+  (    2 /VSYNC )
  )
  ( /50785226 $noname  R20 240 {Lib=R}
-  (    1 /SYNC )
+  (    1 /VSYNC )
   (    2 GND )
  )
  ( /5078556A $noname  J9 CONN_VIDEO {Lib=CONN_2}
-  (    1 /SYNC )
+  (    1 /VSYNC )
   (    2 GND )
  )
  ( /5078565B $noname  D1 1N4148 {Lib=DIODE}
   (    1 N-000059 )
-  (    2 /SYNC )
+  (    2 /VSYNC )
  )
  ( /507858D1 $noname  R18 470 {Lib=R}
   (    1 VCC )
@@ -898,7 +898,7 @@ Net 82 "/~SFF.SYNC" "~SFF.SYNC"
  U23 3
  D2 2
  R19 1
-Net 83 "/SYNC" "SYNC"
+Net 83 "/VSYNC" "VSYNC"
  D1 2
  R20 1
  R19 2

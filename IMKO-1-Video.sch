@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Sat 13 Oct 2012 12:29:11 PM EEST
+EESchema Schematic File Version 2  date Sat 13 Oct 2012 12:37:14 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -715,7 +715,7 @@ F 1 "1k" V 12950 7200 50  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 Text Label 13350 7050 0    60   ~ 0
-SYNC
+VSYNC
 $Comp
 L R R20
 U 1 1 50785226
