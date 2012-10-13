@@ -1,4 +1,4 @@
-update=Sun 23 Sep 2012 08:41:16 PM EEST
+update=Sat 13 Oct 2012 06:08:28 PM EEST
 version=1
 last_client=eeschema
 [general]
@@ -43,9 +43,6 @@ EquName1=devcms
 version=1
 LibDir=libs
 NetFmtName=Pcbnew
-HPGLSpd=20
-HPGLDm=15
-HPGLNum=1
 RptD_X=0
 RptD_Y=100
 RptLab=1
@@ -85,3 +82,5 @@ LibName31=micro-intel
 LibName32=o_memory
 LibName33=2708
 LibName34=19inch
+LibName35=RO-3-2513
+LibName36=SFF96364
