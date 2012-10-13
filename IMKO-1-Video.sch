@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Sat 13 Oct 2012 12:37:14 PM EEST
+EESchema Schematic File Version 2  date Sat 13 Oct 2012 01:46:05 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -154,8 +154,6 @@ F 1 "VCC" H 3900 6700 30  0000 C CNN
 	1    3900 6600
 	1    0    0    -1  
 $EndComp
-Text Notes 4250 7200 0    60   ~ 0
-TODO: To video RAM
 $Comp
 L VCC #PWR02
 U 1 1 50747698
@@ -1173,6 +1171,102 @@ Text Label 17500 1600 0    60   ~ 0
 U55.6
 Text Label 17500 1900 0    60   ~ 0
 U55.9
+Text Label 19750 1200 0    60   ~ 0
+U55.9
+Text Label 19750 1850 0    60   ~ 0
+U55.6
+Text Label 11650 3750 0    60   ~ 0
+SFF.PT
+Text Label 13700 2000 0    60   ~ 0
+SFF.PT
+Text Label 18650 2000 0    60   ~ 0
+U55.11
+Text Label 13850 1150 0    60   ~ 0
+U55.11
+Text Label 11700 3850 0    60   ~ 0
+V.D7
+Text Label 21100 4000 0    60   ~ 0
+CHR6
+Text Label 21400 1300 0    60   ~ 0
+CHR6
+Text Label 21100 3400 0    60   ~ 0
+CHR0
+Text Label 21400 1750 0    60   ~ 0
+CHR0
+Text Label 22900 3400 0    60   ~ 0
+CHR.Q7
+Text Label 12250 6500 0    60   ~ 0
+CHR.Q7
+Text Label 21100 4100 0    60   ~ 0
+CHR7
+Text Label 15450 1250 0    60   ~ 0
+CHR7
+Text Label 14100 1350 2    60   ~ 0
+U23.8
+Text Label 19750 1550 0    60   ~ 0
+U23.8
+Text Notes 19750 2050 0    60   ~ 0
+TODO: Signal names
+NoConn ~ 22850 3500
+NoConn ~ 21450 3300
+NoConn ~ 9750 6900
+NoConn ~ 9750 7000
+NoConn ~ 9750 7200
+Text Label 10700 4050 0    60   ~ 0
+SFF.CTRL0
+Text Label 10700 4150 0    60   ~ 0
+SFF.CTRL1
+Text Label 10700 4250 0    60   ~ 0
+SFF.CTRL2
+$Comp
+L 2114 U11
+U 1 1 5079692A
+P 17300 6150
+F 0 "U11" H 17300 6900 60  0000 C CNN
+F 1 "2114" H 17300 5400 60  0000 C CNN
+	1    17300 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L 2114 U12
+U 1 1 50796937
+P 17300 7850
+F 0 "U12" H 17300 8600 60  0000 C CNN
+F 1 "2114" H 17300 7100 60  0000 C CNN
+	1    17300 7850
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 50796955
+P 16600 8550
+F 0 "#PWR?" H 16600 8550 30  0001 C CNN
+F 1 "GND" H 16600 8480 30  0001 C CNN
+	1    16600 8550
+	1    0    0    -1  
+$EndComp
+Text Label 16050 8450 0    60   ~ 0
+~VID.MEMW
+Text Label 16200 7250 0    60   ~ 0
+VID.A0
+Text Label 16200 7350 0    60   ~ 0
+VID.A1
+Text Label 16200 7450 0    60   ~ 0
+VID.A2
+Text Label 16200 7550 0    60   ~ 0
+VID.A3
+Text Label 16200 7650 0    60   ~ 0
+VID.A4
+Text Label 16200 7750 0    60   ~ 0
+VID.A5
+Text Label 16200 7850 0    60   ~ 0
+VID.A6
+Text Label 16200 7950 0    60   ~ 0
+VID.A7
+Text Label 16200 8050 0    60   ~ 0
+VID.A8
+Text Label 16200 8150 0    60   ~ 0
+VID.A9
 Wire Wire Line
 	1500 5250 1300 5250
 Wire Wire Line
@@ -1758,85 +1852,150 @@ Wire Wire Line
 	20150 1850 19750 1850
 Wire Wire Line
 	20150 1200 19750 1200
-Text Label 19750 1200 0    60   ~ 0
-U55.9
-Text Label 19750 1850 0    60   ~ 0
-U55.6
 Wire Wire Line
 	12100 3750 11650 3750
-Text Label 11650 3750 0    60   ~ 0
-SFF.PT
-Text Label 13700 2000 0    60   ~ 0
-SFF.PT
 Wire Wire Line
 	20050 1550 19750 1550
 Connection ~ 20050 1550
-Text Label 18650 2000 0    60   ~ 0
-U55.11
-Text Label 13850 1150 0    60   ~ 0
-U55.11
 Wire Wire Line
 	14200 1150 13850 1150
 Wire Wire Line
 	12100 3850 11650 3850
-Text Label 11700 3850 0    60   ~ 0
-V.D7
 Wire Wire Line
 	13700 2000 14100 2000
 Connection ~ 14100 2000
 Wire Wire Line
 	21450 4000 21100 4000
-Text Label 21100 4000 0    60   ~ 0
-CHR6
-Text Label 21400 1300 0    60   ~ 0
-CHR6
 Wire Wire Line
 	21350 1300 21650 1300
 Wire Wire Line
 	21450 3400 21100 3400
-Text Label 21100 3400 0    60   ~ 0
-CHR0
-Text Label 21400 1750 0    60   ~ 0
-CHR0
 Wire Wire Line
 	21350 1750 21650 1750
 Wire Wire Line
 	22850 3400 23250 3400
-Text Label 22900 3400 0    60   ~ 0
-CHR.Q7
-Text Label 12250 6500 0    60   ~ 0
-CHR.Q7
 Wire Wire Line
 	12600 6500 12200 6500
 Wire Wire Line
 	21450 4100 21100 4100
-Text Label 21100 4100 0    60   ~ 0
-CHR7
-Text Label 15450 1250 0    60   ~ 0
-CHR7
 Wire Wire Line
 	15400 1250 15750 1250
-Text Label 14100 1350 2    60   ~ 0
-U23.8
-Text Label 19750 1550 0    60   ~ 0
-U23.8
-Text Notes 19750 2050 0    60   ~ 0
-TODO: Signal names
-NoConn ~ 22850 3500
-NoConn ~ 21450 3300
-NoConn ~ 9750 6900
-NoConn ~ 9750 7000
-NoConn ~ 9750 7200
 Wire Wire Line
 	10600 4050 12100 4050
 Wire Wire Line
 	10600 4150 12100 4150
 Wire Wire Line
 	10600 4250 12100 4250
-Text Label 10700 4050 0    60   ~ 0
-SFF.CTRL0
-Text Label 10700 4150 0    60   ~ 0
-SFF.CTRL1
-Text Label 10700 4250 0    60   ~ 0
-SFF.CTRL2
+Wire Wire Line
+	16700 8350 16600 8350
+Wire Wire Line
+	16600 8350 16600 8550
+Wire Wire Line
+	16050 8450 16700 8450
+Wire Wire Line
+	16700 7250 16200 7250
+Wire Wire Line
+	16700 7350 16200 7350
+Wire Wire Line
+	16700 7450 16200 7450
+Wire Wire Line
+	16700 7550 16200 7550
+Wire Wire Line
+	16700 7650 16200 7650
+Wire Wire Line
+	16700 7750 16200 7750
+Wire Wire Line
+	16700 7850 16200 7850
+Wire Wire Line
+	16700 7950 16200 7950
+Wire Wire Line
+	16700 8050 16200 8050
+Wire Wire Line
+	16700 8150 16200 8150
+$Comp
+L GND #PWR?
+U 1 1 5079712F
+P 16600 6850
+F 0 "#PWR?" H 16600 6850 30  0001 C CNN
+F 1 "GND" H 16600 6780 30  0001 C CNN
+	1    16600 6850
+	1    0    0    -1  
+$EndComp
+Text Label 16050 6750 0    60   ~ 0
+~VID.MEMW
+Text Label 16200 5550 0    60   ~ 0
+VID.A0
+Text Label 16200 5650 0    60   ~ 0
+VID.A1
+Text Label 16200 5750 0    60   ~ 0
+VID.A2
+Text Label 16200 5850 0    60   ~ 0
+VID.A3
+Text Label 16200 5950 0    60   ~ 0
+VID.A4
+Text Label 16200 6050 0    60   ~ 0
+VID.A5
+Text Label 16200 6150 0    60   ~ 0
+VID.A6
+Text Label 16200 6250 0    60   ~ 0
+VID.A7
+Text Label 16200 6350 0    60   ~ 0
+VID.A8
+Text Label 16200 6450 0    60   ~ 0
+VID.A9
+Wire Wire Line
+	16700 6650 16600 6650
+Wire Wire Line
+	16600 6650 16600 6850
+Wire Wire Line
+	16050 6750 16700 6750
+Wire Wire Line
+	16700 5550 16200 5550
+Wire Wire Line
+	16700 5650 16200 5650
+Wire Wire Line
+	16700 5750 16200 5750
+Wire Wire Line
+	16700 5850 16200 5850
+Wire Wire Line
+	16700 5950 16200 5950
+Wire Wire Line
+	16700 6050 16200 6050
+Wire Wire Line
+	16700 6150 16200 6150
+Wire Wire Line
+	16700 6250 16200 6250
+Wire Wire Line
+	16700 6350 16200 6350
+Wire Wire Line
+	16700 6450 16200 6450
+Text Label 18000 5550 0    60   ~ 0
+VID.D0
+Text Label 18000 5650 0    60   ~ 0
+VID.D1
+Text Label 18000 5750 0    60   ~ 0
+VID.D2
+Text Label 18000 5850 0    60   ~ 0
+VID.D3
+Wire Wire Line
+	17900 5550 18300 5550
+Wire Wire Line
+	17900 5650 18300 5650
+Wire Wire Line
+	17900 5750 18300 5750
+Wire Wire Line
+	17900 5850 18300 5850
+Text Label 18000 7350 0    60   ~ 0
+VID.D4
+Wire Wire Line
+	17900 7350 18300 7350
+Wire Wire Line
+	17900 7450 18300 7450
+Wire Wire Line
+	17900 7550 18300 7550
+Text Label 18000 7450 0    60   ~ 0
+VID.D5
+Text Label 18000 7550 0    60   ~ 0
+VID.D6
+NoConn ~ 17900 7250
 $EndSCHEMATC
