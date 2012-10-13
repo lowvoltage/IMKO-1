@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Sat 13 Oct 2012 01:46:05 PM EEST
+EESchema Schematic File Version 2  date Sat 13 Oct 2012 04:26:07 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -1237,10 +1237,10 @@ F 1 "2114" H 17300 7100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR?
+L GND #PWR040
 U 1 1 50796955
 P 16600 8550
-F 0 "#PWR?" H 16600 8550 30  0001 C CNN
+F 0 "#PWR040" H 16600 8550 30  0001 C CNN
 F 1 "GND" H 16600 8480 30  0001 C CNN
 	1    16600 8550
 	1    0    0    -1  
@@ -1267,6 +1267,128 @@ Text Label 16200 8050 0    60   ~ 0
 VID.A8
 Text Label 16200 8150 0    60   ~ 0
 VID.A9
+$Comp
+L GND #PWR041
+U 1 1 5079712F
+P 16600 6850
+F 0 "#PWR041" H 16600 6850 30  0001 C CNN
+F 1 "GND" H 16600 6780 30  0001 C CNN
+	1    16600 6850
+	1    0    0    -1  
+$EndComp
+Text Label 16050 6750 0    60   ~ 0
+~VID.MEMW
+Text Label 16200 5550 0    60   ~ 0
+VID.A0
+Text Label 16200 5650 0    60   ~ 0
+VID.A1
+Text Label 16200 5750 0    60   ~ 0
+VID.A2
+Text Label 16200 5850 0    60   ~ 0
+VID.A3
+Text Label 16200 5950 0    60   ~ 0
+VID.A4
+Text Label 16200 6050 0    60   ~ 0
+VID.A5
+Text Label 16200 6150 0    60   ~ 0
+VID.A6
+Text Label 16200 6250 0    60   ~ 0
+VID.A7
+Text Label 16200 6350 0    60   ~ 0
+VID.A8
+Text Label 16200 6450 0    60   ~ 0
+VID.A9
+Text Label 18000 5550 0    60   ~ 0
+VID.D0
+Text Label 18000 5650 0    60   ~ 0
+VID.D1
+Text Label 18000 5750 0    60   ~ 0
+VID.D2
+Text Label 18000 5850 0    60   ~ 0
+VID.D3
+Text Label 18000 7350 0    60   ~ 0
+VID.D4
+Text Label 18000 7450 0    60   ~ 0
+VID.D5
+Text Label 18000 7550 0    60   ~ 0
+VID.D6
+NoConn ~ 17900 7250
+$Comp
+L 74LS244 U15
+U 1 1 507978AB
+P 14550 8650
+F 0 "U15" H 14600 8450 60  0000 C CNN
+F 1 "74LS244" H 14650 8250 60  0000 C CNN
+	1    14550 8650
+	1    0    0    -1  
+$EndComp
+Text Label 13750 3250 0    60   ~ 0
+SFF.A0
+Text Label 13750 3350 0    60   ~ 0
+SFF.A1
+Text Label 13750 3450 0    60   ~ 0
+SFF.A2
+Text Label 13750 3550 0    60   ~ 0
+SFF.A3
+Text Label 13750 3650 0    60   ~ 0
+SFF.A4
+Text Label 13750 3750 0    60   ~ 0
+SFF.A5
+Text Label 13750 3850 0    60   ~ 0
+SFF.A6
+Text Label 13750 3950 0    60   ~ 0
+SFF.A7
+Text Label 13750 4050 0    60   ~ 0
+SFF.A8
+Text Label 13750 4150 0    60   ~ 0
+SFF.A9
+Text Label 13500 8150 0    60   ~ 0
+SFF.A7
+Text Label 13500 8250 0    60   ~ 0
+SFF.A5
+Text Label 13500 8350 0    60   ~ 0
+SFF.A3
+Text Label 13500 8450 0    60   ~ 0
+SFF.A1
+Text Label 13500 8550 0    60   ~ 0
+SFF.A0
+Text Label 13500 8650 0    60   ~ 0
+SFF.A2
+Text Label 13500 8750 0    60   ~ 0
+SFF.A4
+Text Label 13500 8850 0    60   ~ 0
+SFF.A6
+Text Label 15300 8550 0    60   ~ 0
+VID.A0
+Text Label 15300 8450 0    60   ~ 0
+VID.A1
+Text Label 15300 8850 0    60   ~ 0
+VID.A6
+Text Label 15300 8750 0    60   ~ 0
+VID.A4
+Text Label 15300 8650 0    60   ~ 0
+VID.A2
+Text Label 15300 8350 0    60   ~ 0
+VID.A3
+Text Label 15300 8250 0    60   ~ 0
+VID.A5
+Text Label 15300 8150 0    60   ~ 0
+VID.A7
+$Comp
+L 74LS367 U17
+U 1 1 5079A090
+P 14550 9900
+F 0 "U17" H 14550 9850 60  0000 C CNN
+F 1 "74LS367" H 14650 9650 60  0000 C CNN
+	1    14550 9900
+	1    0    0    -1  
+$EndComp
+Text Label 6950 1750 0    60   ~ 0
+U25.8
+Text Label 13450 9550 0    60   ~ 0
+U25.8
+Text Label 15300 9500 0    60   ~ 0
+~VID.MEMW
 Wire Wire Line
 	1500 5250 1300 5250
 Wire Wire Line
@@ -1843,9 +1965,9 @@ Wire Wire Line
 Wire Wire Line
 	17900 1900 17500 1900
 Wire Wire Line
-	20150 1650 20050 1650
+	20050 1650 20150 1650
 Wire Wire Line
-	20050 1650 20050 1400
+	20050 1400 20050 1650
 Wire Wire Line
 	20050 1400 20150 1400
 Wire Wire Line
@@ -1912,37 +2034,6 @@ Wire Wire Line
 	16700 8050 16200 8050
 Wire Wire Line
 	16700 8150 16200 8150
-$Comp
-L GND #PWR?
-U 1 1 5079712F
-P 16600 6850
-F 0 "#PWR?" H 16600 6850 30  0001 C CNN
-F 1 "GND" H 16600 6780 30  0001 C CNN
-	1    16600 6850
-	1    0    0    -1  
-$EndComp
-Text Label 16050 6750 0    60   ~ 0
-~VID.MEMW
-Text Label 16200 5550 0    60   ~ 0
-VID.A0
-Text Label 16200 5650 0    60   ~ 0
-VID.A1
-Text Label 16200 5750 0    60   ~ 0
-VID.A2
-Text Label 16200 5850 0    60   ~ 0
-VID.A3
-Text Label 16200 5950 0    60   ~ 0
-VID.A4
-Text Label 16200 6050 0    60   ~ 0
-VID.A5
-Text Label 16200 6150 0    60   ~ 0
-VID.A6
-Text Label 16200 6250 0    60   ~ 0
-VID.A7
-Text Label 16200 6350 0    60   ~ 0
-VID.A8
-Text Label 16200 6450 0    60   ~ 0
-VID.A9
 Wire Wire Line
 	16700 6650 16600 6650
 Wire Wire Line
@@ -1969,14 +2060,6 @@ Wire Wire Line
 	16700 6350 16200 6350
 Wire Wire Line
 	16700 6450 16200 6450
-Text Label 18000 5550 0    60   ~ 0
-VID.D0
-Text Label 18000 5650 0    60   ~ 0
-VID.D1
-Text Label 18000 5750 0    60   ~ 0
-VID.D2
-Text Label 18000 5850 0    60   ~ 0
-VID.D3
 Wire Wire Line
 	17900 5550 18300 5550
 Wire Wire Line
@@ -1985,17 +2068,178 @@ Wire Wire Line
 	17900 5750 18300 5750
 Wire Wire Line
 	17900 5850 18300 5850
-Text Label 18000 7350 0    60   ~ 0
-VID.D4
 Wire Wire Line
 	17900 7350 18300 7350
 Wire Wire Line
 	17900 7450 18300 7450
 Wire Wire Line
 	17900 7550 18300 7550
-Text Label 18000 7450 0    60   ~ 0
-VID.D5
-Text Label 18000 7550 0    60   ~ 0
-VID.D6
-NoConn ~ 17900 7250
+Wire Wire Line
+	13850 9050 13800 9050
+Wire Wire Line
+	13800 9050 13800 9150
+Wire Wire Line
+	13800 9150 13850 9150
+Wire Wire Line
+	13700 3250 14100 3250
+Wire Wire Line
+	13700 3350 14100 3350
+Wire Wire Line
+	13700 3450 14100 3450
+Wire Wire Line
+	13700 3550 14100 3550
+Wire Wire Line
+	13700 3650 14100 3650
+Wire Wire Line
+	13700 3750 14100 3750
+Wire Wire Line
+	13700 3850 14100 3850
+Wire Wire Line
+	13700 3950 14100 3950
+Wire Wire Line
+	13700 4050 14100 4050
+Wire Wire Line
+	13700 4150 14100 4150
+Wire Wire Line
+	13850 8150 13500 8150
+Wire Wire Line
+	13850 8250 13500 8250
+Wire Wire Line
+	13850 8350 13500 8350
+Wire Wire Line
+	13850 8450 13500 8450
+Wire Wire Line
+	13850 8550 13500 8550
+Wire Wire Line
+	13850 8650 13500 8650
+Wire Wire Line
+	13850 8750 13500 8750
+Wire Wire Line
+	13850 8850 13500 8850
+Wire Wire Line
+	15250 8550 15600 8550
+Wire Wire Line
+	15250 8450 15600 8450
+Wire Wire Line
+	15250 8850 15600 8850
+Wire Wire Line
+	15250 8750 15600 8750
+Wire Wire Line
+	15250 8650 15600 8650
+Wire Wire Line
+	15250 8350 15600 8350
+Wire Wire Line
+	15250 8250 15600 8250
+Wire Wire Line
+	15250 8150 15600 8150
+Wire Wire Line
+	13850 9500 13800 9500
+Wire Wire Line
+	13800 9500 13800 9600
+Wire Wire Line
+	13800 9600 13850 9600
+Wire Wire Line
+	13450 9550 13800 9550
+Connection ~ 13800 9550
+Wire Wire Line
+	15250 9500 15750 9500
+Wire Wire Line
+	15250 9700 15400 9700
+Wire Wire Line
+	15400 9700 15400 10000
+Wire Wire Line
+	15250 10000 15600 10000
+Text Label 15450 10000 0    60   ~ 0
+VID.A9
+Connection ~ 15400 10000
+Wire Wire Line
+	15250 9900 15600 9900
+Text Label 15450 9900 0    60   ~ 0
+VID.A8
+Text Label 13500 9800 0    60   ~ 0
+SFF.A9
+Wire Wire Line
+	13850 9800 13500 9800
+Text Label 13500 9700 0    60   ~ 0
+SFF.A8
+Wire Wire Line
+	13850 9700 13500 9700
+Wire Wire Line
+	13850 9900 13500 9900
+Wire Wire Line
+	13850 10000 13500 10000
+Text Label 13600 9900 0    60   ~ 0
+A9
+Text Label 13600 10000 0    60   ~ 0
+A8
+Wire Wire Line
+	15250 9800 15300 9800
+Wire Wire Line
+	15300 9800 15300 9900
+Connection ~ 15300 9900
+Wire Wire Line
+	13800 9100 13450 9100
+Connection ~ 13800 9100
+Text Label 13550 10300 0    60   ~ 0
+U42.Q
+Wire Wire Line
+	13850 10300 13550 10300
+Text Label 13450 9100 0    60   ~ 0
+U42.NQ
+Text Label 13500 10200 0    60   ~ 0
+U42.NQ
+Wire Wire Line
+	13850 10200 13500 10200
+$Comp
+L 74LS244 U16
+U 1 1 5079C9F8
+P 14550 11200
+F 0 "U16" H 14600 11000 60  0000 C CNN
+F 1 "74LS244" H 14650 10800 60  0000 C CNN
+	1    14550 11200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	13850 11600 13800 11600
+Wire Wire Line
+	13800 11600 13800 11700
+Wire Wire Line
+	13800 11700 13850 11700
+Wire Wire Line
+	13800 11650 13450 11650
+Connection ~ 13800 11650
+Text Label 13450 11650 0    60   ~ 0
+U42.Q
+Text Label 15300 11100 0    60   ~ 0
+VID.A0
+Text Label 15300 11000 0    60   ~ 0
+VID.A1
+Text Label 15300 11400 0    60   ~ 0
+VID.A6
+Text Label 15300 11300 0    60   ~ 0
+VID.A4
+Text Label 15300 11200 0    60   ~ 0
+VID.A2
+Text Label 15300 10900 0    60   ~ 0
+VID.A3
+Text Label 15300 10800 0    60   ~ 0
+VID.A5
+Text Label 15300 10700 0    60   ~ 0
+VID.A7
+Wire Wire Line
+	15250 11100 15600 11100
+Wire Wire Line
+	15250 11000 15600 11000
+Wire Wire Line
+	15250 11400 15600 11400
+Wire Wire Line
+	15250 11300 15600 11300
+Wire Wire Line
+	15250 11200 15600 11200
+Wire Wire Line
+	15250 10900 15600 10900
+Wire Wire Line
+	15250 10800 15600 10800
+Wire Wire Line
+	15250 10700 15600 10700
 $EndSCHEMATC
