@@ -1,4 +1,4 @@
-EESchema Schematic File Version 2  date Sat 13 Oct 2012 05:30:10 PM EEST
+EESchema Schematic File Version 2  date Sat 13 Oct 2012 05:47:51 PM EEST
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -2440,4 +2440,24 @@ Wire Wire Line
 Wire Wire Line
 	16750 9750 16700 9750
 Connection ~ 16750 9450
+Text Label 6950 8400 0    60   ~ 0
+TMP.V1
+Text Label 6300 8050 0    60   ~ 0
+TMP.V2
+Text Label 5550 8150 1    60   ~ 0
+TMP.V3
+Text Label 14000 6500 0    60   ~ 0
+TMP.V4
+Text Label 16050 9600 1    60   ~ 0
+TMP.V5
+Text Label 16750 9600 0    60   ~ 0
+TMP.V6
+Text Label 13300 2300 0    60   ~ 0
+TMP.V7
+Text Label 6950 2250 1    60   ~ 0
+TMP.V10
+Text Label 11600 5200 3    60   ~ 0
+TMP.V8
+Text Label 11600 4500 0    60   ~ 0
+TMP.V9
 $EndSCHEMATC
