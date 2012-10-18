@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Thu 18 Oct 2012 10:04:07 PM EEST
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Thu 18 Oct 2012 11:55:17 PM EEST
 
 BeginCmp
 TimeStamp = /505CAC19;
@@ -190,9 +190,23 @@ IdModule  = IMKO-Power;
 EndCmp
 
 BeginCmp
-TimeStamp = /505F4D28;
+TimeStamp = /505F2822;
 Reference = J2;
+ValeurCmp = CONN_KBD;
+IdModule  = VASCH8x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /505F4D28;
+Reference = J3;
 ValeurCmp = CONN_EXPANSION;
+IdModule  = c64acfd;
+EndCmp
+
+BeginCmp
+TimeStamp = /508073DE;
+Reference = J4;
+ValeurCmp = CONN_EXTERNAL;
 IdModule  = c64acfd;
 EndCmp
 
@@ -201,13 +215,6 @@ TimeStamp = /5078556A;
 Reference = J9;
 ValeurCmp = CONN_VIDEO;
 IdModule  = SIL-2;
-EndCmp
-
-BeginCmp
-TimeStamp = /505F2822;
-Reference = P1;
-ValeurCmp = CONN_KBD;
-IdModule  = VASCH8x2;
 EndCmp
 
 BeginCmp
