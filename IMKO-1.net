@@ -1,4 +1,4 @@
-# EESchema Netlist Version 1.1 created  Tue 16 Oct 2012 09:38:29 PM EEST
+# EESchema Netlist Version 1.1 created  Thu 18 Oct 2012 10:25:32 PM EEST
 (
  ( /5059FA06 micro-intel-DIL40  U1 8080 {Lib=8080}
   (    1 /AA10 )
@@ -86,8 +86,8 @@
   (   11 /PHI1 )
   (   12 ? )
   (   13 ? )
-  (   14 N-000219 )
-  (   15 N-000177 )
+  (   14 N-000251 )
+  (   15 N-000210 )
   (   16 VCC )
  )
  ( /505A26D4 $noname  U40 74LS244 {Lib=74LS244}
@@ -305,9 +305,9 @@
  ( /505D18AC $noname  U35 74LS00 {Lib=74LS00}
   (    1 /~EXT.DATA )
   (    2 /DBINX )
-  (    3 N-000179 )
-  (    4 N-000179 )
-  (    5 N-000179 )
+  (    3 N-000217 )
+  (    4 N-000217 )
+  (    5 N-000217 )
   (    6 /~CE.U41 )
   (    7 GND )
   (    8 ? )
@@ -319,12 +319,12 @@
   (   14 VCC )
  )
  ( /505D7884 $noname  X1 18MHz {Lib=CRYSTAL}
-  (    1 N-000176 )
-  (    2 N-000177 )
+  (    1 N-000211 )
+  (    2 N-000210 )
  )
  ( /505D789D $noname  C2 10pF {Lib=C}
-  (    1 N-000219 )
-  (    2 N-000176 )
+  (    1 N-000251 )
+  (    2 N-000211 )
  )
  ( /505D7DD9 $noname  R1 22k {Lib=R}
   (    1 VCC )
@@ -345,30 +345,30 @@
   (    4 /A13 )
   (    5 /A14 )
   (    6 /~A15 )
-  (    7 /CS.RAM2 )
+  (    7 /~CS.RAM2 )
   (    8 GND )
-  (    9 /CS.RAM1 )
-  (   10 /CS.RAM0 )
-  (   11 /CS.VRAM )
-  (   12 /CS.ROM3 )
-  (   13 /CS.ROM2 )
-  (   14 /CS.ROM1 )
-  (   15 /CS.ROM0 )
+  (    9 /~CS.RAM1 )
+  (   10 /~CS.RAM0 )
+  (   11 /~CS.VRAM )
+  (   12 /~CS.ROM3 )
+  (   13 /~CS.ROM2 )
+  (   14 /~CS.ROM1 )
+  (   15 /~CS.ROM0 )
   (   16 VCC )
  )
  ( /505DD251 $noname  U34 74LS32 {Lib=74LS32}
   (    1 /~MEMR )
-  (    2 /CS.ROM0 )
+  (    2 /~CS.ROM0 )
   (    3 /~CS.EPROM0 )
-  (    4 /CS.ROM2 )
+  (    4 /~CS.ROM2 )
   (    5 /~MEMR )
   (    6 /~CS.EPROM2 )
   (    7 GND )
   (    8 /~CS.EPROM3 )
   (    9 /~MEMR )
-  (   10 /CS.ROM3 )
+  (   10 /~CS.ROM3 )
   (   11 /~CS.EPROM1 )
-  (   12 /CS.ROM1 )
+  (   12 /~CS.ROM1 )
   (   13 /~MEMR )
   (   14 VCC )
  )
@@ -384,7 +384,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM0 )
+  (    8 /~CS.RAM0 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB7 )
@@ -408,7 +408,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM1 )
+  (    8 /~CS.RAM1 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB7 )
@@ -432,7 +432,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM2 )
+  (    8 /~CS.RAM2 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB7 )
@@ -456,7 +456,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM0 )
+  (    8 /~CS.RAM0 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB3 )
@@ -480,7 +480,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM1 )
+  (    8 /~CS.RAM1 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB3 )
@@ -504,7 +504,7 @@
   (    5 /A0 )
   (    6 /A1 )
   (    7 /A2 )
-  (    8 /CS.RAM2 )
+  (    8 /~CS.RAM2 )
   (    9 GND )
   (   10 /~MEMW )
   (   11 /DB3 )
@@ -524,9 +524,9 @@
   (    1 /INTA )
   (    2 GND )
   (    3 /DB6 )
-  (    4 N-000243 )
+  (    4 N-000257 )
   (    5 /DB4 )
-  (    6 N-000242 )
+  (    6 N-000256 )
   (    7 /DB2 )
   (    8 GND )
   (    9 /DB0 )
@@ -535,7 +535,7 @@
   (   12 /DB1 )
   (   13 GND )
   (   14 /DB3 )
-  (   15 N-000244 )
+  (   15 N-000258 )
   (   16 /DB5 )
   (   17 GND )
   (   18 /DB7 )
@@ -548,14 +548,14 @@
   (    3 /EXT.INT2 )
   (    4 /EXT.INT3 )
   (    5 GND )
-  (    6 N-000243 )
-  (    7 N-000244 )
+  (    6 N-000257 )
+  (    7 N-000258 )
   (    8 GND )
-  (    9 N-000242 )
-  (   10 N-000247 )
+  (    9 N-000256 )
+  (   10 N-000255 )
   (   11 /KBD3 )
   (   12 /KBD5 )
-  (   13 N-000241 )
+  (   13 N-000254 )
   (   14 ? )
   (   15 /INT )
   (   16 VCC )
@@ -577,7 +577,7 @@
   (    2 VCC )
  )
  ( /505E9CBE $noname  R9 1k {Lib=R}
-  (    1 N-000241 )
+  (    1 N-000254 )
   (    2 VCC )
  )
  ( /505EAA5C $noname  R8 1k {Lib=R}
@@ -589,7 +589,7 @@
   (    2 VCC )
  )
  ( /505EB55E $noname  R6 1k {Lib=R}
-  (    1 N-000247 )
+  (    1 N-000255 )
   (    2 VCC )
  )
  ( /505F1DBF $noname  R5 120 {Lib=R}
@@ -619,7 +619,7 @@
   (    2 GND )
  )
  ( /505F5573 $noname  U49 74LS244 {Lib=74LS244}
-  (    1 N-000231 )
+  (    1 /~READ.KBD )
   (    2 /KBD.D7 )
   (    3 /DB3 )
   (    4 /KBD.D6 )
@@ -637,7 +637,7 @@
   (   16 /DB6 )
   (   17 /KBD.D3 )
   (   18 /DB7 )
-  (   19 N-000231 )
+  (   19 /~READ.KBD )
   (   20 VCC )
  )
  ( /505F4D28 19inch-VG64  J2 CONN_EXPANSION {Lib=VG64}
@@ -717,7 +717,7 @@
   (    8 /DB1 )
   (    9 /V.D1 )
   (   10 GND )
-  (   11 /U51.10 )
+  (   11 /WRITE.U26 )
   (   12 /V.D0 )
   (   13 /DB0 )
   (   14 /DB4 )
@@ -1214,11 +1214,11 @@
   (    1 /NET1 )
  )
  ( /5079E75E $noname  T3 CONN_6 {Lib=CONN_6}
-  (    1 /U42.Q )
-  (    2 /U42.NQ )
-  (    3 /U51.10 )
+  (    1 ? )
+  (    2 ? )
+  (    3 ? )
   (    4 /NET1 )
-  (    5 /CS.VRAM )
+  (    5 ? )
   (    6 ? )
  )
  ( /5079BA70 $noname  C19 10uF {Lib=CP1}
@@ -1239,6 +1239,96 @@
   (    3 -12V )
   (    4 GND )
   (    5 VCC )
+ )
+ ( /508036C3 $noname  U52 74LS42 {Lib=74LS42}
+  (    1 /~CS.IO0 )
+  (    2 /~CS.IO1 )
+  (    3 /~CS.IO2 )
+  (    4 /~CS.IO3 )
+  (    5 /~CS.IO4 )
+  (    6 /~CS.IO5 )
+  (    7 /~CS.IO6 )
+  (    8 GND )
+  (    9 /~CS.IO7 )
+  (   10 /~CS.IO8 )
+  (   11 ? )
+  (   12 /A3|A6|A7 )
+  (   13 /A2|A6|A7 )
+  (   14 /A1 )
+  (   15 /A0 )
+  (   16 VCC )
+ )
+ ( /50803B69 $noname  U53 74LS32 {Lib=74LS32}
+  (    1 /A7 )
+  (    2 /A6 )
+  (    3 /A6|A7 )
+  (    4 /~IOR )
+  (    5 /~CS.IO0 )
+  (    6 /~READ.KBD )
+  (    7 GND )
+  (    8 /A2|A6|A7 )
+  (    9 /A2 )
+  (   10 /A6|A7 )
+  (   11 /A3|A6|A7 )
+  (   12 /A3 )
+  (   13 /A6|A7 )
+  (   14 VCC )
+ )
+ ( /5080871C $noname  U50 74LS32 {Lib=74LS32}
+  (    1 /~CS.IO8 )
+  (    2 /~IOR )
+  (    3 ? )
+  (    4 /~IOR )
+  (    5 /~CS.IO4 )
+  (    6 ? )
+  (    7 GND )
+  (    8 ? )
+  (    9 /~IOW )
+  (   10 /~CS.IO2 )
+  (   11 ? )
+  (   12 /~IOR )
+  (   13 /~CS.IO1 )
+  (   14 VCC )
+ )
+ ( /5080D5CA $noname  U51 74LS02 {Lib=74LS02}
+  (    1 ? )
+  (    2 /~IOW )
+  (    3 /~CS.IO6 )
+  (    4 ? )
+  (    5 /~IOW )
+  (    6 /~CS.IO7 )
+  (    7 GND )
+  (    8 /~CS.IO5 )
+  (    9 /~IOW )
+  (   10 /WRITE.U26 )
+  (   11 /~CS.IO3 )
+  (   12 /~IOW )
+  (   13 ? )
+  (   14 VCC )
+ )
+ ( /50816FBD $noname  C32 68uF {Lib=CP1}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /50817937 $noname  U42 74LS74 {Lib=74LS74}
+  (    1 VCC )
+  (    2 /~CS.VRAM )
+  (    3 /STSTB )
+  (    4 VCC )
+  (    5 /U42.Q )
+  (    6 /U42.NQ )
+  (    7 GND )
+  (    8 ? )
+  (    9 ? )
+  (   10 VCC )
+  (   11 ? )
+  (   12 ? )
+  (   13 VCC )
+  (   14 VCC )
+ )
+ ( /5081A1B6 $noname  C25 10uF {Lib=CP1}
+  (    1 VCC )
+  (    2 GND )
  )
 )
 *
@@ -1595,1223 +1685,1307 @@ $component C21
  CP*
  SM*
 $endlist
+$component U51
+ SO14*
+ 14DIP*
+$endlist
+$component C32
+ CP*
+ SM*
+$endlist
+$component C25
+ CP*
+ SM*
+$endlist
 $endfootprintlist
 }
 { Pin List by Nets
-Net 1 "GND" "GND"
- U4 12
+Net 1 "/CHR.ROW2" "CHR.ROW2"
+ U9 16
+ U55 3
+ U25 13
+ U8 13
+Net 2 "GND" "GND"
+ U2 22
+ U1 2
  U3 8
  U2 14
- U2 22
- U9 10
- R27 2
- U16 10
- U5 18
- C3 2
- U4 18
- R28 2
- C4 2
- U55 10
- U40 10
- C1 2
- U40 19
- U7 12
- U41 10
- U40 1
- U28 9
- C21 1
- C8 2
- R29 2
- U21 7
- U13 1
- U13 10
- U1 2
- C12 2
- C11 2
- P1 2
- U26 10
- U30 9
- U26 1
- U36 8
- U36 11
- U36 13
- C33 2
- U36 17
- C16 2
- U37 5
- U18 8
- U37 8
- U25 7
- C15 2
- U18 13
- U18 14
- U18 15
- P1 4
- U19 10
- U6 18
- U5 12
- C5 2
- C6 2
- U7 18
- U6 12
- J2 C2
- J2 A2
- J2 C1
- J2 A1
- U49 10
- U36 10
- U36 2
- U20 10
- U39 10
- U23 7
- J9 2
- U24 8
- U38 10
- U12 8
  U12 9
+ U12 8
+ U15 10
  C9 2
- U14 15
+ U40 19
+ U41 10
+ U40 10
+ U40 1
+ U22 7
+ U7 12
+ U7 18
+ C17 2
+ C1 2
+ U42 7
+ C5 2
+ C25 2
+ R26 2
+ U5 12
+ C4 2
+ U8 14
+ P1 4
+ C3 2
  U11 9
  U11 8
- U22 7
+ U4 12
+ U4 18
+ U39 10
+ U6 18
+ C6 2
+ U6 12
+ U5 18
+ U34 7
+ U26 1
+ U18 8
+ R3 2
+ U33 8
+ U27 9
+ C7 2
+ U24 8
+ U16 10
+ C8 2
+ U31 9
+ C12 2
+ U36 10
+ U30 9
+ U29 9
+ U28 9
+ U32 9
+ U38 10
+ U19 10
+ U26 10
+ U20 10
  U35 7
+ U51 7
+ U50 7
+ C11 2
+ C10 2
+ U18 13
+ U21 7
  R20 2
+ U36 2
+ U36 8
+ J9 2
+ U36 11
+ U36 17
+ C19 2
+ U18 14
+ U18 15
+ J1 4
+ C21 1
+ J2 A2
+ C33 2
+ U49 10
+ J2 A1
+ U25 7
+ J2 C1
+ J2 C2
+ U37 8
+ U37 5
+ U36 13
+ R29 2
+ R28 2
+ R27 2
+ U14 15
+ U14 8
+ U23 7
+ C20 1
+ U53 7
+ C15 2
+ U55 10
+ U52 8
+ U9 10
+ R25 2
+ U24 3
+ C18 2
+ R23 2
+ U17 8
+ P1 2
+ R24 2
+ U13 1
+ U13 10
  U24 4
  U24 5
- R3 2
- U8 14
- U34 7
- U24 3
- U33 8
- R25 2
- U14 8
- R26 2
- C20 1
- U17 8
- R24 2
- J1 4
- U27 9
- R23 2
- C7 2
- C19 2
- C18 2
- U29 9
- C10 2
- U15 10
- U32 9
- U31 9
- C17 2
-Net 2 "/VID.D4" "VID.D4"
- U19 3
- U12 13
- R24 1
- U13 4
- U20 3
-Net 3 "/VID.D2" "VID.D2"
- U20 7
- R25 1
- U13 7
- U11 12
- U19 7
-Net 4 "/VID.D5" "VID.D5"
- U19 16
- U20 16
- R26 1
- U13 17
- U12 12
-Net 6 "VCC" "VCC"
- C15 1
- R8 2
- U29 18
- U1 20
- U31 18
- R7 2
- U41 20
- U32 18
- P1 6
- U26 20
- U3 16
- U20 20
- U18 16
- U40 20
- U27 18
- U28 18
- C16 1
- R6 2
- C7 1
- R4 1
- C8 1
- J1 5
- R15 2
- C10 1
- U7 24
- U25 14
- U17 16
- C1 1
- U19 20
- U35 14
- C5 1
- U5 24
- U15 20
- C6 1
- R2 1
- U6 24
- U34 14
- U12 18
- U16 20
- U38 20
- U2 28
- U11 18
- U39 20
- C9 1
- R1 1
- U33 16
- C3 1
- C4 1
- U4 24
- U49 20
- U24 16
- U21 14
- U24 7
- U24 6
- R34 1
- U36 20
+ C16 2
+ C32 2
+Net 3 "VCC" "VCC"
  U22 14
- C11 1
- J2 A32
- R18 1
- U55 20
+ C15 1
+ U53 14
+ U23 2
+ C32 1
+ U23 14
+ C18 1
+ C16 1
+ U25 14
+ U42 10
+ U42 13
+ U50 14
+ C17 1
+ U42 14
+ U42 1
+ U42 4
+ U51 14
+ U26 20
+ U23 5
+ C25 1
+ J1 5
+ U18 16
+ U17 16
+ U13 20
  J2 A31
  J2 C31
- U13 20
+ J2 A32
  J2 C32
- U8 28
- U24 10
- U23 2
- R16 1
- U37 16
- R32 1
- U30 18
- R33 1
+ C4 1
+ C5 1
+ U5 24
+ R8 2
+ U49 20
+ R7 2
+ R6 2
+ P1 6
+ U55 20
+ U24 6
+ R31 1
  R30 1
  R10 2
- R11 2
- R12 2
- R13 2
- R31 1
+ U24 7
  R9 2
+ U24 10
  U9 24
- C12 1
  U14 16
- C18 1
- C17 1
- U23 14
- U23 5
-Net 7 "/SYNC.OUT" "SYNC.OUT"
- D1 2
+ U36 20
+ U8 28
+ U37 16
+ U21 14
+ R13 2
+ R12 2
+ R18 1
+ R11 2
+ R34 1
+ R33 1
+ R32 1
+ C7 1
+ R4 1
+ U38 20
+ R1 1
+ R2 1
+ R16 1
+ U35 14
+ U31 18
+ C11 1
+ C10 1
+ U52 16
+ U16 20
+ R15 2
+ U24 16
+ U6 24
+ U34 14
+ U20 20
+ U33 16
+ U27 18
+ C1 1
+ U1 20
+ U3 16
+ U11 18
+ U2 28
+ C3 1
+ U4 24
+ U39 20
+ C6 1
+ C8 1
+ C12 1
+ U28 18
+ U30 18
+ U19 20
+ U32 18
+ U12 18
+ U15 20
+ U29 18
+ C9 1
+ U41 20
+ U40 20
+ U7 24
+Net 4 "/CHR.ROW1" "CHR.ROW1"
+ U9 15
+ U55 2
+ U8 12
+Net 7 "/CHR.ROW0" "CHR.ROW0"
+ U8 11
+ U9 14
+ U55 1
+Net 8 "/ASCII.A1" "ASCII.A1"
+ U13 12
+ U55 5
+ U9 18
+Net 9 "/VID.LOAD" "VID.LOAD"
+ U14 1
+ U24 9
+ U23 6
+ U13 11
+Net 10 "/VID.SHIFT" "VID.SHIFT"
+ U14 2
+ U24 2
+ U25 6
+ C14 1
+Net 11 "/DOT3" "DOT3"
+ U55 13
+ U14 14
+ R32 2
+ U9 6
+Net 12 "/DOT2" "DOT2"
+ U14 13
+ U55 7
+ R33 2
+ U9 5
+Net 13 "/DOT1" "DOT1"
+ R34 2
+ U55 14
+ U9 4
+ U14 12
+Net 14 "/SYNC.OUT" "SYNC.OUT"
  J9 1
+ R20 1
  R19 2
  D2 1
- R20 1
-Net 8 "/SFF.PHI1" "SFF.PHI1"
- U24 12
- U8 9
-Net 9 "/SFF.SYNC" "SFF.SYNC"
- U8 26
+ D1 2
+Net 15 "/TMP.V4" "TMP.V4"
+ D1 1
+ R18 2
+ U21 3
+Net 16 "/SFF.SYNC" "SFF.SYNC"
  U23 1
-Net 11 "/TMP.V8" "TMP.V8"
+ U8 26
+Net 18 "/TMP.V8" "TMP.V8"
  R22 2
  X2 1
  U8 2
-Net 12 "/TMP.V9 " "TMP.V9 "
+Net 19 "/TMP.V9 " "TMP.V9 "
  R22 1
  U8 1
  X2 2
-Net 16 "/TMP.V1" "TMP.V1"
- U25 2
- R17 1
- C14 2
-Net 17 "/TMP.V2" "TMP.V2"
- U25 3
- VR1 1
- U25 4
- U25 5
- VR1 2
-Net 18 "/U42.Q" "U42.Q"
- T3 1
- U25 12
- U22 2
- U16 1
- U17 15
- U16 19
-Net 19 "/~SFF.SYNC" "~SFF.SYNC"
- R19 1
- D2 2
- U23 3
-Net 21 "/~MEMW" "~MEMW"
- U32 10
- U30 10
- U20 11
- U29 10
- U22 1
- U31 10
- U2 26
- J2 A18
- U27 10
- U28 10
-Net 22 "/TMP.V10" "TMP.V10"
- U22 4
- U25 11
-Net 23 "/U19.EN" "U19.EN"
- U19 19
- U22 6
- U19 1
-Net 25 "/DOT5" "DOT5"
- U55 12
- R30 2
- U14 4
- U9 8
-Net 26 "/DOT3" "DOT3"
- U14 14
- U9 6
- R32 2
- U55 13
-Net 27 "/DOT2" "DOT2"
- U9 5
- U55 7
- R33 2
- U14 13
-Net 28 "/VID.LOAD" "VID.LOAD"
- U24 9
- U23 6
- U14 1
- U13 11
-Net 29 "/CHR.ROW2" "CHR.ROW2"
- U55 3
- U25 13
- U9 16
- U8 13
-Net 30 "/VID.SHIFT" "VID.SHIFT"
- U25 6
- C14 1
- U24 2
- U14 2
-Net 31 "/DOT7" "DOT7"
- U14 6
- U21 6
-Net 34 "/ASCII.A5" "ASCII.A5"
- U9 22
- U55 19
- U23 12
- U13 16
-Net 35 "/CYR.INH" "CYR.INH"
- U55 15
- U22 11
-Net 36 "/SFF.PT" "SFF.PT"
- U8 15
- U22 12
- U22 9
-Net 37 "/V.D7" "V.D7"
- U19 11
- U8 16
- U26 19
-Net 38 "/DOT6" "DOT6"
- U21 8
- U14 5
-Net 39 "/DOT1" "DOT1"
- R34 2
- U14 12
- U55 14
- U9 4
-Net 40 "/LATIN.INH" "LATIN.INH"
- U22 8
- U9 11
-Net 41 "/CHR.ROW1" "CHR.ROW1"
- U8 12
- U9 15
- U55 2
-Net 42 "/ASCII.A1" "ASCII.A1"
- U9 18
- U13 12
- U55 5
-Net 43 "/CYR.DOT0" "CYR.DOT0"
- U21 12
- U55 6
-Net 44 "/CYR.DOT6" "CYR.DOT6"
- U21 10
- U55 9
-Net 45 "/CYR.DOT7" "CYR.DOT7"
- U21 5
- U55 11
-Net 46 "/U24.TC" "U24.TC"
- U24 15
- U23 4
-Net 47 "/SFF.W" "SFF.W"
- U8 17
- U25 10
-Net 48 "/ASCII.A4" "ASCII.A4"
- U13 5
+Net 20 "/ASCII.A4" "ASCII.A4"
  U55 18
  U9 21
-Net 49 "/ASCII.A2" "ASCII.A2"
- U55 16
+ U13 5
+Net 21 "/ASCII.A2" "ASCII.A2"
  U9 19
  U13 6
-Net 50 "/TMP.V4" "TMP.V4"
- D1 1
- U21 3
- R18 2
-Net 51 "/~SFF.INI" "~SFF.INI"
- U8 10
- U25 1
- U21 1
-Net 52 "/VID.D3" "VID.D3"
- U11 11
- U13 14
- R29 1
- U20 14
- U19 14
-Net 53 "/CHR.ROW0" "CHR.ROW0"
- U55 1
- U9 14
- U8 11
-Net 56 "/ASCII.A3" "ASCII.A3"
- U55 17
+ U55 16
+Net 24 "/ASCII.A3" "ASCII.A3"
  U9 20
  U13 15
-Net 57 "/ASCII.A0" "ASCII.A0"
+ U55 17
+Net 25 "/ASCII.A0" "ASCII.A0"
  U9 17
  U55 4
  U13 19
-Net 58 "/VID.D0" "VID.D0"
+Net 26 "/VID.D6" "VID.D6"
+ U20 18
+ R23 1
+ U13 3
+ U19 18
+ U12 11
+Net 27 "/VID.D4" "VID.D4"
+ U20 3
+ U12 13
+ U13 4
+ U19 3
+ R24 1
+Net 28 "/VID.D2" "VID.D2"
+ U13 7
+ R25 1
+ U20 7
+ U11 12
+ U19 7
+Net 29 "/VID.D5" "VID.D5"
+ U12 12
+ U13 17
+ U20 16
+ U19 16
+ R26 1
+Net 30 "/VID.D0" "VID.D0"
  U13 18
+ U11 14
  R27 1
  U19 5
- U11 14
  U20 5
-Net 59 "/DBX2" "DBX2"
- U41 7
- J2 C24
-Net 60 "/DBX3" "DBX3"
- J2 A24
- U41 6
-Net 61 "/DBX4" "DBX4"
- J2 C25
- U41 5
-Net 62 "/DBX5" "DBX5"
- J2 A25
- U41 4
-Net 63 "/DBX6" "DBX6"
- U41 3
- J2 C26
-Net 64 "/DBX7" "DBX7"
- J2 A26
- U41 2
-Net 65 "/DBX1" "DBX1"
- U41 8
- J2 A23
-Net 66 "/DBX0" "DBX0"
+Net 31 "/VID.D3" "VID.D3"
+ U11 11
+ U19 14
+ U20 14
+ R29 1
+ U13 14
+Net 32 "/VID.D1" "VID.D1"
+ U20 12
+ U19 12
+ U11 13
+ U13 13
+ R28 1
+Net 33 "/SFF.W" "SFF.W"
+ U8 17
+ U25 10
+Net 34 "/VID.A5" "VID.A5"
+ U12 2
+ U16 16
+ U15 16
+ U11 2
+Net 35 "/SFF.A7" "SFF.A7"
+ U15 2
+ U8 6
+Net 36 "/VID.A6" "VID.A6"
+ U12 1
+ U16 3
+ U15 3
+ U11 1
+Net 37 "/SFF.A5" "SFF.A5"
+ U15 4
+ U8 8
+Net 38 "/VID.A4" "VID.A4"
+ U15 5
+ U16 5
+ U11 3
+ U12 3
+Net 39 "/SFF.A3" "SFF.A3"
+ U15 6
+ U8 21
+Net 40 "/VID.A2" "VID.A2"
+ U12 7
+ U11 7
+ U15 7
+ U16 7
+Net 41 "/SFF.A1" "SFF.A1"
+ U15 8
+ U8 19
+Net 42 "/VID.A0" "VID.A0"
+ U12 5
+ U11 5
+ U16 9
+ U15 9
+Net 43 "/SFF.A0" "SFF.A0"
+ U15 11
+ U8 18
+Net 44 "/VID.A1" "VID.A1"
+ U11 6
+ U16 12
+ U15 12
+ U12 6
+Net 45 "/SFF.A2" "SFF.A2"
+ U8 20
+ U15 13
+Net 46 "/VID.A3" "VID.A3"
+ U11 4
+ U12 4
+ U16 14
+ U15 14
+Net 47 "/SFF.A4" "SFF.A4"
+ U15 15
+ U8 22
+Net 48 "/SFF.A6" "SFF.A6"
+ U15 17
+ U8 7
+Net 49 "/VID.A7" "VID.A7"
+ U11 17
+ U12 17
+ U16 18
+ U15 18
+Net 50 "/DB0" "DB0"
+ U31 14
+ U41 11
+ U20 15
+ U26 13
+ U7 9
+ U32 14
+ U5 9
+ U6 9
+ U4 9
+ U2 13
+ U49 9
+ U30 14
+ U36 9
+Net 51 "/~VID.MEMW" "~VID.MEMW"
+ U12 10
+ U20 9
+ R16 2
+ U11 10
+ U17 3
+Net 52 "/DB2" "DB2"
+ U30 12
+ U6 11
+ U31 12
+ U4 11
+ U32 12
+ U26 3
+ U36 7
+ U5 11
+ U20 13
+ U7 11
+ U41 13
+ U49 7
+ U2 11
+Net 53 "/DB5" "DB5"
+ U20 4
+ U26 4
+ U5 15
+ U28 13
+ U27 13
+ U7 15
+ U41 16
+ U2 18
+ U4 15
+ U49 14
+ U36 16
+ U6 15
+ U29 13
+Net 54 "/DB3" "DB3"
+ U49 3
+ U26 7
+ U30 11
+ U36 14
+ U31 11
+ U2 9
+ U4 13
+ U6 13
+ U20 6
+ U41 14
+ U32 11
+ U5 13
+ U7 13
+Net 55 "/DB1" "DB1"
+ U31 13
+ U26 8
+ U7 10
+ U41 12
+ U2 16
+ U20 8
+ U4 10
+ U6 10
+ U32 13
+ U5 10
+ U36 12
+ U30 13
+ U49 5
+Net 56 "/DB4" "DB4"
+ U20 17
+ U27 14
+ U7 14
+ U41 15
+ U2 5
+ U4 14
+ U6 14
+ U5 14
+ U49 12
+ U36 5
+ U26 14
+ U28 14
+ U29 14
+Net 57 "/DB6" "DB6"
+ U20 2
+ U5 16
+ U28 12
+ U27 12
+ U49 16
+ U26 17
+ U36 3
+ U2 20
+ U7 16
+ U41 17
+ U4 16
+ U6 16
+ U29 12
+Net 58 "/DB7" "DB7"
+ U36 18
+ U26 18
+ U7 17
+ U41 18
+ U2 7
+ U4 17
+ U6 17
+ U5 17
+ U49 18
+ U29 11
+ U27 11
+ U28 11
+Net 60 "/CYR.DOT7" "CYR.DOT7"
+ U55 11
+ U21 5
+Net 61 "/ASCII.A5" "ASCII.A5"
+ U55 19
+ U13 16
+ U9 22
+ U23 12
+Net 62 "/CYR.DOT0" "CYR.DOT0"
+ U55 6
+ U21 12
+Net 63 "/CYR.DOT6" "CYR.DOT6"
+ U21 10
+ U55 9
+Net 64 "/DOT6" "DOT6"
+ U14 5
+ U21 8
+Net 65 "/DOT0" "DOT0"
+ U14 11
+ U21 11
+Net 66 "/VIDEO.OUT" "VIDEO.OUT"
+ U21 2
+ U14 9
+Net 67 "/DOT7" "DOT7"
+ U14 6
+ U21 6
+Net 70 "/VID.A9" "VID.A9"
+ U11 15
+ U12 15
+ U17 7
+ U17 13
+Net 71 "/VID.A8" "VID.A8"
+ U11 16
+ U17 9
+ U12 16
+ U17 11
+Net 73 "/V.D7" "V.D7"
+ U26 19
+ U19 11
+ U8 16
+Net 75 "/V.D2" "V.D2"
+ U18 7
+ U19 13
+ U26 2
+Net 76 "/V.D0" "V.D0"
+ U26 12
+ U19 15
+ U18 5
+Net 77 "/V.D4" "V.D4"
+ U18 3
+ U19 17
+ U26 15
+Net 78 "/~MEMW" "~MEMW"
+ U22 1
+ U28 10
+ U29 10
+ J2 A18
+ U20 11
+ U2 26
+ U32 10
+ U30 10
+ U31 10
+ U27 10
+Net 79 "/~IOW" "~IOW"
+ U50 9
+ J2 C18
+ U51 5
+ U51 12
+ U2 27
+ U51 9
+ U51 2
+Net 80 "/A9" "A9"
+ U27 15
+ J2 A9
+ U29 15
+ U5 22
+ U6 22
+ U31 15
+ U17 12
+ U28 15
+ U7 22
+ U32 15
+ U4 22
+ U30 15
+ U38 12
+Net 81 "/A8" "A8"
+ U32 16
+ U30 16
+ U29 16
+ U27 16
+ U31 16
+ U4 23
+ J2 C9
+ U38 9
+ U7 23
+ U6 23
+ U28 16
+ U5 23
+ U17 14
+Net 82 "/~IOR" "~IOR"
+ U50 12
+ U50 2
+ U50 4
+ U2 25
+ J2 C21
+ U53 4
+Net 83 "/~MEMR" "~MEMR"
+ U34 1
+ U34 9
+ U34 5
+ U34 13
+ U2 24
+ J2 A21
+Net 84 "/READY" "READY"
+ U1 23
+ J2 A20
+ U3 4
+Net 85 "/RESETX" "RESETX"
+ U40 18
+ J2 C20
+Net 86 "/DBINX" "DBINX"
+ U35 2
+ U40 3
+ U41 1
+ J2 C19
+Net 88 "/DBX0" "DBX0"
  J2 C23
  U41 9
-Net 67 "/A0" "A0"
- U32 5
- U5 8
- U16 11
- U28 5
+Net 89 "/DBX1" "DBX1"
+ U41 8
+ J2 A23
+Net 90 "/DBX2" "DBX2"
+ U41 7
+ J2 C24
+Net 91 "/DBX3" "DBX3"
+ J2 A24
+ U41 6
+Net 92 "/DBX4" "DBX4"
+ J2 C25
+ U41 5
+Net 93 "/DBX5" "DBX5"
+ J2 A25
+ U41 4
+Net 94 "/DBX6" "DBX6"
+ U41 3
+ J2 C26
+Net 96 "/A0" "A0"
+ U52 15
  U6 8
+ U27 5
  U39 9
- U29 5
  U30 5
+ U31 5
+ U28 5
+ U16 11
+ U4 8
+ U5 8
+ U29 5
  U7 8
  J2 C5
- U31 5
- U4 8
- U27 5
-Net 68 "/A7" "A7"
- U39 18
+ U32 5
+Net 97 "/A7" "A7"
+ J2 A8
+ U30 17
  U28 17
  U4 1
- J2 A8
- U27 17
- U16 2
  U5 1
+ U27 17
  U6 1
- U30 17
- U7 1
+ U39 18
+ U53 1
  U29 17
  U32 17
  U31 17
-Net 69 "/A5" "A5"
- U32 2
- J2 A7
- U39 16
- U4 3
- U6 3
- U5 3
+ U7 1
+ U16 2
+Net 98 "/A5" "A5"
  U27 2
- U31 2
- U29 2
- U30 2
+ U32 2
  U16 4
+ U6 3
+ U29 2
+ U5 3
+ U31 2
  U28 2
  U7 3
-Net 70 "+12V" "+12V"
+ U30 2
+ U39 16
+ U4 3
+ J2 A7
+Net 99 "/A3" "A3"
+ U53 12
+ U28 4
+ U31 4
+ U16 6
+ U30 4
+ J2 A6
+ U27 4
+ U7 5
+ U32 4
+ U4 5
+ U6 5
+ U39 14
+ U29 4
+ U5 5
+Net 100 "/A1" "A1"
+ U4 7
+ U32 6
+ U7 7
+ J2 A5
+ U39 12
+ U27 6
+ U6 7
+ U52 14
+ U5 7
+ U16 8
+ U31 6
+ U30 6
+ U29 6
+ U28 6
+Net 101 "/A2" "A2"
+ U5 6
+ U6 6
+ J2 C6
+ U39 7
+ U7 6
+ U4 6
+ U31 7
+ U29 7
+ U28 7
+ U53 9
+ U32 7
+ U27 7
+ U30 7
+ U16 13
+Net 102 "/A4" "A4"
+ U31 3
+ U4 4
+ U7 4
+ U28 3
+ U32 3
+ J2 C7
+ U6 4
+ U39 5
+ U5 4
+ U16 15
+ U27 3
+ U29 3
+ U30 3
+Net 103 "/A6" "A6"
+ U6 2
+ U29 1
+ U28 1
+ U4 2
+ U5 2
+ U27 1
+ U30 1
+ U53 2
+ U31 1
+ U7 2
+ U32 1
+ U39 3
+ J2 C8
+ U16 17
+Net 104 "/PHI2-TTLX" "PHI2-TTLX"
+ J2 A15
+ U40 7
+Net 105 "/A11" "A11"
+ U38 3
+ J2 A10
+ U33 2
+Net 106 "/A10" "A10"
+ J2 C10
+ U33 1
+ U38 18
+Net 107 "/A13" "A13"
+ J2 A11
+ U38 5
+ U33 4
+Net 108 "/A12" "A12"
+ J2 C11
+ U38 16
+ U33 3
+Net 109 "/~A15" "~A15"
+ J2 A12
+ U38 7
+ U33 6
+Net 110 "/A14" "A14"
+ U38 14
+ J2 C12
+ U33 5
+Net 111 "/EXT.INT3" "EXT.INT3"
+ R10 1
+ U37 4
+ J2 A14
+Net 112 "/EXT.INT2" "EXT.INT2"
+ J2 C14
+ R11 1
+ U37 3
+Net 113 "/EXT.INT1" "EXT.INT1"
+ J2 A13
+ R12 1
+ U37 2
+Net 114 "/INTAX" "INTAX"
+ U40 5
+ J2 A16
+Net 115 "/HOLD" "HOLD"
+ J2 C17
+ R3 1
+ U1 13
+Net 116 "/HLDAX" "HLDAX"
+ U40 16
+ J2 A17
+Net 117 "/WAITX" "WAITX"
+ J2 C16
+ U40 14
+Net 118 "/INTEX" "INTEX"
+ J2 C15
+ U40 12
+Net 119 "/LATIN.INH" "LATIN.INH"
+ U9 11
+ U22 8
+Net 120 "/CYR.INH" "CYR.INH"
+ U22 11
+ U55 15
+Net 121 "/U20.EN" "U20.EN"
+ U22 3
+ U20 1
+ U20 19
+Net 122 "/U19.EN" "U19.EN"
+ U19 1
+ U19 19
+ U22 6
+Net 125 "/SFF.A9" "SFF.A9"
+ U17 10
+ U8 4
+Net 126 "/SFF.A8" "SFF.A8"
+ U8 5
+ U17 6
+Net 127 "/SFF.PHI1" "SFF.PHI1"
+ U8 9
+ U24 12
+Net 128 "/SFF.PT" "SFF.PT"
+ U8 15
+ U22 12
+ U22 9
+Net 129 "/SFF.CTRL2" "SFF.CTRL2"
+ U8 25
+ U18 10
+Net 130 "/PROM.D4" "PROM.D4"
+ U25 9
+ U18 9
+Net 131 "/~SFF.INI" "~SFF.INI"
+ U8 10
+ U21 1
+ U25 1
+Net 132 "/SFF.CTRL1" "SFF.CTRL1"
+ U8 24
+ U18 11
+Net 133 "/SFF.CTRL0" "SFF.CTRL0"
+ U8 23
+ U18 12
+Net 134 "/V.D5" "V.D5"
+ U18 2
+ U26 5
+ U19 4
+Net 135 "/V.D3" "V.D3"
+ U19 6
+ U18 4
+ U26 6
+Net 136 "/V.D1" "V.D1"
+ U26 9
+ U18 6
+ U19 8
+Net 137 "/U25.8" "U25.8"
+ U17 2
+ U22 5
+ U17 4
+ U25 8
+Net 138 "/TMP.V1" "TMP.V1"
+ C14 2
+ R17 1
+ U25 2
+Net 139 "/TMP.V2" "TMP.V2"
+ U25 3
+ VR1 1
+ U25 4
+ VR1 2
+ U25 5
+Net 140 "/U24.TC" "U24.TC"
+ U24 15
+ U23 4
+Net 142 "/U42.Q" "U42.Q"
+ U42 5
+ U17 15
+ U16 1
+ U16 19
+ U25 12
+ U22 2
+Net 143 "/ASCII.A6" "ASCII.A6"
+ U13 2
+ U23 13
+Net 144 "/TMP.V10" "TMP.V10"
+ U22 4
+ U25 11
+Net 145 "/TMP.V3" "TMP.V3"
+ VR1 3
+ R17 2
+Net 146 "/KBD3" "KBD3"
+ U37 11
+ R7 1
+ P1 3
+Net 147 "/KBD5" "KBD5"
+ P1 5
+ R8 1
+ U37 12
+Net 148 "/CYRILLIC" "CYRILLIC"
+ U23 8
+ U21 4
+ U21 13
+ U21 9
+ U22 10
+Net 149 "/A6|A7" "A6|A7"
+ U53 3
+ U53 13
+ U53 10
+Net 151 "-12V" "-12V"
+ P1 8
+ J2 C29
+ J1 3
+ C21 2
+ J2 A29
+Net 152 "+12V" "+12V"
  U6 19
  J2 A3
  J2 C3
  U1 28
  J1 1
- U5 19
+ U7 19
+ U3 9
  U4 19
  C19 1
- U3 9
- U7 19
-Net 71 "/A3" "A3"
- U31 4
- U29 4
- U5 5
- U39 14
- U4 5
- U27 4
- U32 4
- U6 5
- U30 4
- U28 4
- U7 5
- U16 6
- J2 A6
-Net 72 "/~IOR" "~IOR"
- U2 25
- J2 C21
-Net 73 "/READY" "READY"
- J2 A20
- U3 4
- U1 23
-Net 74 "/RESETX" "RESETX"
- U40 18
- J2 C20
-Net 75 "/DBINX" "DBINX"
- J2 C19
- U35 2
- U41 1
- U40 3
-Net 78 "/~IOW" "~IOW"
- J2 C18
- U2 27
-Net 79 "/HOLD" "HOLD"
- U1 13
- J2 C17
- R3 1
-Net 80 "/HLDAX" "HLDAX"
- J2 A17
- U40 16
-Net 81 "/A9" "A9"
- U4 22
- U5 22
- U31 15
- U38 12
- U6 22
- U28 15
- U29 15
- U7 22
- U27 15
- U30 15
- U32 15
- U17 12
- J2 A9
-Net 82 "/A1" "A1"
- U31 6
- U28 6
- U4 7
- U7 7
- U27 6
- U16 8
- U6 7
- U39 12
- U5 7
- U29 6
- J2 A5
- U30 6
- U32 6
-Net 83 "/A2" "A2"
- U27 7
- U7 6
- U28 7
- U30 7
- U29 7
- U31 7
- U6 6
- U39 7
- U32 7
- J2 C6
- U4 6
- U16 13
- U5 6
-Net 84 "/A4" "A4"
- U32 3
- U30 3
- U31 3
- U4 4
- J2 C7
- U27 3
- U6 4
- U39 5
- U16 15
- U5 4
- U7 4
- U28 3
- U29 3
-Net 85 "/A6" "A6"
- U28 1
- U32 1
- U39 3
- J2 C8
- U30 1
- U7 2
- U16 17
- U6 2
- U4 2
- U5 2
- U29 1
- U27 1
- U31 1
-Net 86 "/A8" "A8"
- U29 16
- U30 16
- U28 16
- U5 23
- U32 16
- U4 23
- U6 23
- U38 9
- U7 23
- U31 16
- U27 16
- J2 C9
- U17 14
-Net 87 "/~MEMR" "~MEMR"
- U34 1
- U34 5
- U34 13
- J2 A21
- U2 24
- U34 9
-Net 88 "/EXT.INT2" "EXT.INT2"
- U37 3
- R11 1
- J2 C14
-Net 93 "-12V" "-12V"
- J2 A29
- P1 8
- C21 2
- J1 3
- J2 C29
-Net 94 "-5V" "-5V"
- J2 A28
+ U5 19
+Net 153 "-5V" "-5V"
+ U7 21
+ C20 2
+ J1 2
  U1 11
  J2 C28
- U6 21
- J1 2
- U7 21
  U5 21
+ U6 21
+ J2 A28
  U4 21
- C20 2
-Net 97 "/~VID.MEMW" "~VID.MEMW"
- U11 10
- U12 10
- U20 9
- R16 2
- U17 3
-Net 99 "/PROM.D4" "PROM.D4"
- U25 9
- U18 9
-Net 100 "/DB3" "DB3"
- U6 13
- U20 6
- U4 13
- U32 11
- U5 13
- U7 13
- U49 3
- U2 9
- U41 14
- U31 11
- U36 14
- U30 11
- U26 7
-Net 101 "/DB1" "DB1"
- U7 10
- U36 12
- U26 8
- U2 16
- U49 5
- U30 13
- U32 13
- U5 10
- U4 10
- U6 10
- U31 13
- U41 12
- U20 8
-Net 102 "/DB0" "DB0"
- U36 9
- U5 9
- U6 9
- U4 9
- U41 11
- U7 9
- U32 14
- U2 13
- U26 13
- U20 15
- U30 14
- U49 9
- U31 14
-Net 103 "/DB2" "DB2"
- U4 11
- U26 3
- U32 12
- U31 12
- U20 13
- U2 11
- U41 13
- U6 11
- U7 11
- U30 12
- U36 7
- U5 11
- U49 7
-Net 104 "/DB5" "DB5"
- U26 4
- U4 15
- U29 13
- U6 15
- U36 16
- U7 15
- U41 16
- U49 14
- U28 13
- U5 15
- U2 18
- U20 4
- U27 13
-Net 105 "/DB4" "DB4"
- U26 14
- U41 15
- U49 12
- U2 5
- U20 17
- U27 14
- U4 14
- U29 14
- U6 14
- U36 5
- U7 14
- U5 14
- U28 14
-Net 106 "/DB6" "DB6"
- U29 12
- U2 20
- U36 3
- U7 16
- U6 16
- U28 12
- U20 2
- U49 16
- U26 17
- U27 12
- U4 16
- U5 16
- U41 17
-Net 107 "/A14" "A14"
- U38 14
- U33 5
- J2 C12
-Net 108 "/EXT.INT3" "EXT.INT3"
- R10 1
- J2 A14
- U37 4
-Net 109 "/EXT.INT1" "EXT.INT1"
- U37 2
- J2 A13
- R12 1
-Net 110 "/V.D2" "V.D2"
- U26 2
- U18 7
- U19 13
-Net 111 "/PHI2-TTLX" "PHI2-TTLX"
- U40 7
- J2 A15
-Net 112 "/INTAX" "INTAX"
- J2 A16
- U40 5
-Net 113 "/WAITX" "WAITX"
- U40 14
- J2 C16
-Net 114 "/INTEX" "INTEX"
- J2 C15
- U40 12
-Net 115 "/V.D0" "V.D0"
- U18 5
- U19 15
- U26 12
-Net 116 "/A11" "A11"
- U33 2
- J2 A10
- U38 3
-Net 117 "/A10" "A10"
- J2 C10
- U33 1
- U38 18
-Net 118 "/A13" "A13"
- U38 5
- U33 4
- J2 A11
-Net 119 "/A12" "A12"
- U38 16
- U33 3
- J2 C11
-Net 120 "/~A15" "~A15"
- U38 7
- U33 6
- J2 A12
-Net 121 "/V.D1" "V.D1"
- U18 6
- U26 9
- U19 8
-Net 122 "/V.D3" "V.D3"
- U19 6
- U18 4
- U26 6
-Net 123 "/V.D4" "V.D4"
- U18 3
- U19 17
- U26 15
-Net 124 "/DOT0" "DOT0"
- U21 11
- U14 11
-Net 125 "/DB7" "DB7"
- U29 11
- U7 17
- U6 17
- U36 18
- U5 17
- U28 11
- U26 18
- U41 18
- U49 18
- U2 7
- U4 17
- U27 11
-Net 126 "/V.D5" "V.D5"
- U19 4
- U26 5
- U18 2
-Net 127 "/SFF.A6" "SFF.A6"
- U8 7
- U15 17
-Net 128 "/VID.A9" "VID.A9"
- U17 13
- U12 15
- U17 7
- U11 15
-Net 129 "/SFF.A9" "SFF.A9"
- U17 10
- U8 4
-Net 130 "/SFF.A8" "SFF.A8"
- U8 5
- U17 6
-Net 131 "/VID.A0" "VID.A0"
- U15 9
- U11 5
- U12 5
- U16 9
-Net 132 "/VID.A1" "VID.A1"
- U12 6
- U11 6
- U15 12
- U16 12
-Net 133 "/VID.A3" "VID.A3"
- U15 14
- U11 4
- U12 4
- U16 14
-Net 134 "/VID.A5" "VID.A5"
- U12 2
- U15 16
- U16 16
- U11 2
-Net 135 "/VID.A7" "VID.A7"
- U16 18
- U11 17
- U15 18
- U12 17
-Net 136 "/VID.A8" "VID.A8"
- U12 16
- U17 9
- U17 11
- U11 16
-Net 137 "/U42.NQ" "U42.NQ"
- T3 2
- U15 19
- U17 1
- U15 1
-Net 138 "/VID.A6" "VID.A6"
- U15 3
- U16 3
- U11 1
- U12 1
-Net 139 "/VID.A4" "VID.A4"
- U15 5
- U12 3
- U16 5
- U11 3
-Net 140 "/VID.A2" "VID.A2"
- U12 7
- U11 7
- U16 7
- U15 7
-Net 141 "/DOT4" "DOT4"
- R31 2
- U14 3
- U55 8
- U9 7
-Net 142 "/CS.ROM3" "CS.ROM3"
- U33 12
- U34 10
-Net 146 "/TMP.V3" "TMP.V3"
- R17 2
- VR1 3
-Net 147 "/ASCII.A6" "ASCII.A6"
- U13 2
- U23 13
-Net 148 "/KBD3" "KBD3"
- U37 11
- R7 1
- P1 3
-Net 149 "/KBD5" "KBD5"
- R8 1
- P1 5
- U37 12
-Net 150 "/CYRILLIC" "CYRILLIC"
- U21 4
- U23 8
- U21 9
- U21 13
- U22 10
-Net 151 "/VIDEO.OUT" "VIDEO.OUT"
- U14 9
- U21 2
-Net 152 "/TMP.V5" "TMP.V5"
- R14 1
- C13 1
- U17 5
-Net 153 "/TMP.V6" "TMP.V6"
+Net 154 "/TMP.V6" "TMP.V6"
  R14 2
  R15 1
  C13 2
-Net 154 "/NET1" "NET1"
- T3 4
+Net 155 "/NET1" "NET1"
  T4 1
-Net 155 "/U51.10" "U51.10"
- U26 11
- T3 3
-Net 156 "/CS.VRAM" "CS.VRAM"
- T3 5
+ T3 4
+Net 156 "/~CS.VRAM" "~CS.VRAM"
+ U42 2
  U33 11
-Net 158 "/SFF.A5" "SFF.A5"
- U15 4
- U8 8
-Net 159 "/SFF.A0" "SFF.A0"
- U8 18
- U15 11
-Net 160 "/SFF.A1" "SFF.A1"
- U15 8
- U8 19
-Net 161 "/SFF.A2" "SFF.A2"
- U8 20
- U15 13
-Net 162 "/SFF.A3" "SFF.A3"
- U8 21
- U15 6
-Net 163 "/SFF.A4" "SFF.A4"
- U15 15
- U8 22
-Net 164 "/SFF.A7" "SFF.A7"
- U15 2
- U8 6
-Net 165 "/U25.8" "U25.8"
- U22 5
- U25 8
- U17 4
- U17 2
-Net 167 "/SFF.CTRL0" "SFF.CTRL0"
- U18 12
- U8 23
-Net 168 "/SFF.CTRL1" "SFF.CTRL1"
- U18 11
- U8 24
-Net 169 "/SFF.CTRL2" "SFF.CTRL2"
- U8 25
- U18 10
-Net 170 "/VID.D6" "VID.D6"
- U12 11
- U19 18
- R23 1
- U13 3
- U20 18
-Net 171 "/VID.D1" "VID.D1"
- U20 12
- U19 12
- R28 1
- U13 13
- U11 13
-Net 172 "/LATIN" "LATIN"
- U22 13
- U23 10
- U23 11
-Net 173 "/V.D6" "V.D6"
- U18 1
- U26 16
- U19 2
-Net 174 "/U20.EN" "U20.EN"
- U20 19
- U22 3
- U20 1
-Net 176 "" ""
- X1 1
- C2 2
-Net 177 "" ""
- X1 2
- U3 15
-Net 179 "" ""
- U35 5
- U35 4
- U35 3
-Net 180 "/~CS.EPROM3" "~CS.EPROM3"
- U34 8
- U4 20
-Net 181 "/CS.ROM2" "CS.ROM2"
- U33 13
- U34 4
-Net 182 "/CS.ROM1" "CS.ROM1"
- U34 12
- U33 14
-Net 183 "/CS.ROM0" "CS.ROM0"
- U34 2
- U33 15
-Net 184 "/AA10" "AA10"
- U38 2
- U1 1
-Net 185 "/AA12" "AA12"
- U38 4
- U1 37
-Net 186 "/AA14" "AA14"
- U38 6
- U1 39
-Net 187 "/AA9" "AA9"
- U1 35
- U38 8
-Net 188 "/AA15" "AA15"
- U1 36
- U35 12
- U35 13
-Net 189 "/~AA15" "~AA15"
- U38 13
- U35 11
-Net 190 "/AA13" "AA13"
- U1 38
- U38 15
-Net 191 "/AA2" "AA2"
- U1 27
- U39 13
-Net 192 "/AA4" "AA4"
- U1 30
- U39 15
-Net 193 "/CS.RAM1" "CS.RAM1"
- U28 8
- U33 9
- U31 8
-Net 194 "/~CS.EPROM1" "~CS.EPROM1"
- U34 11
- U5 20
-Net 195 "/~CS.EPROM0" "~CS.EPROM0"
- U7 20
- U34 3
-Net 196 "/~EXT.DATA" "~EXT.DATA"
- U35 1
- J2 C22
- R4 2
-Net 199 "/PHI2-TTL" "PHI2-TTL"
- U40 13
- U3 6
-Net 200 "/INTE" "INTE"
- U40 8
- U1 16
-Net 201 "/WAIT" "WAIT"
- U1 24
- U40 6
-Net 202 "/RESET" "RESET"
- U3 1
- U40 2
- U1 12
-Net 203 "/~CE.U41" "~CE.U41"
- U35 6
- U41 19
-Net 204 "/AA3" "AA3"
- U1 29
- U39 6
-Net 205 "/AA0" "AA0"
- U1 25
- U39 11
-Net 206 "/AA1" "AA1"
- U1 26
- U39 8
-Net 207 "/SYNC" "SYNC"
- U3 5
- U1 19
-Net 208 "/D4" "D4"
- U1 3
- U2 6
-Net 209 "/D7" "D7"
- U2 8
- U1 6
-Net 210 "/D3" "D3"
- U1 7
- U2 10
-Net 211 "/AA11" "AA11"
- U38 17
- U1 40
-Net 212 "/AA5" "AA5"
- U1 31
- U39 4
-Net 213 "/AA6" "AA6"
- U39 17
- U1 32
-Net 214 "/AA7" "AA7"
- U39 2
- U1 33
-Net 215 "/INT" "INT"
- U1 14
- U37 15
-Net 216 "/AA8" "AA8"
- U1 34
- U38 11
-Net 217 "/PHI2" "PHI2"
- U1 15
- U3 10
-Net 218 "/PHI1" "PHI1"
- U1 22
- U3 11
-Net 219 "" ""
- U3 14
- C2 1
-Net 220 "/D6" "D6"
- U1 5
- U2 21
-Net 221 "/D2" "D2"
- U2 12
- U1 8
-Net 222 "/INTA" "INTA"
- U36 1
- U2 23
- U40 15
- U36 19
-Net 223 "/D0" "D0"
- U2 15
- U1 10
-Net 224 "/D1" "D1"
- U1 9
- U2 17
-Net 225 "/D5" "D5"
- U2 19
- U1 4
-Net 226 "/RDYIN" "RDYIN"
- U3 3
- P1 1
- R2 2
-Net 227 "/STSTB" "STSTB"
+Net 162 "/~CS.ROM3" "~CS.ROM3"
+ U34 10
+ U33 12
+Net 168 "/WRITE.U26" "WRITE.U26"
+ U26 11
+ U51 10
+Net 169 "/STSTB" "STSTB"
+ U42 3
  U2 1
  U3 7
-Net 228 "/~CS.EPROM2" "~CS.EPROM2"
- U6 20
- U34 6
-Net 229 "/DBIN" "DBIN"
- U1 17
- U2 4
- U40 17
-Net 230 "/WR'" "WR'"
- U1 18
- U2 3
-Net 231 "" ""
- U49 19
+Net 171 "/U42.NQ" "U42.NQ"
+ U15 1
+ U42 6
+ U17 1
+ U15 19
+Net 175 "/A2|A6|A7" "A2|A6|A7"
+ U52 13
+ U53 8
+Net 176 "/A3|A6|A7" "A3|A6|A7"
+ U53 11
+ U52 12
+Net 177 "/~CS.IO0" "~CS.IO0"
+ U52 1
+ U53 5
+Net 178 "/~READ.KBD" "~READ.KBD"
  U49 1
-Net 232 "/KBD.D0" "KBD.D0"
- U49 11
- P1 9
-Net 233 "/KBD.D2" "KBD.D2"
- U49 13
- P1 11
-Net 234 "/KBD.D3" "KBD.D3"
- U49 17
- P1 15
-Net 235 "/KBD.D5" "KBD.D5"
- U49 6
- P1 12
-Net 236 "/KBD.D6" "KBD.D6"
- P1 14
- U49 4
-Net 237 "/KBD.D4" "KBD.D4"
- P1 10
- U49 8
-Net 238 "/KBD.D1" "KBD.D1"
- U49 15
- P1 13
-Net 239 "/KBD.D7" "KBD.D7"
- P1 16
- U49 2
-Net 240 "/EXT.INT0" "EXT.INT0"
- U37 1
- J2 C13
- R13 1
-Net 241 "" ""
- R9 1
- U37 13
-Net 242 "" ""
- U36 6
- U37 9
-Net 243 "" ""
- U37 6
- U36 4
-Net 244 "" ""
- U36 15
- U37 7
-Net 245 "/KBD.RESET" "KBD.RESET"
- P1 7
- R5 1
-Net 246 "/RESIN" "RESIN"
- C33 1
- U3 2
- R5 2
- R1 2
-Net 247 "" ""
- U37 10
- R6 1
-Net 249 "/CS.RAM0" "CS.RAM0"
- U32 8
- U27 8
- U33 10
-Net 250 "/CS.RAM2" "CS.RAM2"
- U33 7
- U29 8
- U30 8
-Net 251 "/HLDA" "HLDA"
- U38 1
- U38 19
- U39 1
- U39 19
+ U49 19
+ U53 6
+Net 183 "/TMP.V5" "TMP.V5"
+ C13 1
+ U17 5
+ R14 1
+Net 184 "/~CS.IO3" "~CS.IO3"
+ U51 11
+ U52 4
+Net 185 "/~CS.IO4" "~CS.IO4"
+ U52 5
+ U50 5
+Net 186 "/~CS.IO5" "~CS.IO5"
+ U52 6
+ U51 8
+Net 187 "/~CS.IO6" "~CS.IO6"
+ U52 7
+ U51 3
+Net 188 "/~CS.IO7" "~CS.IO7"
+ U52 9
+ U51 6
+Net 189 "/~CS.IO1" "~CS.IO1"
+ U50 13
+ U52 2
+Net 191 "/~CS.IO2" "~CS.IO2"
+ U50 10
+ U52 3
+Net 192 "/~CS.IO8" "~CS.IO8"
+ U50 1
+ U52 10
+Net 193 "/~SFF.SYNC" "~SFF.SYNC"
+ R19 1
+ U23 3
+ D2 2
+Net 194 "/LATIN" "LATIN"
+ U23 11
+ U23 10
+ U22 13
+Net 195 "/DOT5" "DOT5"
+ R30 2
+ U9 8
+ U14 4
+ U55 12
+Net 196 "/DOT4" "DOT4"
+ R31 2
+ U14 3
+ U9 7
+ U55 8
+Net 197 "/V.D6" "V.D6"
+ U19 2
+ U18 1
+ U26 16
+Net 198 "/~CS.ROM2" "~CS.ROM2"
+ U33 13
+ U34 4
+Net 199 "/~CS.ROM1" "~CS.ROM1"
+ U34 12
+ U33 14
+Net 200 "/~CS.ROM0" "~CS.ROM0"
+ U34 2
+ U33 15
+Net 201 "/~CS.EPROM3" "~CS.EPROM3"
+ U34 8
+ U4 20
+Net 202 "/~CS.EPROM1" "~CS.EPROM1"
+ U5 20
+ U34 11
+Net 203 "/~CS.EPROM0" "~CS.EPROM0"
+ U7 20
+ U34 3
+Net 204 "/HLDA" "HLDA"
  U1 21
  U2 2
  U40 4
+ U38 19
+ U38 1
+ U39 19
+ U39 1
+Net 205 "/AA10" "AA10"
+ U1 1
+ U38 2
+Net 206 "/AA12" "AA12"
+ U1 37
+ U38 4
+Net 207 "/AA14" "AA14"
+ U38 6
+ U1 39
+Net 208 "/AA9" "AA9"
+ U38 8
+ U1 35
+Net 209 "/AA13" "AA13"
+ U1 38
+ U38 15
+Net 210 "" ""
+ X1 2
+ U3 15
+Net 211 "" ""
+ C2 2
+ X1 1
+Net 214 "/~AA15" "~AA15"
+ U38 13
+ U35 11
+Net 215 "/AA15" "AA15"
+ U35 12
+ U35 13
+ U1 36
+Net 216 "/~EXT.DATA" "~EXT.DATA"
+ U35 1
+ R4 2
+ J2 C22
+Net 217 "" ""
+ U35 3
+ U35 4
+ U35 5
+Net 218 "/~CE.U41" "~CE.U41"
+ U35 6
+ U41 19
+Net 219 "/~CS.RAM0" "~CS.RAM0"
+ U27 8
+ U32 8
+ U33 10
+Net 220 "/~CS.RAM1" "~CS.RAM1"
+ U31 8
+ U28 8
+ U33 9
+Net 221 "/~CS.RAM2" "~CS.RAM2"
+ U33 7
+ U30 8
+ U29 8
+Net 222 "/PHI2-TTL" "PHI2-TTL"
+ U3 6
+ U40 13
+Net 225 "/RESET" "RESET"
+ U1 12
+ U3 1
+ U40 2
+Net 226 "/WAIT" "WAIT"
+ U40 6
+ U1 24
+Net 227 "/INTE" "INTE"
+ U40 8
+ U1 16
+Net 228 "/AA1" "AA1"
+ U39 8
+ U1 26
+Net 229 "/SYNC" "SYNC"
+ U3 5
+ U1 19
+Net 230 "/AA3" "AA3"
+ U39 6
+ U1 29
+Net 231 "/WR'" "WR'"
+ U1 18
+ U2 3
+Net 232 "/D6" "D6"
+ U1 5
+ U2 21
+Net 233 "/D7" "D7"
+ U1 6
+ U2 8
+Net 234 "/AA11" "AA11"
+ U38 17
+ U1 40
+Net 235 "/AA5" "AA5"
+ U39 4
+ U1 31
+Net 236 "/AA6" "AA6"
+ U1 32
+ U39 17
+Net 237 "/AA7" "AA7"
+ U39 2
+ U1 33
+Net 238 "/INT" "INT"
+ U37 15
+ U1 14
+Net 239 "/AA8" "AA8"
+ U1 34
+ U38 11
+Net 240 "/AA0" "AA0"
+ U1 25
+ U39 11
+Net 241 "/D2" "D2"
+ U2 12
+ U1 8
+Net 242 "/D3" "D3"
+ U1 7
+ U2 10
+Net 243 "/D4" "D4"
+ U2 6
+ U1 3
+Net 244 "/INTA" "INTA"
+ U40 15
+ U36 1
+ U36 19
+ U2 23
+Net 245 "/D0" "D0"
+ U1 10
+ U2 15
+Net 246 "/D1" "D1"
+ U2 17
+ U1 9
+Net 247 "/D5" "D5"
+ U1 4
+ U2 19
+Net 248 "/RDYIN" "RDYIN"
+ R2 2
+ U3 3
+ P1 1
+Net 249 "/PHI2" "PHI2"
+ U1 15
+ U3 10
+Net 250 "/PHI1" "PHI1"
+ U3 11
+ U1 22
+Net 251 "" ""
+ C2 1
+ U3 14
+Net 252 "/AA2" "AA2"
+ U1 27
+ U39 13
+Net 253 "/~CS.EPROM2" "~CS.EPROM2"
+ U34 6
+ U6 20
+Net 254 "" ""
+ R9 1
+ U37 13
+Net 255 "" ""
+ R6 1
+ U37 10
+Net 256 "" ""
+ U37 9
+ U36 6
+Net 257 "" ""
+ U37 6
+ U36 4
+Net 258 "" ""
+ U36 15
+ U37 7
+Net 259 "/EXT.INT0" "EXT.INT0"
+ R13 1
+ J2 C13
+ U37 1
+Net 260 "/KBD.D0" "KBD.D0"
+ U49 11
+ P1 9
+Net 261 "/KBD.D5" "KBD.D5"
+ U49 6
+ P1 12
+Net 262 "/KBD.D1" "KBD.D1"
+ P1 13
+ U49 15
+Net 268 "/DBX7" "DBX7"
+ J2 A26
+ U41 2
+Net 271 "/KBD.RESET" "KBD.RESET"
+ P1 7
+ R5 1
+Net 272 "/RESIN" "RESIN"
+ R1 2
+ C33 1
+ U3 2
+ R5 2
+Net 273 "/KBD.D4" "KBD.D4"
+ U49 8
+ P1 10
+Net 274 "/KBD.D3" "KBD.D3"
+ U49 17
+ P1 15
+Net 275 "/KBD.D2" "KBD.D2"
+ P1 11
+ U49 13
+Net 276 "/KBD.D6" "KBD.D6"
+ P1 14
+ U49 4
+Net 277 "/KBD.D7" "KBD.D7"
+ U49 2
+ P1 16
+Net 278 "/AA4" "AA4"
+ U39 15
+ U1 30
+Net 279 "/DBIN" "DBIN"
+ U40 17
+ U2 4
+ U1 17
 }
 #End
