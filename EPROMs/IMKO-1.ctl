@@ -30,6 +30,12 @@ L 003F writeToUARTloop
 ! 0046 Restore A
 ! 0047 Write A to UART
 
+L 004A write00hToIO7
+# 004A
+# 004A Send 00h to IO-7, store it at memory address 1470
+# 004A
+! 004A A := 00h
+
 L 004E init
 L 0084 checkMemLoop
 L 008F endOfMem
@@ -112,6 +118,13 @@ L 014D delay1Loop
 ! 0150 Jump back if D != 0
 ! 0153 Restore D
 
+L 0155 memHexCharToValue
+# 0155
+# 0155 Converts the '0'~'9', 'A'~'F' character at memory address D to a 00h~0Fh value.
+# 0155 The result is stored in A. The CARRY flag is set in case of an error.
+# 0155
+! 0155 A := mem[D]
+
 L 01B3 delay1402
 L 01B7 delay1402loop
 # 01B3
@@ -146,6 +159,106 @@ L 01F3 toLowerCase
 # 02B4 The result remains in A.
 # 02B4
 
+L 02C2 write1410toUART
+L 02CC write1410CRLoop
+L 02D6 write1410StrLoop
+# 02C2
+# 02C2 Outputs to UART the 4-terminated string, located at memory address 1410
+# 02C2 TODO: What's at 1410? Tape header? TODO: Name: write -> send?
+# 02C2
+! 02C2 TODO: What is this?
+! 02C5 Wait for a while
+! 02C8 B := 64
+! 02CA Write 64 CR (0x0D) characters to UART
+! 02D0 Jump back if more CR's need to be written
+! 02D3 Set D to 1410
+! 02D6 Load the byte at mem[D]
+! 02D7 Send it to the UART
+! 02DA ++D
+! 02DB Was this the string terminator byte (0x04)?
+! 02DD Jump back if not end-of-string
+
+L 0322 writeProgToUART
+L 032C writeProgLoop
+# 0322
+# 0322 Writes to UART the string at 1410 (TODO: some header?), followed by 
+# 0322 the contents of the program located at memory address 1600
+# 0322
+! 0322 First write some header (TODO)
+! 0325 Set the memory address to 1600
+! 0328 (D, E) := (mem[1601], mem[1600]) - the address after the last byte of the program
+! 032B H is back at 1600. The end-of-program address is stored together with the program itself
+! 032C Load the current memory byte into A
+! 032D Send it to UART
+! 0330 Advance to the next memory address
+! 0331 Compare the current memory address with the end-of-program address (in DE)
+! 0334 Jump back if DE has not been reached
+! 0337 Timed delay
+
+! 033A TODO: Now what?
+
+L 0365 readUARTSafe
+# 0365
+# 0365 Reads a single char from the UART into A. 
+# 0365 In case of an error, returns the default value from C
+# 0365
+! 0365 Perform a plain read into A
+! 0368 Backup A
+! 0369 Read the UART status
+! 036B AND with a mask for all the error bits
+! 036D Restore A
+! 036E Return if no error bits were set
+! 036F Use the default, C, in case of an error
+! 0370 Check for zero
+! 0371 Display C, if non-zero
+! 0374 TODO
+! 0377 Set the default to be zero, for any further reads
+
+L 0398 string1410ToAddr
+L 039B stringDToAddr
+L 039F accumulateMemHex
+# 0398
+# 0398 Converts the sequence of hex characters at memory address 1410
+# 0398 to a 16-bit address, stored in (H, L). '0FFF' -> 0FFFh
+# 0398
+! 0398 D := 1410h
+! 039B A := 0, (H, L) := (0, 0), B := 0
+! 039F Store the next hex digit in A
+! 03A2 Also copy it to C
+! 03A3 Store the last valid digit in A, in case of a return
+! 03A4 Return in case of a conversion error or end-of-string
+! 03A5 'Append' the next hex digit to (H, L)
+! 03A6 (H, L) := 16 * (H, L) + (0, C)
+! 03AA Advance to the next memory address
+! 03AB Loop until the char->hex conversion fails
+
+L 03F6 write80hToIO7
+! 03F6 A := 80h
+
+L 03F8 writeIO7
+! 03F8 Send A to IO-7, store it at memory address 1470
+
+L 03EF toggleIO7
+# 03EF
+# 03EF Toggles the output to IO-7 between 00h and 80h. 
+# 03EF The new value is also stored at memory address 1470
+# 03EF
+
+L 0E51 hexCharToValue
+# 0E51
+# 0E51 Converts the '0'~'9', 'A'~'F' character in A to a 00h~0Fh value.
+# 0E51 The CARRY flag is set in case of an error.
+# 0E51
+! 0E51 '0' (30h) -> 00h
+! 0E53 If A originally had an ASCII below '0', return with the error flag set
+! 0E54 Compare A with 10 (0Ah), i.e. originally ':'
+! 0E56 If less-than, i.e. A was '0'~'9', invert the carry flag to indicate success and return
+! 0E58 Compare A with 17 (11h), i.e. originally 'A'
+! 0E5A If less-than, return with an error
+! 0E5B Compare A with 23 (17h), i.e. originally 'G'
+! 0E5D If greater-or-equal, invert the carry flag to indicate an error and return
+! 0E5F The value in A is 17 ~ 22. Subtract 7 (07h) to bring it to 10 ~ 15 (0Ah ~ 0Fh)
+
 L 0E62 readFromUART
 # 0E62
 # 0E62 Waits for "Data Available" (DAV) and reads the UART data byte to A (IO address 0x04)
@@ -155,7 +268,25 @@ L 0E62 readFromUART
 ! 0E66 Jump back if DAV flag is not set
 ! 0E69 Read UART data byte
 
+L 0F0F invert1472
+# 0F0F
+# 0F0F Inverts the byte at memory address 1472
+# 0F0F
+! 0F0F Set address to 1472
 
+L 0F15 invert1401
+# 0F15
+# 0F15 Inverts the byte at memory address 1401
+# 0F15
+! 0F15 Set address to 1401
+
+L 0F18 invertMemByte
+# 0F18
+# 0F18 Inverts (performs a bitwise NOT) the byte at the current memory address
+# 0F18
+! 0F18 Load memory byte into A
+! 0F19 Invert A
+! 0F1A Write back to memory
 
 ;
 ; Text areas
@@ -185,5 +316,6 @@ C 014F
 ;
 ; Ignored regions
 ;
+I 03FE-03FF	; Last two bytes from the first EPROM - two NOPs
 ;I 0400-0BFF	; N/A EPROMs
-;I 0FFC-0FFF	; Last four bytes
+;I 0FFC-0FFF	; Last four bytes from the second EPROM

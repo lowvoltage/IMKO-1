@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/20 21:49
+;  2012/10/21 19:43
 ;
 	org	0
 ;
@@ -62,8 +62,12 @@ writeToUARTloop:
 	out	2		; 0047  d3 02		S.	; Write A to UART
 	ret			; 0049  c9		I
 ;
-X004a:	xra	a		; 004a  af		/
-	jmp	X03f8		; 004b  c3 f8 03	Cx.
+;
+; Send 00h to IO-7, store it at memory address 1470
+;
+write00hToIO7:
+	xra	a		; 004a  af		/	; A := 00h
+	jmp	writeIO7	; 004b  c3 f8 03	Cx.
 ;
 ;
 ; Continues the system initialization, started in RST0
@@ -247,8 +251,13 @@ delay1Loop:
 	pop	d		; 0153  d1		Q	; Restore D
 	ret			; 0154  c9		I
 ;
-X0155:	ldax	d		; 0155  1a		.
-	jmp	X0e51		; 0156  c3 51 0e	CQ.
+;
+; Converts the '0'~'9', 'A'~'F' character at memory address D to a 00h~0Fh value.
+; The result is stored in A. The CARRY flag is set in case of an error.
+;
+memHexCharToValue:
+	ldax	d		; 0155  1a		.	; A := mem[D]
+	jmp	hexCharToValue	; 0156  c3 51 0e	CQ.
 ;
 	org	15bh
 ;
@@ -368,7 +377,7 @@ X01fd:	ldax	d		; 01fd  1a		.
 X0208:	lxi	d,X0ecf		; 0208  11 cf 0e	.O.
 X020b:	call	X01fa		; 020b  cd fa 01	Mz.
 X020e:	call	X027b		; 020e  cd 7b 02	M{.
-	call	X0398		; 0211  cd 98 03	M..
+	call	string1410ToAddr; 0211  cd 98 03	M..
 ;
 	org	219h
 ;
@@ -472,19 +481,26 @@ X02b4:	ani	0fh		; 02b4  e6 0f		f.
 	adi	7		; 02bd  c6 07		F.
 	jmp	X00eb		; 02bf  c3 eb 00	Ck.
 ;
-X02c2:	call	X0e6c		; 02c2  cd 6c 0e	Ml.
-	call	delay2047	; 02c5  cd c5 00	ME.
-	mvi	b,40h		; 02c8  06 40		.@
-	mvi	a,0dh		; 02ca  3e 0d		>.
-X02cc:	call	writeToUART	; 02cc  cd 3e 00	M>.
+;
+; Outputs to UART the 4-terminated string, located at memory address 1410
+; TODO: What's at 1410? Tape header? TODO: Name: write -> send?
+;
+write1410toUART:
+	call	X0e6c		; 02c2  cd 6c 0e	Ml.	; TODO: What is this?
+	call	delay2047	; 02c5  cd c5 00	ME.	; Wait for a while
+	mvi	b,40h		; 02c8  06 40		.@	; B := 64
+	mvi	a,0dh		; 02ca  3e 0d		>.	; Write 64 CR (0x0D) characters to UART
+write1410CRLoop:
+	call	writeToUART	; 02cc  cd 3e 00	M>.
 	dcr	b		; 02cf  05		.
-	jnz	X02cc		; 02d0  c2 cc 02	BL.
-	lxi	d,X1410		; 02d3  11 10 14	...
-X02d6:	ldax	d		; 02d6  1a		.
-	call	writeToUART	; 02d7  cd 3e 00	M>.
-	inx	d		; 02da  13		.
-	cpi	4		; 02db  fe 04		~.
-	jnz	X02d6		; 02dd  c2 d6 02	BV.
+	jnz	write1410CRLoop	; 02d0  c2 cc 02	BL.	; Jump back if more CR's need to be written
+	lxi	d,X1410		; 02d3  11 10 14	...	; Set D to 1410
+write1410StrLoop:
+	ldax	d		; 02d6  1a		.	; Load the byte at mem[D]
+	call	writeToUART	; 02d7  cd 3e 00	M>.	; Send it to the UART
+	inx	d		; 02da  13		.	; ++D
+	cpi	4		; 02db  fe 04		~.	; Was this the string terminator byte (0x04)?
+	jnz	write1410StrLoop; 02dd  c2 d6 02	BV.	; Jump back if not end-of-string
 	ret			; 02e0  c9		I
 ;
 X02e1:	call	X0e6c		; 02e1  cd 6c 0e	Ml.
@@ -515,51 +531,62 @@ X0314:	cpi	4		; 0314  fe 04		~.
 	call	X00eb		; 031c  cd eb 00	Mk.
 	jmp	X0314		; 031f  c3 14 03	C..
 ;
-	call	X02c2		; 0322  cd c2 02	MB.
-	lxi	h,X1600		; 0325  21 00 16	!..
-	mov	e,m		; 0328  5e		^
+;
+; Writes to UART the string at 1410 (TODO: some header?), followed by 
+; the contents of the program located at memory address 1600
+;
+writeProgToUART:
+	call	write1410toUART	; 0322  cd c2 02	MB.	; First write some header (TODO)
+	lxi	h,X1600		; 0325  21 00 16	!..	; Set the memory address to 1600
+	mov	e,m		; 0328  5e		^	; (D, E) := (mem[1601], mem[1600]) - the address after the last byte of the program
 	inx	h		; 0329  23		#
 	mov	d,m		; 032a  56		V
-	dcx	h		; 032b  2b		+
-X032c:	mov	a,m		; 032c  7e		~
-	call	writeToUART	; 032d  cd 3e 00	M>.
-	inx	h		; 0330  23		#
-	call	cmpDH		; 0331  cd bf 00	M?.
-	jnz	X032c		; 0334  c2 2c 03	B,.
-	call	delay2047	; 0337  cd c5 00	ME.
-X033a:	call	X004a		; 033a  cd 4a 00	MJ.
+	dcx	h		; 032b  2b		+	; H is back at 1600. The end-of-program address is stored together with the program itself
+writeProgLoop:
+	mov	a,m		; 032c  7e		~	; Load the current memory byte into A
+	call	writeToUART	; 032d  cd 3e 00	M>.	; Send it to UART
+	inx	h		; 0330  23		#	; Advance to the next memory address
+	call	cmpDH		; 0331  cd bf 00	M?.	; Compare the current memory address with the end-of-program address (in DE)
+	jnz	writeProgLoop	; 0334  c2 2c 03	B,.	; Jump back if DE has not been reached
+	call	delay2047	; 0337  cd c5 00	ME.	; Timed delay
+X033a:	call	write00hToIO7	; 033a  cd 4a 00	MJ.	; TODO: Now what?
 X033d:	lxi	d,X0e47		; 033d  11 47 0e	.G.
 	jmp	X0161		; 0340  c3 61 01	Ca.
 ;
 	call	X02e1		; 0343  cd e1 02	Ma.
 	lxi	h,X1600		; 0346  21 00 16	!..
 	mvi	c,3fh		; 0349  0e 3f		.?
-	call	X0365		; 034b  cd 65 03	Me.
+	call	readUARTSafe	; 034b  cd 65 03	Me.
 	mov	e,a		; 034e  5f		_
 	mov	m,a		; 034f  77		w
 	inx	h		; 0350  23		#
-	call	X0365		; 0351  cd 65 03	Me.
+	call	readUARTSafe	; 0351  cd 65 03	Me.
 	mov	d,a		; 0354  57		W
 	mov	m,a		; 0355  77		w
 	inx	h		; 0356  23		#
-X0357:	call	X0365		; 0357  cd 65 03	Me.
+X0357:	call	readUARTSafe	; 0357  cd 65 03	Me.
 	mov	m,a		; 035a  77		w
 	inx	h		; 035b  23		#
 	call	cmpDH		; 035c  cd bf 00	M?.
 	jnz	X0357		; 035f  c2 57 03	BW.
 	jmp	X0182		; 0362  c3 82 01	C..
 ;
-X0365:	call	readFromUART	; 0365  cd 62 0e	Mb.
-	mov	b,a		; 0368  47		G
-	in	1		; 0369  db 01		[.
-	ani	0eh		; 036b  e6 0e		f.
-	mov	a,b		; 036d  78		x
-	rz			; 036e  c8		H
-	mov	a,c		; 036f  79		y
-	ana	a		; 0370  a7		'
-	cnz	X0219		; 0371  c4 19 02	D..
-	cnz	X00eb		; 0374  c4 eb 00	Dk.
-	mvi	c,0		; 0377  0e 00		..
+;
+; Reads a single char from the UART into A. 
+; In case of an error, returns the default value from C
+;
+readUARTSafe:
+	call	readFromUART	; 0365  cd 62 0e	Mb.	; Perform a plain read into A
+	mov	b,a		; 0368  47		G	; Backup A
+	in	1		; 0369  db 01		[.	; Read the UART status
+	ani	0eh		; 036b  e6 0e		f.	; AND with a mask for all the error bits
+	mov	a,b		; 036d  78		x	; Restore A
+	rz			; 036e  c8		H	; Return if no error bits were set
+	mov	a,c		; 036f  79		y	; Use the default, C, in case of an error
+	ana	a		; 0370  a7		'	; Check for zero
+	cnz	X0219		; 0371  c4 19 02	D..	; Display C, if non-zero
+	cnz	X00eb		; 0374  c4 eb 00	Dk.	; TODO
+	mvi	c,0		; 0377  0e 00		..	; Set the default to be zero, for any further reads
 	ret			; 0379  c9		I
 ;
 X037a:	db	'READ'					; 037a
@@ -576,24 +603,31 @@ X038b:	mov	m,b		; 038b  70		p
 	inx	h		; 038f  23		#
 	jmp	X038b		; 0390  c3 8b 03	C..
 ;
+;
+; Converts the sequence of hex characters at memory address 1410
+; to a 16-bit address, stored in (H, L). '0FFF' -> 0FFFh
+;
 	org	398h
 ;
-X0398:	lxi	d,X1410		; 0398  11 10 14	...
-X039b:	xra	a		; 039b  af		/
+string1410ToAddr:
+	lxi	d,X1410		; 0398  11 10 14	...	; D := 1410h
+stringDToAddr:
+	xra	a		; 039b  af		/	; A := 0, (H, L) := (0, 0), B := 0
 	mov	h,a		; 039c  67		g
 	mov	l,a		; 039d  6f		o
 	mov	b,a		; 039e  47		G
-X039f:	call	X0155		; 039f  cd 55 01	MU.
-	mov	c,a		; 03a2  4f		O
-	mov	a,l		; 03a3  7d		}
-	rc			; 03a4  d8		X
-	dad	h		; 03a5  29		)
-	dad	h		; 03a6  29		)
+accumulateMemHex:
+	call	memHexCharToValue; 039f  cd 55 01	MU.	; Store the next hex digit in A
+	mov	c,a		; 03a2  4f		O	; Also copy it to C
+	mov	a,l		; 03a3  7d		}	; Store the last valid digit in A, in case of a return
+	rc			; 03a4  d8		X	; Return in case of a conversion error or end-of-string
+	dad	h		; 03a5  29		)	; 'Append' the next hex digit to (H, L)
+	dad	h		; 03a6  29		)	; (H, L) := 16 * (H, L) + (0, C)
 	dad	h		; 03a7  29		)
 	dad	h		; 03a8  29		)
 	dad	b		; 03a9  09		.
-	inx	d		; 03aa  13		.
-	jmp	X039f		; 03ab  c3 9f 03	C..
+	inx	d		; 03aa  13		.	; Advance to the next memory address
+	jmp	accumulateMemHex; 03ab  c3 9f 03	C..	; Loop until the char->hex conversion fails
 ;
 X03ae:	push	psw		; 03ae  f5		u
 	ani	0fh		; 03af  e6 0f		f.
@@ -625,15 +659,20 @@ X03e6:	call	readFromUART	; 03e6  cd 62 0e	Mb.
 	call	X00eb		; 03e9  cd eb 00	Mk.
 	jmp	X03e6		; 03ec  c3 e6 03	Cf.
 ;
+;
+; Toggles the output to IO-7 between 00h and 80h. 
+; The new value is also stored at memory address 1470
+;
+toggleIO7:
 	lda	X1470		; 03ef  3a 70 14	:p.
 	ana	a		; 03f2  a7		'
-	jnz	X004a		; 03f3  c2 4a 00	BJ.
-X03f6:	mvi	a,80h		; 03f6  3e 80		>.
-X03f8:	out	7		; 03f8  d3 07		S.
+	jnz	write00hToIO7	; 03f3  c2 4a 00	BJ.
+write80hToIO7:
+	mvi	a,80h		; 03f6  3e 80		>.	; A := 80h
+writeIO7:
+	out	7		; 03f8  d3 07		S.	; Send A to IO-7, store it at memory address 1470
 	sta	X1470		; 03fa  32 70 14	2p.
 	ret			; 03fd  c9		I
-;
-	nop			; 03fe  00		.
 ;
 	org	400h
 ;
@@ -1050,17 +1089,22 @@ X0e47:	db	0dh,0ah					; 0e47 ..
 X0e4d:	db	'TO:'					; 0e4d
 	db	4					; 0e50 .
 ;
-X0e51:	sui	30h		; 0e51  d6 30		V0
-	rc			; 0e53  d8		X
-	cpi	0ah		; 0e54  fe 0a		~.
-	cmc			; 0e56  3f		?
+; Converts the '0'~'9', 'A'~'F' character in A to a 00h~0Fh value.
+; The CARRY flag is set in case of an error.
+;
+;
+hexCharToValue:
+	sui	30h		; 0e51  d6 30		V0	; '0' (30h) -> 00h
+	rc			; 0e53  d8		X	; If A originally had an ASCII below '0', return with the error flag set
+	cpi	0ah		; 0e54  fe 0a		~.	; Compare A with 10 (0Ah), i.e. originally ':'
+	cmc			; 0e56  3f		?	; If less-than, i.e. A was '0'~'9', invert the carry flag to indicate success and return
 	rnc			; 0e57  d0		P
-	cpi	11h		; 0e58  fe 11		~.
-	rc			; 0e5a  d8		X
-	cpi	17h		; 0e5b  fe 17		~.
-	cmc			; 0e5d  3f		?
+	cpi	11h		; 0e58  fe 11		~.	; Compare A with 17 (11h), i.e. originally 'A'
+	rc			; 0e5a  d8		X	; If less-than, return with an error
+	cpi	17h		; 0e5b  fe 17		~.	; Compare A with 23 (17h), i.e. originally 'G'
+	cmc			; 0e5d  3f		?	; If greater-or-equal, invert the carry flag to indicate an error and return
 	rc			; 0e5e  d8		X
-	sui	7		; 0e5f  d6 07		V.
+	sui	7		; 0e5f  d6 07		V.	; The value in A is 17 ~ 22. Subtract 7 (07h) to bring it to 10 ~ 15 (0Ah ~ 0Fh)
 	ret			; 0e61  c9		I
 ;
 ;
@@ -1073,11 +1117,11 @@ readFromUART:
 	in	4		; 0e69  db 04		[.	; Read UART data byte
 	ret			; 0e6b  c9		I
 ;
-X0e6c:	call	X004a		; 0e6c  cd 4a 00	MJ.
+X0e6c:	call	write00hToIO7	; 0e6c  cd 4a 00	MJ.
 	lxi	d,X0fd0		; 0e6f  11 d0 0f	.P.
 	call	X01fa		; 0e72  cd fa 01	Mz.
 	call	X027b		; 0e75  cd 7b 02	M{.
-	jmp	X03f6		; 0e78  c3 f6 03	Cv.
+	jmp	write80hToIO7	; 0e78  c3 f6 03	Cv.
 ;
 X0e7b:	lxi	d,X037a		; 0e7b  11 7a 03	.z.
 X0e7e:	call	X01fa		; 0e7e  cd fa 01	Mz.
@@ -1104,7 +1148,7 @@ X0e84:	mov	a,b		; 0e84  78		x
 X0e98:	lxi	d,X1410		; 0e98  11 10 14	...
 X0e9b:	push	h		; 0e9b  e5		e
 	push	b		; 0e9c  c5		E
-	call	X039b		; 0e9d  cd 9b 03	M..
+	call	stringDToAddr	; 0e9d  cd 9b 03	M..
 	pop	b		; 0ea0  c1		A
 	pop	h		; 0ea1  e1		a
 	ret			; 0ea2  c9		I
@@ -1146,13 +1190,25 @@ X0edd:	db	'FUNCTION? ENTER MONITOR OPTION'	; 0edd
 X0f02:	db	'FILES FOUND:'				; 0f02
 	db	4					; 0f0e .
 ;
-	lxi	h,X1472		; 0f0f  21 72 14	!r.
-	jmp	X0f18		; 0f12  c3 18 0f	C..
+; Inverts the byte at memory address 1472
 ;
-	lxi	h,X1401		; 0f15  21 01 14	!..
-X0f18:	mov	a,m		; 0f18  7e		~
-	cma			; 0f19  2f		/
-	mov	m,a		; 0f1a  77		w
+;
+invert1472:
+	lxi	h,X1472		; 0f0f  21 72 14	!r.	; Set address to 1472
+	jmp	invertMemByte	; 0f12  c3 18 0f	C..
+;
+;
+; Inverts the byte at memory address 1401
+;
+invert1401:
+	lxi	h,X1401		; 0f15  21 01 14	!..	; Set address to 1401
+;
+; Inverts (performs a bitwise NOT) the byte at the current memory address
+;
+invertMemByte:
+	mov	a,m		; 0f18  7e		~	; Load memory byte into A
+	cma			; 0f19  2f		/	; Invert A
+	mov	m,a		; 0f1a  77		w	; Write back to memory
 	ret			; 0f1b  c9		I
 ;
 	call	X0208		; 0f1c  cd 08 02	M..
