@@ -1,0 +1,24 @@
+Disassembly project of the IMKO-1 EPROMs
+
+Author: Dimitar Kovachev
+E-mail: d.kovachev@gmail.com
+
+Files description:
+IMKO-1-0000h-03FFh.bin		Binary dump of the EPROM at 0000h
+IMKO-1-0C00h-0FFFh.bin		Binary dump of the EPROM at 0C00h
+Zeros1k.bin			A 1024-byte file of 00h, used for padding
+
+IMKO-1.bin			Concatenation of the two EPROMs, placed at their actual addresses. This is the input file for the disassembly process.
+IMKO-1.ctl			Control file for the dz80 disassembler, contains all mnemonics and comments.
+IMKO-1.d80			Output file. It's never edited directly - modify the .ctl file, then rerun the disassembly: 'dz80 -d IMKO-1.bin -80'
+
+
+d52 disassembler:
+Installation:	$ sudo apt-get install d52
+Command line:	$ dz80 -d IMKO-1.bin -80
+User guide:	http://www.bipom.com/documents/dis51/d52manual.html
+
+Intel 8080 ASM links:
+http://neil.franklin.ch/Info_Texts/Instruction_Set_8080
+http://www.pastraiser.com/cpu/i8080/i8080_opcodes.html
+
