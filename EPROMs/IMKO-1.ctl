@@ -314,8 +314,27 @@ C 00BE
 C 014F
 
 ;
+; Forced binary word / address regions
+;
+
+B 0C00-0CA1
+# 0C00
+# 0C00 BASIC literals? TODO...
+# 0C00
+
+W 0D80-0D89
+# 0D80
+# 0D80 TODO
+# 0D80
+
+A 0F7E-0FB1
+# 0F7E
+# 0F7E Jump table with 26 Monitor functions, 'A' to 'Z'
+# 0F7E
+
+;
 ; Ignored regions
 ;
 I 03FE-03FF	; Last two bytes from the first EPROM - two NOPs
-;I 0400-0BFF	; N/A EPROMs
-;I 0FFC-0FFF	; Last four bytes from the second EPROM
+I 0400-0BFF	; N/A EPROMs
+I 0FFC-0FFF	; Last four bytes from the second EPROM

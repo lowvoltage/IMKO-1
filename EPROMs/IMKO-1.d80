@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/21 19:43
+;  2012/10/21 22:18
 ;
 	org	0
 ;
@@ -364,7 +364,7 @@ toLowerCase:
 	adi	20h		; 01f3  c6 20		F 	; Convert to lowercase by adding 0x20
 	ret			; 01f5  c9		I
 ;
-	call	X0208		; 01f6  cd 08 02	M..
+X01f6:	call	X0208		; 01f6  cd 08 02	M..
 	xchg			; 01f9  eb		k
 X01fa:	call	X0219		; 01fa  cd 19 02	M..
 X01fd:	ldax	d		; 01fd  1a		.
@@ -409,7 +409,7 @@ X023f:	call	X03c4		; 023f  cd c4 03	MD.
 X0242:	mov	a,m		; 0242  7e		~
 	jmp	X0259		; 0243  c3 59 02	CY.
 ;
-	call	X0208		; 0246  cd 08 02	M..
+X0246:	call	X0208		; 0246  cd 08 02	M..
 	mvi	b,4		; 0249  06 04		..
 	call	X0261		; 024b  cd 61 02	Ma.
 	lxi	d,X0fc5		; 024e  11 c5 0f	.E.
@@ -553,7 +553,7 @@ X033a:	call	write00hToIO7	; 033a  cd 4a 00	MJ.	; TODO: Now what?
 X033d:	lxi	d,X0e47		; 033d  11 47 0e	.G.
 	jmp	X0161		; 0340  c3 61 01	Ca.
 ;
-	call	X02e1		; 0343  cd e1 02	Ma.
+X0343:	call	X02e1		; 0343  cd e1 02	Ma.
 	lxi	h,X1600		; 0346  21 00 16	!..
 	mvi	c,3fh		; 0349  0e 3f		.?
 	call	readUARTSafe	; 034b  cd 65 03	Me.
@@ -642,7 +642,7 @@ X03ae:	push	psw		; 03ae  f5		u
 X03c4:	call	X0219		; 03c4  cd 19 02	M..
 	jmp	X0254		; 03c7  c3 54 02	CT.
 ;
-	call	X0208		; 03ca  cd 08 02	M..
+X03ca:	call	X0208		; 03ca  cd 08 02	M..
 X03cd:	mvi	b,0fh		; 03cd  06 0f		..
 X03cf:	call	X023f		; 03cf  cd 3f 02	M?.
 	inx	h		; 03d2  23		#
@@ -682,165 +682,34 @@ X0400:	nop			; 0400  00		.
 ;
 X07ff:	nop			; 07ff  00		.
 ;
+; BASIC literals? TODO...
+;
+;
 	org	0c00h
 ;
-	mov	c,h		; 0c00  4c		L
-	mov	b,l		; 0c01  45		E
-	mov	d,h		; 0c02  54		T
-	add	a		; 0c03  87		.
-	mov	c,a		; 0c04  4f		O
-	mov	c,c		; 0c05  49		I
-	mov	b,m		; 0c06  46		F
-	add	m		; 0c07  86		.
-	jnc	X4f47		; 0c08  d2 47 4f	RGO
-	mov	d,h		; 0c0b  54		T
-	mov	c,a		; 0c0c  4f		O
-	add	l		; 0c0d  85		.
-	inr	l		; 0c0e  2c		,
-	mov	b,a		; 0c0f  47		G
-	mov	c,a		; 0c10  4f		O
-	mov	d,e		; 0c11  53		S
-	mov	d,l		; 0c12  55		U
-	mov	b,d		; 0c13  42		B
-	add	l		; 0c14  85		.
-	rst	0		; 0c15  c7		G
-	mov	d,d		; 0c16  52		R
-	mov	b,l		; 0c17  45		E
-	mov	d,h		; 0c18  54		T
-	mov	d,l		; 0c19  55		U
-	mov	d,d		; 0c1a  52		R
-	mov	c,m		; 0c1b  4e		N
-	add	l		; 0c1c  85		.
-	pchl			; 0c1d  e9		i
+	db	4ch,45h,54h,87h,4fh,49h,46h,86h		; 0c00 LET.OIF.
+	db	0d2h,47h,4fh,54h,4fh,85h,2ch,47h	; 0c08 RGOTO.,G
+	db	4fh,53h,55h,42h,85h,0c7h,52h,45h	; 0c10 OSUB.GRE
+	db	54h,55h,52h,4eh,85h,0e9h,52h,45h	; 0c18 TURN.iRE
+	db	4dh,86h,0cch,46h,4fh,52h,86h,4		; 0c20 M.LFOR..
+	db	49h,4eh,50h,55h,54h,86h,0edh,50h	; 0c28 INPUT.mP
+	db	52h,49h,4eh,54h,85h,6dh,53h,54h		; 0c30 RINT.mST
+	db	4fh,50h,85h,7,56h,44h,55h,8bh		; 0c38 OP..VDU.
+	db	57h,43h,41h,4ch,4ch,8bh,76h,50h		; 0c40 WCALL.vP
+	db	45h,45h,4bh,8bh,7eh,50h,4fh,4bh		; 0c48 EEK.~POK
+	db	45h,8bh,92h,47h,45h,54h,8bh,0a0h	; 0c50 E..GET. 
+	db	50h,55h,54h,8bh,0b8h,53h,50h,52h	; 0c58 PUT.8SPR
+	db	41h,94h,7ch,87h,49h,52h,4eh,44h		; 0c60 A.|.IRND
+	db	88h,6dh,41h,42h,53h,88h,9ah,53h		; 0c68 .mABS..S
+	db	49h,5ah,45h,88h,0a3h,53h,50h,52h	; 0c70 IZE.#SPR
+	db	42h,94h,7ch,88h,4bh,54h,4fh,86h		; 0c78 B.|.KTO.
+	db	14h,89h,32h,53h,54h,45h,50h,86h		; 0c80 ..2STEP.
+	db	20h,86h,26h,3eh,3dh,87h,67h,23h		; 0c88  .&>=.g#
+	db	87h,6dh,3eh,87h,73h,3dh,87h,82h		; 0c90 .m>.s=..
+	db	3ch,3dh,87h,7ah,3ch,87h,88h,87h		; 0c98 <=.z<...
+	db	8eh,0					; 0ca0 ..
 ;
-	mov	d,d		; 0c1e  52		R
-	mov	b,l		; 0c1f  45		E
-	mov	c,l		; 0c20  4d		M
-	add	m		; 0c21  86		.
-	cz	X4f46		; 0c22  cc 46 4f	LFO
-	mov	d,d		; 0c25  52		R
-	add	m		; 0c26  86		.
-	inr	b		; 0c27  04		.
-	mov	c,c		; 0c28  49		I
-	mov	c,m		; 0c29  4e		N
-	mov	d,b		; 0c2a  50		P
-	mov	d,l		; 0c2b  55		U
-	mov	d,h		; 0c2c  54		T
-	add	m		; 0c2d  86		.
-	db	0edh		; 0c2e  ed		m
-	mov	d,b		; 0c2f  50		P
-	mov	d,d		; 0c30  52		R
-	mov	c,c		; 0c31  49		I
-	mov	c,m		; 0c32  4e		N
-	mov	d,h		; 0c33  54		T
-	add	l		; 0c34  85		.
-	mov	l,l		; 0c35  6d		m
-	mov	d,e		; 0c36  53		S
-	mov	d,h		; 0c37  54		T
-	mov	c,a		; 0c38  4f		O
-	mov	d,b		; 0c39  50		P
-	add	l		; 0c3a  85		.
-	rlc			; 0c3b  07		.
-	mov	d,m		; 0c3c  56		V
-	mov	b,h		; 0c3d  44		D
-	mov	d,l		; 0c3e  55		U
-	adc	e		; 0c3f  8b		.
-	mov	d,a		; 0c40  57		W
-	mov	b,e		; 0c41  43		C
-	mov	b,c		; 0c42  41		A
-	mov	c,h		; 0c43  4c		L
-	mov	c,h		; 0c44  4c		L
-	adc	e		; 0c45  8b		.
-	hlt			; 0c46  76		v
-;
-	mov	d,b		; 0c47  50		P
-	mov	b,l		; 0c48  45		E
-	mov	b,l		; 0c49  45		E
-	mov	c,e		; 0c4a  4b		K
-	adc	e		; 0c4b  8b		.
-	mov	a,m		; 0c4c  7e		~
-	mov	d,b		; 0c4d  50		P
-	mov	c,a		; 0c4e  4f		O
-	mov	c,e		; 0c4f  4b		K
-	mov	b,l		; 0c50  45		E
-	adc	e		; 0c51  8b		.
-	sub	d		; 0c52  92		.
-	mov	b,a		; 0c53  47		G
-	mov	b,l		; 0c54  45		E
-	mov	d,h		; 0c55  54		T
-	adc	e		; 0c56  8b		.
-	ana	b		; 0c57  a0		 
-	mov	d,b		; 0c58  50		P
-	mov	d,l		; 0c59  55		U
-	mov	d,h		; 0c5a  54		T
-	adc	e		; 0c5b  8b		.
-	cmp	b		; 0c5c  b8		8
-	mov	d,e		; 0c5d  53		S
-	mov	d,b		; 0c5e  50		P
-	mov	d,d		; 0c5f  52		R
-	mov	b,c		; 0c60  41		A
-	sub	h		; 0c61  94		.
-	mov	a,h		; 0c62  7c		|
-	add	a		; 0c63  87		.
-	mov	c,c		; 0c64  49		I
-	mov	d,d		; 0c65  52		R
-	mov	c,m		; 0c66  4e		N
-	mov	b,h		; 0c67  44		D
-	adc	b		; 0c68  88		.
-	mov	l,l		; 0c69  6d		m
-	mov	b,c		; 0c6a  41		A
-	mov	b,d		; 0c6b  42		B
-	mov	d,e		; 0c6c  53		S
-	adc	b		; 0c6d  88		.
-	sbb	d		; 0c6e  9a		.
-	mov	d,e		; 0c6f  53		S
-	mov	c,c		; 0c70  49		I
-	mov	e,d		; 0c71  5a		Z
-	mov	b,l		; 0c72  45		E
-	adc	b		; 0c73  88		.
-	ana	e		; 0c74  a3		#
-	mov	d,e		; 0c75  53		S
-	mov	d,b		; 0c76  50		P
-	mov	d,d		; 0c77  52		R
-	mov	b,d		; 0c78  42		B
-	sub	h		; 0c79  94		.
-	mov	a,h		; 0c7a  7c		|
-	adc	b		; 0c7b  88		.
-	mov	c,e		; 0c7c  4b		K
-	mov	d,h		; 0c7d  54		T
-	mov	c,a		; 0c7e  4f		O
-	add	m		; 0c7f  86		.
-	inr	d		; 0c80  14		.
-	adc	c		; 0c81  89		.
-	sta	X5453		; 0c82  32 53 54	2ST
-	mov	b,l		; 0c85  45		E
-	mov	d,b		; 0c86  50		P
-	add	m		; 0c87  86		.
-	db	20h		; 0c88  20		 
-	add	m		; 0c89  86		.
-	mvi	h,3eh		; 0c8a  26 3e		&>
-	dcr	a		; 0c8c  3d		=
-	add	a		; 0c8d  87		.
-	mov	h,a		; 0c8e  67		g
-	inx	h		; 0c8f  23		#
-	add	a		; 0c90  87		.
-	mov	l,l		; 0c91  6d		m
-	mvi	a,87h		; 0c92  3e 87		>.
-	mov	m,e		; 0c94  73		s
-	dcr	a		; 0c95  3d		=
-	add	a		; 0c96  87		.
-	add	d		; 0c97  82		.
-	inr	a		; 0c98  3c		<
-	dcr	a		; 0c99  3d		=
-	add	a		; 0c9a  87		.
-	mov	a,d		; 0c9b  7a		z
-	inr	a		; 0c9c  3c		<
-	add	a		; 0c9d  87		.
-	adc	b		; 0c9e  88		.
-	add	a		; 0c9f  87		.
-	adc	m		; 0ca0  8e		.
-	nop			; 0ca1  00		.
-	call	X0208		; 0ca2  cd 08 02	M..
+X0ca2:	call	X0208		; 0ca2  cd 08 02	M..
 	dcx	h		; 0ca5  2b		+
 X0ca6:	inx	h		; 0ca6  23		#
 X0ca7:	call	X023f		; 0ca7  cd 3f 02	M?.
@@ -859,7 +728,7 @@ X0ca7:	call	X023f		; 0ca7  cd 3f 02	M?.
 X0cc6:	dcx	h		; 0cc6  2b		+
 	jmp	X0ca7		; 0cc7  c3 a7 0c	C'.
 ;
-	call	X00e8		; 0cca  cd e8 00	Mh.
+X0cca:	call	X00e8		; 0cca  cd e8 00	Mh.
 	call	X0219		; 0ccd  cd 19 02	M..
 	cpi	20h		; 0cd0  fe 20		~ 
 	jz	X0d40		; 0cd2  ca 40 0d	J@.
@@ -958,17 +827,16 @@ X0d79:	dcx	h		; 0d79  2b		+
 	inx	h		; 0d7e  23		#
 	ret			; 0d7f  c9		I
 ;
-X0d80:	mov	d,e		; 0d80  53		S
-X0d81:	add	b		; 0d81  80		.
-	mov	e,d		; 0d82  5a		Z
-	mov	b,b		; 0d83  40		@
-	mov	b,c		; 0d84  41		A
-	db	10h		; 0d85  10		.
-	mov	d,b		; 0d86  50		P
-	inr	b		; 0d87  04		.
-	mov	b,e		; 0d88  43		C
-	lxi	b,X24cd		; 0d89  01 cd 24	.M$
-	stax	b		; 0d8c  02		.
+;
+; TODO
+;
+X0d80:	dw	8053h		; 0d80   53 80      S.
+	dw	405ah		; 0d82   5a 40      Z@
+	dw	1041h		; 0d84   41 10      A.
+	dw	450h		; 0d86   50 04      P.
+	dw	143h		; 0d88   43 01      C.
+;
+X0d8a:	call	X0224		; 0d8a  cd 24 02	M$.
 	call	X0275		; 0d8d  cd 75 02	Mu.
 	lxi	h,X1410		; 0d90  21 10 14	!..
 	mov	d,h		; 0d93  54		T
@@ -1018,7 +886,7 @@ X0dd7:	mvi	a,0ch		; 0dd7  3e 0c		>.
 	sta	X1471		; 0dd9  32 71 14	2q.
 	jmp	X0219		; 0ddc  c3 19 02	C..
 ;
-	call	X0224		; 0ddf  cd 24 02	M$.
+X0ddf:	call	X0224		; 0ddf  cd 24 02	M$.
 	lxi	d,X0e4d		; 0de2  11 4d 0e	.M.
 	call	X020b		; 0de5  cd 0b 02	M..
 	pop	b		; 0de8  c1		A
@@ -1054,7 +922,7 @@ X0e09:	mov	a,m		; 0e09  7e		~
 	dcx	h		; 0e0f  2b		+
 	jmp	X0e09		; 0e10  c3 09 0e	C..
 ;
-	lxi	sp,X1404	; 0e13  31 04 14	1..
+X0e13:	lxi	sp,X1404	; 0e13  31 04 14	1..
 	pop	psw		; 0e16  f1		q
 	pop	b		; 0e17  c1		A
 	pop	d		; 0e18  d1		Q
@@ -1153,10 +1021,10 @@ X0e9b:	push	h		; 0e9b  e5		e
 	pop	h		; 0ea1  e1		a
 	ret			; 0ea2  c9		I
 ;
-	call	X0208		; 0ea3  cd 08 02	M..
+X0ea3:	call	X0208		; 0ea3  cd 08 02	M..
 	pchl			; 0ea6  e9		i
 ;
-	call	X0224		; 0ea7  cd 24 02	M$.
+X0ea7:	call	X0224		; 0ea7  cd 24 02	M$.
 	pop	d		; 0eaa  d1		Q
 	pop	h		; 0eab  e1		a
 X0eac:	call	X03c4		; 0eac  cd c4 03	MD.
@@ -1211,7 +1079,7 @@ invertMemByte:
 	mov	m,a		; 0f1a  77		w	; Write back to memory
 	ret			; 0f1b  c9		I
 ;
-	call	X0208		; 0f1c  cd 08 02	M..
+X0f1c:	call	X0208		; 0f1c  cd 08 02	M..
 	mvi	c,64h		; 0f1f  0e 64		.d
 	lxi	d,X0400		; 0f21  11 00 04	...
 X0f24:	push	h		; 0f24  e5		e
@@ -1265,43 +1133,35 @@ X0f72:	lxi	d,X0ec0		; 0f72  11 c0 0e	.@.
 X0f78:	call	X00e8		; 0f78  cd e8 00	Mh.
 	jmp	X0f78		; 0f7b  c3 78 0f	Cx.
 ;
-X0f7e:	mov	b,m		; 0f7e  46		F
-	stax	b		; 0f7f  02		.
-	nop			; 0f80  00		.
-	inr	b		; 0f81  04		.
-	inx	d		; 0f82  13		.
-	mvi	c,0f6h		; 0f83  0e f6		.v
-	lxi	b,X037f		; 0f85  01 7f 03	...
-	adc	d		; 0f88  8a		.
-	dcr	c		; 0f89  0d		.
-	ana	e		; 0f8a  a3		#
-	mvi	c,0a7h		; 0f8b  0e a7		.'
-	mvi	c,43h		; 0f8d  0e 43		.C
-	inx	b		; 0f8f  03		.
-	cz	X0ff7		; 0f90  cc f7 0f	Lw.
-	rrc			; 0f93  0f		.
-	jz	Xef03		; 0f94  ca 03 ef	J.o
-	inx	b		; 0f97  03		.
-	mov	m,e		; 0f98  73		s
-	inr	d		; 0f99  14		.
-	shld	Xa203		; 0f9a  22 03 a2	"."
-	inr	c		; 0f9d  0c		.
-	mov	m,e		; 0f9e  73		s
-	inr	d		; 0f9f  14		.
-	jz	Xdf0c		; 0fa0  ca 0c df	J._
-	dcr	c		; 0fa3  0d		.
-	nop			; 0fa4  00		.
-	rnz			; 0fa5  c0		@
-	mov	m,e		; 0fa6  73		s
-	inr	d		; 0fa7  14		.
-	dcr	d		; 0fa8  15		.
-	rrc			; 0fa9  0f		.
-	mov	a,b		; 0faa  78		x
-	rrc			; 0fab  0f		.
-	dcr	l		; 0fac  2d		-
-	jpo	X1473		; 0fad  e2 73 14	bs.
-	inr	e		; 0fb0  1c		.
-	rrc			; 0fb1  0f		.
+;
+; Jump table with 26 Monitor functions, 'A' to 'Z'
+;
+X0f7e:	dw	X0246		; 0f7e   46 02      F.
+	dw	X0400		; 0f80   00 04      ..
+	dw	X0e13		; 0f82   13 0e      ..
+	dw	X01f6		; 0f84   f6 01      v.
+	dw	X037f		; 0f86   7f 03      ..
+	dw	X0d8a		; 0f88   8a 0d      ..
+	dw	X0ea3		; 0f8a   a3 0e      #.
+	dw	X0ea7		; 0f8c   a7 0e      '.
+	dw	X0343		; 0f8e   43 03      C.
+	dw	Xf7cc		; 0f90   cc f7      Lw
+	dw	invert1472		; 0f92   0f 0f      ..
+	dw	X03ca		; 0f94   ca 03      J.
+	dw	toggleIO7		; 0f96   ef 03      o.
+	dw	X1473		; 0f98   73 14      s.
+	dw	writeProgToUART		; 0f9a   22 03      ".
+	dw	X0ca2		; 0f9c   a2 0c      ".
+	dw	X1473		; 0f9e   73 14      s.
+	dw	X0cca		; 0fa0   ca 0c      J.
+	dw	X0ddf		; 0fa2   df 0d      _.
+	dw	Xc000		; 0fa4   00 c0      .@
+	dw	X1473		; 0fa6   73 14      s.
+	dw	invert1401		; 0fa8   15 0f      ..
+	dw	X0f78		; 0faa   78 0f      x.
+	dw	Xe22d		; 0fac   2d e2      -b
+	dw	X1473		; 0fae   73 14      s.
+	dw	X0f1c		; 0fb0   1c 0f      ..
 ;
 X0fb2:	db	'BYTE:'					; 0fb2
 	db	4					; 0fb7 .
@@ -1313,14 +1173,8 @@ X0fc5:	db	'END:'					; 0fc5
 	db	4					; 0fcf .
 X0fd0:	db	'TAPE HEADER:'				; 0fd0
 	db	4					; 0fdc .
-X0fdd:	db	'A  C  B  E  D  L  H  SP   '		; 0fdd
-X0ff7:	db	'PC'					; 0ff7
+X0fdd:	db	'A  C  B  E  D  L  H  SP   PC'		; 0fdd
 X0ff9:	db	0dh,0ah,4				; 0ff9 ...
-;
-	mov	b,m		; 0ffc  46		F
-	mov	c,c		; 0ffd  49		I
-	mov	c,m		; 0ffe  4e		N
-	mov	c,c		; 0fff  49		I
 ;
 ;	Miscellaneous equates
 ;
@@ -1356,14 +1210,10 @@ X147a	equ	147ah
 X1481	equ	1481h
 X14ff	equ	14ffh
 X1600	equ	1600h
-X24cd	equ	24cdh
-X4f46	equ	4f46h
-X4f47	equ	4f47h
-X5453	equ	5453h
 X8032	equ	8032h
-Xa203	equ	0a203h
-Xdf0c	equ	0df0ch
-Xef03	equ	0ef03h
+Xc000	equ	0c000h
+Xe22d	equ	0e22dh
+Xf7cc	equ	0f7cch
 ;
 	end
 ;
