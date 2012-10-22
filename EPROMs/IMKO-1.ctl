@@ -125,6 +125,38 @@ L 0155 memHexCharToValue
 # 0155
 ! 0155 A := mem[D]
 
+L 0174 monitor
+# 0174
+# 0174 Entry point for the IMKO-1 system monitor. 
+# 0174 It allows for the execution of 26 predefined functions, by typing 'A' ~ 'Z'
+# 0174
+! 0174 Reset stack base at memory address 1470
+! 0177 Display the function selection prompt (TODO)
+
+L 0192 monitor2
+# 0192
+# 0192 Part II of the monitor
+# 0192 
+! 0192 TODO: PrintCRLF?
+! 0195 TODO: Read a char in A?
+
+L 0198 tableJmpA
+# 0198
+# 0198 Executes one of 26 routines, indexed by the letter in A: 'A' ~ 'Z'
+# 0198
+! 0198 Base address of the jump table
+! 019B 'A' (41h) -> 00h
+! 019D Negative value after the subtraction is an error
+! 01A0 Compare A with 27 (1Bh)
+! 01A2 Greater-than-or-equal is an error
+! 01A5 (H, L) := (0, A)
+! 01A8 (H, L) := (0, 2*A) - the table offset in bytes
+! 01A9 Add the table base address. Now (H, L) points to the target routine's address
+! 01AA Load the target address into (D, E)
+! 01AD Swap HL <-> DE. Now the target address is in HL
+! 01AE Push a default return address on the stack
+! 01B2 PC := HL. Transfer the execution to the target routine
+
 L 01B3 delay1402
 L 01B7 delay1402loop
 # 01B3
@@ -243,6 +275,41 @@ L 03EF toggleIO7
 # 03EF Toggles the output to IO-7 between 00h and 80h. 
 # 03EF The new value is also stored at memory address 1470
 # 03EF
+
+L 0E13 memToRegisters
+# 0E13
+# 0E13 Loads the values stored at 1404h ~ 140Fh (see memory map) to the system registers
+# 0E13
+! 0E13 Set the stack pointer to the base of the registers' memory storage
+! 0E16 Load the next two bytes into PSW:  PSW := PSW*, SP := 1406h
+! 0E17 Load the next two bytes into B:  B := B*, SP := 1408h
+! 0E18 Load the next two bytes into D:  D := D*, SP := 140Ah
+! 0E19 Load the next two bytes into H:  H := H*, SP := 140Ch
+! 0E1A Load the next two bytes into H:  H := SP*, SP := 140Eh
+! 0E1B Copy H into SP:  H := SP*, SP := SP*
+! 0E1C H := PC*, SP := SP*
+! 0E1F Push H (PC*) on the stack, as a fake return address
+! 0E20 H := H*
+! 0E23 "Return" to the last address on the stack, i.e. PC := PC*
+
+L 0E24 registersToMem
+# 0E24
+# 0E24 Stores the system registers in memory, at addresses 1404h ~ 140Fh (see memory map)
+# 0E24 The values stored (PC and SP, in particular) are the ones *before* the call to RST2
+# 0E24 
+! 0E24 H* := H
+! 0E27 H := PC-before-last-call (it was on the top of the stack)
+! 0E28 PC* := PC-before-last-call
+! 0E2B Backup (A, F)
+! 0E2C H := SP + 2 = SP-before-last-call
+! 0E30 SP* := SP-before-last-call
+! 0E33 Restore (A, F)
+! 0E34 Set the stack base at 140Ah. Pushes will overwrite D*, B* and PSW*
+! 0E37 D* := D
+! 0E38 B* := B
+! 0E39 PSW* := PSW
+! 0E3A Set the stack base at 1470h (the default address)
+! 0E3D TODO: Print the registers?
 
 L 0E51 hexCharToValue
 # 0E51

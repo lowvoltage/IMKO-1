@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/21 22:18
+;  2012/10/22 22:31
 ;
 	org	0
 ;
@@ -14,7 +14,7 @@ RST1:	jmp	X00d4		; 0008  c3 d4 00	CT.
 ;
 	org	10h
 ;
-RST2:	jmp	X0e24		; 0010  c3 24 0e	C$.
+RST2:	jmp	registersToMem	; 0010  c3 24 0e	C$.
 ;
 	jmp	X00eb		; 0013  c3 eb 00	Ck.
 ;
@@ -78,7 +78,7 @@ write00hToIO7:
 ; * TODO: More
 ;
 init:	sta	X1401		; 004e  32 01 14	2..	; mem[1401] := 0xAA
-	lxi	d,X0174		; 0051  11 74 01	.t.	; Setup jumps to 0x0174 at memory addesses 1430, 1433, 1436, 1439 and 143C
+	lxi	d,monitor	; 0051  11 74 01	.t.	; Setup jumps to 0x0174 at memory addesses 1430, 1433, 1436, 1439 and 143C
 	lxi	h,X1430		; 0054  21 30 14	!0.
 	call	fillMem5	; 0057  cd 9b 00	M..
 	lxi	d,X015b		; 005a  11 5b 01	.[.	; Setup jumps to 0x015B at memory addesses 1473, 1476 and 1479 (147C and 147F are not used?)
@@ -272,10 +272,15 @@ X016a:	call	delay1		; 016a  cd 4a 01	MJ.
 	jnz	X016a		; 016e  c2 6a 01	Bj.
 	xra	a		; 0171  af		/
 	out	7		; 0172  d3 07		S.
-X0174:	lxi	sp,X1470	; 0174  31 70 14	1p.
-	lxi	d,X0edd		; 0177  11 dd 0e	.].
+;
+; Entry point for the IMKO-1 system monitor. 
+; It allows for the execution of 26 predefined functions, by typing 'A' ~ 'Z'
+;
+monitor:
+	lxi	sp,X1470	; 0174  31 70 14	1p.	; Reset stack base at memory address 1470
+	lxi	d,X0edd		; 0177  11 dd 0e	.].	; Display the function selection prompt (TODO)
 	call	X01fa		; 017a  cd fa 01	Mz.
-	jmp	X0192		; 017d  c3 92 01	C..
+	jmp	monitor2	; 017d  c3 92 01	C..
 ;
 	org	182h
 ;
@@ -288,24 +293,32 @@ X0182:	cmc			; 0182  3f		?
 	jz	X0219		; 018c  ca 19 02	J..
 	jmp	X00eb		; 018f  c3 eb 00	Ck.
 ;
-X0192:	call	X0219		; 0192  cd 19 02	M..
-	call	X00e8		; 0195  cd e8 00	Mh.
-X0198:	lxi	d,X0f7e		; 0198  11 7e 0f	.~.
-	sui	41h		; 019b  d6 41		VA
-	jc	X015b		; 019d  da 5b 01	Z[.
-	cpi	1bh		; 01a0  fe 1b		~.
-	jnc	X015b		; 01a2  d2 5b 01	R[.
-	mov	l,a		; 01a5  6f		o
+;
+; Part II of the monitor
+; 
+monitor2:
+	call	X0219		; 0192  cd 19 02	M..	; TODO: PrintCRLF?
+	call	X00e8		; 0195  cd e8 00	Mh.	; TODO: Read a char in A?
+;
+; Executes one of 26 routines, indexed by the letter in A: 'A' ~ 'Z'
+;
+tableJmpA:
+	lxi	d,X0f7e		; 0198  11 7e 0f	.~.	; Base address of the jump table
+	sui	41h		; 019b  d6 41		VA	; 'A' (41h) -> 00h
+	jc	X015b		; 019d  da 5b 01	Z[.	; Negative value after the subtraction is an error
+	cpi	1bh		; 01a0  fe 1b		~.	; Compare A with 27 (1Bh)
+	jnc	X015b		; 01a2  d2 5b 01	R[.	; Greater-than-or-equal is an error
+	mov	l,a		; 01a5  6f		o	; (H, L) := (0, A)
 	mvi	h,0		; 01a6  26 00		&.
-	dad	h		; 01a8  29		)
-	dad	d		; 01a9  19		.
-	mov	e,m		; 01aa  5e		^
+	dad	h		; 01a8  29		)	; (H, L) := (0, 2*A) - the table offset in bytes
+	dad	d		; 01a9  19		.	; Add the table base address. Now (H, L) points to the target routine's address
+	mov	e,m		; 01aa  5e		^	; Load the target address into (D, E)
 	inx	h		; 01ab  23		#
 	mov	d,m		; 01ac  56		V
-	xchg			; 01ad  eb		k
-	lxi	d,X0174		; 01ae  11 74 01	.t.
+	xchg			; 01ad  eb		k	; Swap HL <-> DE. Now the target address is in HL
+	lxi	d,monitor	; 01ae  11 74 01	.t.	; Push a default return address on the stack
 	push	d		; 01b1  d5		U
-	pchl			; 01b2  e9		i
+	pchl			; 01b2  e9		i	; PC := HL. Transfer the execution to the target routine
 ;
 ;
 ; Performs mem[1402] iterations of an empty loop
@@ -330,7 +343,7 @@ X01bf:	push	b		; 01bf  c5		E
 	mov	a,b		; 01c9  78		x
 	cm	toggleLetterCase; 01ca  fc e2 01	|b.
 	cpi	3		; 01cd  fe 03		~.
-	jz	X0174		; 01cf  ca 74 01	Jt.
+	jz	monitor		; 01cf  ca 74 01	Jt.
 	ana	a		; 01d2  a7		'
 	pop	h		; 01d3  e1		a
 	pop	b		; 01d4  c1		A
@@ -653,7 +666,7 @@ X03cf:	call	X023f		; 03cf  cd 3f 02	M?.
 	cpi	59h		; 03dd  fe 59		~Y
 	jz	X03cd		; 03df  ca cd 03	JM.
 	pop	h		; 03e2  e1		a
-	jmp	X0198		; 03e3  c3 98 01	C..
+	jmp	tableJmpA	; 03e3  c3 98 01	C..
 ;
 X03e6:	call	readFromUART	; 03e6  cd 62 0e	Mb.
 	call	X00eb		; 03e9  cd eb 00	Mk.
@@ -808,7 +821,7 @@ X0d4b:	mov	a,m		; 0d4b  7e		~
 	lhld	X140e		; 0d5a  2a 0e 14	*..
 	call	X0254		; 0d5d  cd 54 02	MT.
 	call	X0d66		; 0d60  cd 66 0d	Mf.
-	jmp	X0174		; 0d63  c3 74 01	Ct.
+	jmp	monitor		; 0d63  c3 74 01	Ct.
 ;
 X0d66:	lxi	h,X0d81		; 0d66  21 81 0d	!..
 	mvi	b,5		; 0d69  06 05		..
@@ -922,32 +935,41 @@ X0e09:	mov	a,m		; 0e09  7e		~
 	dcx	h		; 0e0f  2b		+
 	jmp	X0e09		; 0e10  c3 09 0e	C..
 ;
-X0e13:	lxi	sp,X1404	; 0e13  31 04 14	1..
-	pop	psw		; 0e16  f1		q
-	pop	b		; 0e17  c1		A
-	pop	d		; 0e18  d1		Q
-	pop	h		; 0e19  e1		a
-	pop	h		; 0e1a  e1		a
-	sphl			; 0e1b  f9		y
-	lhld	X140e		; 0e1c  2a 0e 14	*..
-	push	h		; 0e1f  e5		e
-	lhld	X140a		; 0e20  2a 0a 14	*..
-	ret			; 0e23  c9		I
 ;
-X0e24:	shld	X140a		; 0e24  22 0a 14	"..
-	pop	h		; 0e27  e1		a
-	shld	X140e		; 0e28  22 0e 14	"..
-	push	psw		; 0e2b  f5		u
-	lxi	h,X0002		; 0e2c  21 02 00	!..
+; Loads the values stored at 1404h ~ 140Fh (see memory map) to the system registers
+;
+memToRegisters:
+	lxi	sp,X1404	; 0e13  31 04 14	1..	; Set the stack pointer to the base of the registers' memory storage
+	pop	psw		; 0e16  f1		q	; Load the next two bytes into PSW:  PSW := PSW*, SP := 1406h
+	pop	b		; 0e17  c1		A	; Load the next two bytes into B:  B := B*, SP := 1408h
+	pop	d		; 0e18  d1		Q	; Load the next two bytes into D:  D := D*, SP := 140Ah
+	pop	h		; 0e19  e1		a	; Load the next two bytes into H:  H := H*, SP := 140Ch
+	pop	h		; 0e1a  e1		a	; Load the next two bytes into H:  H := SP*, SP := 140Eh
+	sphl			; 0e1b  f9		y	; Copy H into SP:  H := SP*, SP := SP*
+	lhld	X140e		; 0e1c  2a 0e 14	*..	; H := PC*, SP := SP*
+	push	h		; 0e1f  e5		e	; Push H (PC*) on the stack, as a fake return address
+	lhld	X140a		; 0e20  2a 0a 14	*..	; H := H*
+	ret			; 0e23  c9		I	; "Return" to the last address on the stack, i.e. PC := PC*
+;
+;
+; Stores the system registers in memory, at addresses 1404h ~ 140Fh (see memory map)
+; The values stored (PC and SP, in particular) are the ones *before* the call to RST2
+; 
+registersToMem:
+	shld	X140a		; 0e24  22 0a 14	"..	; H* := H
+	pop	h		; 0e27  e1		a	; H := PC-before-last-call (it was on the top of the stack)
+	shld	X140e		; 0e28  22 0e 14	"..	; PC* := PC-before-last-call
+	push	psw		; 0e2b  f5		u	; Backup (A, F)
+	lxi	h,X0002		; 0e2c  21 02 00	!..	; H := SP + 2 = SP-before-last-call
 	dad	sp		; 0e2f  39		9
-	shld	X140c		; 0e30  22 0c 14	"..
-	pop	psw		; 0e33  f1		q
-	lxi	sp,X140a	; 0e34  31 0a 14	1..
-	push	d		; 0e37  d5		U
-	push	b		; 0e38  c5		E
-	push	psw		; 0e39  f5		u
-	lxi	sp,X1470	; 0e3a  31 70 14	1p.
-	jmp	X0d40		; 0e3d  c3 40 0d	C@.
+	shld	X140c		; 0e30  22 0c 14	"..	; SP* := SP-before-last-call
+	pop	psw		; 0e33  f1		q	; Restore (A, F)
+	lxi	sp,X140a	; 0e34  31 0a 14	1..	; Set the stack base at 140Ah. Pushes will overwrite D*, B* and PSW*
+	push	d		; 0e37  d5		U	; D* := D
+	push	b		; 0e38  c5		E	; B* := B
+	push	psw		; 0e39  f5		u	; PSW* := PSW
+	lxi	sp,X1470	; 0e3a  31 70 14	1p.	; Set the stack base at 1470h (the default address)
+	jmp	X0d40		; 0e3d  c3 40 0d	C@.	; TODO: Print the registers?
 ;
 X0e40:	db	'MORE? '				; 0e40
 	db	4					; 0e46 .
@@ -1138,7 +1160,7 @@ X0f78:	call	X00e8		; 0f78  cd e8 00	Mh.
 ;
 X0f7e:	dw	X0246		; 0f7e   46 02      F.
 	dw	X0400		; 0f80   00 04      ..
-	dw	X0e13		; 0f82   13 0e      ..
+	dw	memToRegisters		; 0f82   13 0e      ..
 	dw	X01f6		; 0f84   f6 01      v.
 	dw	X037f		; 0f86   7f 03      ..
 	dw	X0d8a		; 0f88   8a 0d      ..
