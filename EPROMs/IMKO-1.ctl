@@ -182,6 +182,68 @@ L 01F3 toLowerCase
 ! 01F0 It's a lowercase letter. Convert to uppercase by subtracting 0x20
 ! 01F3 Convert to lowercase by adding 0x20
 
+L 01F6 printMemString
+# 01F6
+# 01F6 Prompts for an address and displays the string located at it
+# 01F6
+! 01F6 Load the user-specified address in H
+! 01F9 D := H, store a copy of the address in D
+
+L 01FA printNLDString
+# 01FA
+# 01FA Prints a CR/LF on the monitor, followed by the string at the address in D
+# 01FA
+! 01FA Print the new-line
+
+L 01FD printDString
+! 01FD Load the current character in A
+! 01FE Advance D to the next memory address
+! 01FF Check A for end-of-string terminator char
+! 0201 Return if done
+! 0202 TODO
+! 0205 Loop until the whole string has been processed
+
+L 0208 promptStartReadH
+# 0208
+# 0208 TODO. Displays a 'START:' prompt, reads a line of input and converts it to an address, stored in H
+# 0208
+! 0208 Set the (address of the) prompt string in D: 'START:'
+
+L 020B promptDReadH
+! 020B Display the string, starting at the memory address in D
+
+L 020E readAddrInH
+! 020E Read a line from the keyboard
+! 0211 Convert to an address
+
+L 0219 printNL
+# 0219
+# 0219 Displays a CR/LF pair, i.e. moves to a new line
+# 0219
+! 0219 Backup A and D
+! 021B Point D to the address of the CR/LF string
+! 021E Display the string
+! 0221 Restore A and D
+
+L 0224 promptStartEnd
+# 0224
+# 0224 Prompts for input of a start and end addesses and stores them on the stack
+# 0224 (&start is pushed first, &end is pushed second)
+# 0224
+! 0224 HL := &start, SP := &return
+! 0227 HL := &return, SP := &start
+! 0228 HL := &return, SP := &return, &start
+! 0229 Set the prompt string to 'END:'
+! 022C HL := &end, SP := &return, &start
+! 022F HL := &return, SP := &end, &start
+! 0230 PC := HL, return to the caller address
+
+L 0275 promptByte
+# 0275
+# 0275 Displays a 'BYTE:' prompt and reads a line of input to memory address 1410h
+# 0275
+! 0275 Set D to the prompt string of 'BYTE:'
+
 # 02AB
 # 02AB Does something (output) first with the upper nibble of A, then with the lower nibble of A
 # 02AB 
@@ -246,18 +308,34 @@ L 0365 readUARTSafe
 ! 0374 TODO
 ! 0377 Set the default to be zero, for any further reads
 
+L 037F memSet
+L 038B memSetLoop
+# 037F
+# 037F Fills a block of memory with a given byte value
+# 037F
+! 037F Read &start and &end, place them on the stack
+! 0382 Read and convert the fill-value in A
+! 0388 D := &end
+! 0389 H := &start
+! 038A B := fill-value
+! 038B Overwrite the current memory byte with the fill-value
+! 038C TODO: Fall-through to the monitor, if D == H
+! 038F ++H
+! 0390 Jump back, until the whole memory block is overwritten
+
 L 0398 string1410ToAddr
 L 039B stringDToAddr
 L 039F accumulateMemHex
 # 0398
 # 0398 Converts the sequence of hex characters at memory address 1410
 # 0398 to a 16-bit address, stored in (H, L). '0FFF' -> 0FFFh
+# 0398 The lower byte (L) is also stored in A
 # 0398
 ! 0398 D := 1410h
 ! 039B A := 0, (H, L) := (0, 0), B := 0
 ! 039F Store the next hex digit in A
 ! 03A2 Also copy it to C
-! 03A3 Store the last valid digit in A, in case of a return
+! 03A3 Store the last valid byte in A, in case of a return
 ! 03A4 Return in case of a conversion error or end-of-string
 ! 03A5 'Append' the next hex digit to (H, L)
 ! 03A6 (H, L) := 16 * (H, L) + (0, C)
@@ -334,6 +412,24 @@ L 0E62 readFromUART
 ! 0E64 Check for DAV flag
 ! 0E66 Jump back if DAV flag is not set
 ! 0E69 Read UART data byte
+
+L 0E98 string1410ToByte
+L 0E9B stringDToByte
+# 0E98
+# 0E98 Converts a line of input at 1410h to a byte value stored in A
+# 0E98
+! 0E98 Set the address of the keyboard buffer in D
+! 0E9B Backup H and B
+! 0E9D Perform the conversion
+! 0EA0 Restore H and B. The 16-bit conversion result (in H) are discarded
+! 0EA1 and only the LSB byte remains in A
+
+L 0EA3 jumpToAddress
+# 0EA3
+# 0EA3 Prompts for input of an address and jumps there
+# 0EA3
+! 0EA3 Get the address
+! 0EA6 PC := HL, jump to the address
 
 L 0F0F invert1472
 # 0F0F
