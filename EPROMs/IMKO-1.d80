@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/23 23:41
+;  2012/10/27 13:28
 ;
 	org	0
 ;
@@ -135,13 +135,14 @@ X00a9:	mvi	b,0dh		; 00a9  06 0d		..
 	xchg			; 00ae  eb		k
 	dcx	d		; 00af  1b		.
 	pop	b		; 00b0  c1		A
-X00b1:	call	X00eb		; 00b1  cd eb 00	Mk.
-	xchg			; 00b4  eb		k
-	mvi	m,20h		; 00b5  36 20		6 
-	inx	h		; 00b7  23		#
-	mvi	m,4		; 00b8  36 04		6.
-	ana	a		; 00ba  a7		'
-	xchg			; 00bb  eb		k
+terminateStrD:
+	call	X00eb		; 00b1  cd eb 00	Mk.	; Display the value in A, the last char read
+	xchg			; 00b4  eb		k	; DE <-> HL
+	mvi	m,20h		; 00b5  36 20		6 	; Overwrite the new-line (0Dh) with a space (20h)
+	inx	h		; 00b7  23		#	; Move to the next memory byte
+	mvi	m,4		; 00b8  36 04		6.	; 4-terminate the string
+	ana	a		; 00ba  a7		'	; Reset any flags? TODO
+	xchg			; 00bb  eb		k	; DE <-> HL
 	ret			; 00bc  c9		I
 ;
 	nop			; 00bd  00		.
@@ -404,7 +405,7 @@ promptStartReadH:
 promptDReadH:
 	call	printNLDString	; 020b  cd fa 01	Mz.	; Display the string, starting at the memory address in D
 readAddrInH:
-	call	X027b		; 020e  cd 7b 02	M{.	; Read a line from the keyboard
+	call	readLineTo1410	; 020e  cd 7b 02	M{.	; Read a line from the keyboard
 	call	string1410ToAddr; 0211  cd 98 03	M..	; Convert to an address
 ;
 ; Displays a CR/LF pair, i.e. moves to a new line
@@ -434,28 +435,40 @@ promptStartEnd:
 	xthl			; 022f  e3		c	; HL := &return, SP := &end, &start
 	pchl			; 0230  e9		i	; PC := HL, return to the caller address
 ;
-X0231:	call	cmpDH		; 0231  cd bf 00	M?.
-	rnz			; 0234  c0		@
-	jmp	X0164		; 0235  c3 64 01	Cd.
+;
+; Compares D and H and "returns" to the monitor if they are equal
+;
+toMonitorIfDeqH:
+	call	cmpDH		; 0231  cd bf 00	M?.	; Compare
+	rnz			; 0234  c0		@	; Regular return, if not equal
+	jmp	X0164		; 0235  c3 64 01	Cd.	; Jump to the monitor, if equal
 ;
 X0238:	call	X1476		; 0238  cd 76 14	Mv.
 	jz	X0238		; 023b  ca 38 02	J8.
 	ret			; 023e  c9		I
 ;
-X023f:	call	X03c4		; 023f  cd c4 03	MD.
-X0242:	mov	a,m		; 0242  7e		~
-	jmp	X0259		; 0243  c3 59 02	CY.
+;
+; Displays the current memory address (H, L),
+; followed by the value of the byte at this address
+;
+printMemAddrValue:
+	call	printNLHexWord	; 023f  cd c4 03	MD.	; Print (H, L) in hex
+printMemHexByte:
+	mov	a,m		; 0242  7e		~	; Load the current memory byte into A
+	jmp	printHexByteSpace; 0243  c3 59 02	CY.	; Display A in hex
 ;
 X0246:	call	promptStartReadH; 0246  cd 08 02	M..
 	mvi	b,4		; 0249  06 04		..
 	call	X0261		; 024b  cd 61 02	Ma.
 	lxi	d,X0fc5		; 024e  11 c5 0f	.E.
 X0251:	call	printNLDString	; 0251  cd fa 01	Mz.
-X0254:	mov	a,h		; 0254  7c		|
-	call	X02ab		; 0255  cd ab 02	M+.
-	mov	a,l		; 0258  7d		}
-X0259:	call	X02ab		; 0259  cd ab 02	M+.
-	mvi	a,20h		; 025c  3e 20		> 
+printHexHL:
+	mov	a,h		; 0254  7c		|	; First print the upper byte, H
+	call	printHexByte	; 0255  cd ab 02	M+.
+	mov	a,l		; 0258  7d		}	; then the lower byte, L (followed by a space)
+printHexByteSpace:
+	call	printHexByte	; 0259  cd ab 02	M+.	; Display A as hex
+	mvi	a,20h		; 025c  3e 20		> 	; Append a space
 	jmp	X00eb		; 025e  c3 eb 00	Ck.
 ;
 X0261:	call	X0238		; 0261  cd 38 02	M8.
@@ -476,51 +489,60 @@ X0261:	call	X0238		; 0261  cd 38 02	M8.
 promptByte:
 	lxi	d,X0fb2		; 0275  11 b2 0f	.2.	; Set D to the prompt string of 'BYTE:'
 	call	printDString	; 0278  cd fd 01	M}.
-X027b:	mvi	a,20h		; 027b  3e 20		> 
-	lxi	d,X1410		; 027d  11 10 14	...
-X0280:	call	X00eb		; 0280  cd eb 00	Mk.
-	cpi	5eh		; 0283  fe 5e		~^
+;
+; Prompts for keyboard input and stores it at memory address 1410h
+;
+readLineTo1410:
+	mvi	a,20h		; 027b  3e 20		> 	; Prompt char? TODO
+	lxi	d,X1410		; 027d  11 10 14	...	; D := 1410h
+showPrompt:
+	call	X00eb		; 0280  cd eb 00	Mk.	; Display the prompt char in A
+	cpi	5eh		; 0283  fe 5e		~^	; Return if... TODO
 	rz			; 0285  c8		H
-X0286:	call	X0238		; 0286  cd 38 02	M8.
-X0289:	cpi	8		; 0289  fe 08		~.
-	jz	X029f		; 028b  ca 9f 02	J..
-	stax	d		; 028e  12		.
-	cpi	0dh		; 028f  fe 0d		~.
-	jz	X00b1		; 0291  ca b1 00	J1.
-	mov	a,e		; 0294  7b		{
-	cpi	2eh		; 0295  fe 2e		~.
-	jz	X0286		; 0297  ca 86 02	J..
-	ldax	d		; 029a  1a		.
-	inx	d		; 029b  13		.
-	jmp	X0280		; 029c  c3 80 02	C..
+readCharToD:
+	call	X0238		; 0286  cd 38 02	M8.	; Input a single char from the keyboard, into A
+handleLastKbdChar:
+	cpi	8		; 0289  fe 08		~.	; Check for and handle backspace (08h)
+	jz	backspaceRead	; 028b  ca 9f 02	J..
+	stax	d		; 028e  12		.	; Store the char into mem[D]
+	cpi	0dh		; 028f  fe 0d		~.	; Check for a new-line (0Dh)
+	jz	terminateStrD	; 0291  ca b1 00	J1.	; Terminat the string and return
+	mov	a,e		; 0294  7b		{	; Prevent buffer overrun (1410h~142Fh), by checking the lower byte of DE
+	cpi	2eh		; 0295  fe 2e		~.	; The last non-termination symbol can be stored at 142Eh (E == 2Eh)
+	jz	readCharToD	; 0297  ca 86 02	J..	; Keep overwriting the char at 142Eh with new input
+	ldax	d		; 029a  1a		.	; Restore the value in A to be the last char read
+	inx	d		; 029b  13		.	; Advance to the next byte in the memory buffer
+	jmp	showPrompt	; 029c  c3 80 02	C..
 ;
-X029f:	mov	a,e		; 029f  7b		{
-	cpi	10h		; 02a0  fe 10		~.
-	jz	X0286		; 02a2  ca 86 02	J..
-	dcx	d		; 02a5  1b		.
-	mvi	a,8		; 02a6  3e 08		>.
-	jmp	X0280		; 02a8  c3 80 02	C..
+backspaceRead:
+	mov	a,e		; 029f  7b		{	; Prevent buffer underrun (1410h~142Fh), by checking the lower byte of DE
+	cpi	10h		; 02a0  fe 10		~.	; The first symbol is always at 1410h (E == 10h)
+	jz	readCharToD	; 02a2  ca 86 02	J..	; Overwrite the char at 1410h with new input
+	dcx	d		; 02a5  1b		.	; Not at 1410h yet, so execute the backspace - take a step back
+	mvi	a,8		; 02a6  3e 08		>.	; A := 08h (backspace)
+	jmp	showPrompt	; 02a8  c3 80 02	C..
 ;
 ;
-; Does something (output) first with the upper nibble of A, then with the lower nibble of A
+; Displays the value in A as a pair of '0' ~ 'F' ASCII chars
 ; 
-X02ab:	push	psw		; 02ab  f5		u
-	rrc			; 02ac  0f		.
-	rrc			; 02ad  0f		.
+printHexByte:
+	push	psw		; 02ab  f5		u	; Backup A
+	rrc			; 02ac  0f		.	; Shift right four times, the upper nibble takes the place of the lower nibble
+	rrc			; 02ad  0f		.	; and will be displayed first
 	rrc			; 02ae  0f		.
 	rrc			; 02af  0f		.
-	call	X02b4		; 02b0  cd b4 02	M4.
-	pop	psw		; 02b3  f1		q
+	call	printHexNibble	; 02b0  cd b4 02	M4.
+	pop	psw		; 02b3  f1		q	; Restore A, display the lower nibble
 ;
-; Converts the lower nibble of A from 0x00 ~ 0x0F to a '0' ~ 'F' ASCII char. 
-; The result remains in A.
+; Prints the lower nibble of A as a '0' ~ 'F' ASCII char
 ;
-X02b4:	ani	0fh		; 02b4  e6 0f		f.
-	adi	30h		; 02b6  c6 30		F0
-	cpi	3ah		; 02b8  fe 3a		~:
-	jc	X00eb		; 02ba  da eb 00	Zk.
-	adi	7		; 02bd  c6 07		F.
-	jmp	X00eb		; 02bf  c3 eb 00	Ck.
+printHexNibble:
+	ani	0fh		; 02b4  e6 0f		f.	; Set zeros for the upper nibble of A
+	adi	30h		; 02b6  c6 30		F0	; 00h -> '0' (30h)
+	cpi	3ah		; 02b8  fe 3a		~:	; Compare with ':' (3Ah)
+	jc	X00eb		; 02ba  da eb 00	Zk.	; If A is smaller, i.e. '0'~'9', display it and return
+	adi	7		; 02bd  c6 07		F.	; Shift A to the 'A'~'F' range
+	jmp	X00eb		; 02bf  c3 eb 00	Ck.	; Display & return
 ;
 ;
 ; Outputs to UART the 4-terminated string, located at memory address 1410
@@ -644,7 +666,7 @@ memSet:	call	promptStartEnd	; 037f  cd 24 02	M$.	; Read &start and &end, place t
 	mov	b,a		; 038a  47		G	; B := fill-value
 memSetLoop:
 	mov	m,b		; 038b  70		p	; Overwrite the current memory byte with the fill-value
-	call	X0231		; 038c  cd 31 02	M1.	; TODO: Fall-through to the monitor, if D == H
+	call	toMonitorIfDeqH	; 038c  cd 31 02	M1.	; TODO: Fall-through to the monitor, if D == H
 	inx	h		; 038f  23		#	; ++H
 	jmp	memSetLoop	; 0390  c3 8b 03	C..	; Jump back, until the whole memory block is overwritten
 ;
@@ -683,27 +705,41 @@ X03ae:	push	psw		; 03ae  f5		u
 	mvi	a,3		; 03b8  3e 03		>.
 	jmp	X00dc		; 03ba  c3 dc 00	C\.
 ;
+;
+; Prints a new line, then the value of (H, L) as a four-char '0'~'F' string
+;
 	org	3c4h
 ;
-X03c4:	call	printNL		; 03c4  cd 19 02	M..
-	jmp	X0254		; 03c7  c3 54 02	CT.
+printNLHexWord:
+	call	printNL		; 03c4  cd 19 02	M..
+	jmp	printHexHL	; 03c7  c3 54 02	CT.	; Also returns
 ;
-X03ca:	call	promptStartReadH; 03ca  cd 08 02	M..
-X03cd:	mvi	b,0fh		; 03cd  06 0f		..
-X03cf:	call	X023f		; 03cf  cd 3f 02	M?.
-	inx	h		; 03d2  23		#
+;
+; Prints a memory dump, starting from a given address, listing each byte on a separate line
+;
+memList:
+	call	promptStartReadH; 03ca  cd 08 02	M..	; Read the start address in H
+memListPage:
+	mvi	b,0fh		; 03cd  06 0f		..	; Display 15 lines per page
+memListLine:
+	call	printMemAddrValue; 03cf  cd 3f 02	M?.	; Print the current memory address H and its contents
+	inx	h		; 03d2  23		#	; Advance to the next byte
 	dcr	b		; 03d3  05		.
-	jnz	X03cf		; 03d4  c2 cf 03	BO.
-	lxi	d,X0e40		; 03d7  11 40 0e	.@.
+	jnz	memListLine	; 03d4  c2 cf 03	BO.	; Loop back if there are more lines to print in this page
+	lxi	d,X0e40		; 03d7  11 40 0e	.@.	; Prompt for input: 'MORE?'
 	call	X00e5		; 03da  cd e5 00	Me.
-	cpi	59h		; 03dd  fe 59		~Y
-	jz	X03cd		; 03df  ca cd 03	JM.
-	pop	h		; 03e2  e1		a
-	jmp	tableJmpA	; 03e3  c3 98 01	C..
+	cpi	59h		; 03dd  fe 59		~Y	; Check for a 'Y'
+	jz	memListPage	; 03df  ca cd 03	JM.	; Print another page, if 'Y'
+	pop	h		; 03e2  e1		a	; TODO. Pop the 0174h from the stack? It'll be pushed again later?
+	jmp	tableJmpA	; 03e3  c3 98 01	C..	; Use the entered value for the monitor jump-table 
 ;
-X03e6:	call	readFromUART	; 03e6  cd 62 0e	Mb.
+;
+; Infinite loop of reading a char from UART and then displaying it
+;
+readLoopUART:
+	call	readFromUART	; 03e6  cd 62 0e	Mb.
 	call	X00eb		; 03e9  cd eb 00	Mk.
-	jmp	X03e6		; 03ec  c3 e6 03	Cf.
+	jmp	readLoopUART	; 03ec  c3 e6 03	Cf.
 ;
 ;
 ; Toggles the output to IO-7 between 00h and 80h. 
@@ -758,14 +794,14 @@ X07ff:	nop			; 07ff  00		.
 X0ca2:	call	promptStartReadH; 0ca2  cd 08 02	M..
 	dcx	h		; 0ca5  2b		+
 X0ca6:	inx	h		; 0ca6  23		#
-X0ca7:	call	X023f		; 0ca7  cd 3f 02	M?.
+X0ca7:	call	printMemAddrValue; 0ca7  cd 3f 02	M?.
 	lxi	d,X1410		; 0caa  11 10 14	...
 	call	X0238		; 0cad  cd 38 02	M8.
 	cpi	0dh		; 0cb0  fe 0d		~.
 	jz	X0ca6		; 0cb2  ca a6 0c	J&.
 	cpi	5eh		; 0cb5  fe 5e		~^
 	jz	X0cc6		; 0cb7  ca c6 0c	JF.
-	call	X0289		; 0cba  cd 89 02	M..
+	call	handleLastKbdChar; 0cba  cd 89 02	M..
 	push	psw		; 0cbd  f5		u
 	call	string1410ToByte; 0cbe  cd 98 0e	M..
 	mov	m,a		; 0cc1  77		w
@@ -777,7 +813,7 @@ X0cc6:	dcx	h		; 0cc6  2b		+
 X0cca:	call	X00e8		; 0cca  cd e8 00	Mh.
 	call	printNL		; 0ccd  cd 19 02	M..
 	cpi	20h		; 0cd0  fe 20		~ 
-	jz	X0d40		; 0cd2  ca 40 0d	J@.
+	jz	printRegisters	; 0cd2  ca 40 0d	J@.
 	cpi	46h		; 0cd5  fe 46		~F
 	jz	X0d19		; 0cd7  ca 19 0d	J..
 	lxi	h,X0ec8		; 0cda  21 c8 0e	!H.
@@ -800,7 +836,7 @@ X0cf8:	mov	e,m		; 0cf8  5e		^
 	dcx	h		; 0cfb  2b		+
 	xchg			; 0cfc  eb		k
 	push	d		; 0cfd  d5		U
-	call	X03c4		; 0cfe  cd c4 03	MD.
+	call	printNLHexWord	; 0cfe  cd c4 03	MD.
 	call	readAddrInH	; 0d01  cd 0e 02	M..
 	pop	d		; 0d04  d1		Q
 	xchg			; 0d05  eb		k
@@ -811,14 +847,14 @@ X0cf8:	mov	e,m		; 0cf8  5e		^
 ;
 X0d0a:	lxi	h,X1404		; 0d0a  21 04 14	!..
 	dad	b		; 0d0d  09		.
-	call	X0242		; 0d0e  cd 42 02	MB.
-	call	X027b		; 0d11  cd 7b 02	M{.
+	call	printMemHexByte	; 0d0e  cd 42 02	MB.
+	call	readLineTo1410	; 0d11  cd 7b 02	M{.
 	call	string1410ToByte; 0d14  cd 98 0e	M..
 	mov	m,a		; 0d17  77		w
 	ret			; 0d18  c9		I
 ;
-X0d19:	call	X0d66		; 0d19  cd 66 0d	Mf.
-	call	X027b		; 0d1c  cd 7b 02	M{.
+X0d19:	call	printFlagsReg	; 0d19  cd 66 0d	Mf.
+	call	readLineTo1410	; 0d1c  cd 7b 02	M{.
 	lxi	d,X1410		; 0d1f  11 10 14	...
 	mvi	c,0		; 0d22  0e 00		..
 X0d24:	ldax	d		; 0d24  1a		.
@@ -840,37 +876,52 @@ X0d39:	mov	a,c		; 0d39  79		y
 	inx	d		; 0d3c  13		.
 	jmp	X0d24		; 0d3d  c3 24 0d	C$.
 ;
-X0d40:	lxi	d,X0fdd		; 0d40  11 dd 0f	.].
+;
+; Displays the values of the system registers, as stored in memory (at 1404h ~ 140Fh)
+;
+printRegisters:
+	lxi	d,X0fdd		; 0d40  11 dd 0f	.].	; Print the register names' header
 	call	printNLDString	; 0d43  cd fa 01	Mz.
-	lxi	h,X1405		; 0d46  21 05 14	!..
-	mvi	c,7		; 0d49  0e 07		..
-X0d4b:	mov	a,m		; 0d4b  7e		~
-	call	X0259		; 0d4c  cd 59 02	MY.
-	inx	h		; 0d4f  23		#
+	lxi	h,X1405		; 0d46  21 05 14	!..	; Set the current memory address at 1405h
+	mvi	c,7		; 0d49  0e 07		..	; Iterate the seven single-byte registers: A, C, B, E, D, L and H
+printRegH:
+	mov	a,m		; 0d4b  7e		~	; Load the current memory byte in A and display it
+	call	printHexByteSpace; 0d4c  cd 59 02	MY.
+	inx	h		; 0d4f  23		#	; Advance to the next memory byte, decrement the loop counter
 	dcr	c		; 0d50  0d		.
-	jnz	X0d4b		; 0d51  c2 4b 0d	BK.
-	lhld	X140c		; 0d54  2a 0c 14	*..
-	call	X0254		; 0d57  cd 54 02	MT.
-	lhld	X140e		; 0d5a  2a 0e 14	*..
-	call	X0254		; 0d5d  cd 54 02	MT.
-	call	X0d66		; 0d60  cd 66 0d	Mf.
+	jnz	printRegH	; 0d51  c2 4b 0d	BK.	; Jump back if there are more single-byte registers to print
+	lhld	X140c		; 0d54  2a 0c 14	*..	; HL := mem[140C] - load and display the 16-bit value for SP
+	call	printHexHL	; 0d57  cd 54 02	MT.
+	lhld	X140e		; 0d5a  2a 0e 14	*..	; HL := mem[140E] - load and display the 16-bit value for PC
+	call	printHexHL	; 0d5d  cd 54 02	MT.
+	call	printFlagsReg	; 0d60  cd 66 0d	Mf.	; Display the status flags
 	jmp	monitor		; 0d63  c3 74 01	Ct.
 ;
-X0d66:	lxi	h,X0d81		; 0d66  21 81 0d	!..
-	mvi	b,5		; 0d69  06 05		..
-X0d6b:	lda	X1404		; 0d6b  3a 04 14	:..
-	ana	m		; 0d6e  a6		&
-	cnz	X0d79		; 0d6f  c4 79 0d	Dy.
-	inx	h		; 0d72  23		#
+;
+; Displays the F-registers flags, which are currently set (as stored in memory, at 1404h)
+; These are the 'S', 'Z', 'A', 'P' and 'C' flags
+;
+printFlagsReg:
+	lxi	h,X0d81		; 0d66  21 81 0d	!..	; Set the memory address to the start of the flags-to-bit array
+	mvi	b,5		; 0d69  06 05		..	; Five flags to check
+printFlag:
+	lda	X1404		; 0d6b  3a 04 14	:..	; Load the whole status register in A
+	ana	m		; 0d6e  a6		&	; AND with the bitmask for the current flag
+	cnz	printFlagName	; 0d6f  c4 79 0d	Dy.	; Display the flag, if its bit was set
+	inx	h		; 0d72  23		#	; Advance to the memory location for the next flag
 	inx	h		; 0d73  23		#
 	dcr	b		; 0d74  05		.
-	jnz	X0d6b		; 0d75  c2 6b 0d	Bk.
+	jnz	printFlag	; 0d75  c2 6b 0d	Bk.	; Jump back, until all flags have been processed
 	ret			; 0d78  c9		I
 ;
-X0d79:	dcx	h		; 0d79  2b		+
-	mov	a,m		; 0d7a  7e		~
+;
+; Displays the name of the status flag, whose bit-mask is currently being pointed-at by H
+; 
+printFlagName:
+	dcx	h		; 0d79  2b		+	; The flag name is in the previous byte
+	mov	a,m		; 0d7a  7e		~	; Load the flag name into A and display it
 	call	X00eb		; 0d7b  cd eb 00	Mk.
-	inx	h		; 0d7e  23		#
+	inx	h		; 0d7e  23		#	; Restore H to its original value
 	ret			; 0d7f  c9		I
 ;
 ;
@@ -914,11 +965,11 @@ X0dad:	ldax	d		; 0dad  1a		.
 	mov	a,h		; 0dbb  7c		|
 	sbb	b		; 0dbc  98		.
 	mov	h,a		; 0dbd  67		g
-	call	X0254		; 0dbe  cd 54 02	MT.
+	call	printHexHL	; 0dbe  cd 54 02	MT.
 	call	X0dcf		; 0dc1  cd cf 0d	MO.
 X0dc4:	xchg			; 0dc4  eb		k
 	xthl			; 0dc5  e3		c
-	call	X0231		; 0dc6  cd 31 02	M1.
+	call	toMonitorIfDeqH	; 0dc6  cd 31 02	M1.
 	xthl			; 0dc9  e3		c
 	xchg			; 0dca  eb		k
 	inx	h		; 0dcb  23		#
@@ -932,41 +983,50 @@ X0dd7:	mvi	a,0ch		; 0dd7  3e 0c		>.
 	sta	X1471		; 0dd9  32 71 14	2q.
 	jmp	printNL		; 0ddc  c3 19 02	C..
 ;
-X0ddf:	call	promptStartEnd	; 0ddf  cd 24 02	M$.
-	lxi	d,X0e4d		; 0de2  11 4d 0e	.M.
-	call	promptDReadH	; 0de5  cd 0b 02	M..
-	pop	b		; 0de8  c1		A
-	pop	d		; 0de9  d1		Q
-	call	X0231		; 0dea  cd 31 02	M1.
-	push	h		; 0ded  e5		e
+;
+; Copies a memory block from one location to another
+; To avoid corruption, data is copied forward if &start > &to and backward if &start < &to
+;
+memCopy:
+	call	promptStartEnd	; 0ddf  cd 24 02	M$.	; Read start & end addresses, put them on the stack
+	lxi	d,X0e4d		; 0de2  11 4d 0e	.M.	; Prompt 'TO:' and read the destination address
+	call	promptDReadH	; 0de5  cd 0b 02	M..	; H := &to
+	pop	b		; 0de8  c1		A	; B := &end
+	pop	d		; 0de9  d1		Q	; D := &start
+	call	toMonitorIfDeqH	; 0dea  cd 31 02	M1.	; Compare &to and &start. Return if equal
+	push	h		; 0ded  e5		e	; Swap B and H. H := &end, B := &to
 	mov	h,b		; 0dee  60		`
 	mov	l,c		; 0def  69		i
 	pop	b		; 0df0  c1		A
-	jnc	X0dfe		; 0df1  d2 fe 0d	R~.
-X0df4:	ldax	d		; 0df4  1a		.
+	jnc	setBDestEnd	; 0df1  d2 fe 0d	R~.	; Copy memory backwards
+memCopyForward:
+	ldax	d		; 0df4  1a		.	; mem[B] := mem[D]
 	stax	b		; 0df5  02		.
-	call	X0231		; 0df6  cd 31 02	M1.
-	inx	d		; 0df9  13		.
+	call	toMonitorIfDeqH	; 0df6  cd 31 02	M1.	; Compare the 'current-from' D with &end H. Return if equal
+	inx	d		; 0df9  13		.	; Increment both 'current-from' D and 'current-to' B
 	inx	b		; 0dfa  03		.
-	jmp	X0df4		; 0dfb  c3 f4 0d	Ct.
+	jmp	memCopyForward	; 0dfb  c3 f4 0d	Ct.
 ;
-X0dfe:	push	h		; 0dfe  e5		e
-	mov	a,l		; 0dff  7d		}
+; Memory will be copied backwards. Change B from 'destination-start' to 'destination-end'
+setBDestEnd:
+	push	h		; 0dfe  e5		e	; Backup H
+	mov	a,l		; 0dff  7d		}	; H := (H - D) = (&end - &start), the legth of the copied block
 	sub	e		; 0e00  93		.
 	mov	l,a		; 0e01  6f		o
 	mov	a,h		; 0e02  7c		|
 	sbb	d		; 0e03  9a		.
 	mov	h,a		; 0e04  67		g
-	dad	b		; 0e05  09		.
-	push	h		; 0e06  e5		e
+	dad	b		; 0e05  09		.	; H += B, i.e. H := &to + (&end - &start)
+	push	h		; 0e06  e5		e	; B := H, i.e. B := &to + (&end - &start)
 	pop	b		; 0e07  c1		A
-	pop	h		; 0e08  e1		a
-X0e09:	mov	a,m		; 0e09  7e		~
+	pop	h		; 0e08  e1		a	; Restore the original value of H
+memCopyBackward:
+	mov	a,m		; 0e09  7e		~	; mem[B] := mem[H]
 	stax	b		; 0e0a  02		.
-	call	X0231		; 0e0b  cd 31 02	M1.
-	dcx	b		; 0e0e  0b		.
+	call	toMonitorIfDeqH	; 0e0b  cd 31 02	M1.	; Compare the 'current-from' H with &start D. Return if equal
+	dcx	b		; 0e0e  0b		.	; Decrement both 'current-from' H and 'current-to' B
 	dcx	h		; 0e0f  2b		+
-	jmp	X0e09		; 0e10  c3 09 0e	C..
+	jmp	memCopyBackward	; 0e10  c3 09 0e	C..
 ;
 ;
 ; Loads the values stored at 1404h ~ 140Fh (see memory map) to the system registers
@@ -1002,7 +1062,7 @@ registersToMem:
 	push	b		; 0e38  c5		E	; B* := B
 	push	psw		; 0e39  f5		u	; PSW* := PSW
 	lxi	sp,X1470	; 0e3a  31 70 14	1p.	; Set the stack base at 1470h (the default address)
-	jmp	X0d40		; 0e3d  c3 40 0d	C@.	; TODO: Print the registers?
+	jmp	printRegisters	; 0e3d  c3 40 0d	C@.	; TODO: Print the registers?
 ;
 X0e40:	db	'MORE? '				; 0e40
 	db	4					; 0e46 .
@@ -1043,7 +1103,7 @@ readFromUART:
 X0e6c:	call	write00hToIO7	; 0e6c  cd 4a 00	MJ.
 	lxi	d,X0fd0		; 0e6f  11 d0 0f	.P.
 	call	printNLDString	; 0e72  cd fa 01	Mz.
-	call	X027b		; 0e75  cd 7b 02	M{.
+	call	readLineTo1410	; 0e75  cd 7b 02	M{.
 	jmp	write80hToIO7	; 0e78  c3 f6 03	Cv.
 ;
 X0e7b:	lxi	d,X037a		; 0e7b  11 7a 03	.z.
@@ -1088,17 +1148,24 @@ jumpToAddress:
 	call	promptStartReadH; 0ea3  cd 08 02	M..	; Get the address
 	pchl			; 0ea6  e9		i	; PC := HL, jump to the address
 ;
-X0ea7:	call	promptStartEnd	; 0ea7  cd 24 02	M$.
-	pop	d		; 0eaa  d1		Q
-	pop	h		; 0eab  e1		a
-X0eac:	call	X03c4		; 0eac  cd c4 03	MD.
-X0eaf:	call	X0242		; 0eaf  cd 42 02	MB.
-	call	X0231		; 0eb2  cd 31 02	M1.
-	inx	h		; 0eb5  23		#
-	mov	a,l		; 0eb6  7d		}
+;
+; Prints a hex dump of a memory region. 
+; Each line starts with a memory address, followed by (up to) 16 bytes of memory data
+;
+memDump:
+	call	promptStartEnd	; 0ea7  cd 24 02	M$.	; Read start & end addresses, put them on the stack
+	pop	d		; 0eaa  d1		Q	; D := &end
+	pop	h		; 0eab  e1		a	; H := &start
+memDumpAddress:
+	call	printNLHexWord	; 0eac  cd c4 03	MD.	; Print a new-line and the current memory address
+memDumpByte:
+	call	printMemHexByte	; 0eaf  cd 42 02	MB.	; Print the current memory byte
+	call	toMonitorIfDeqH	; 0eb2  cd 31 02	M1.	; If D == H, jump to monitor
+	inx	h		; 0eb5  23		#	; Advance to the next memory address
+	mov	a,l		; 0eb6  7d		}	; Check if the new address ends in a zero nibble
 	ani	0fh		; 0eb7  e6 0f		f.
-	jnz	X0eaf		; 0eb9  c2 af 0e	B/.
-	jmp	X0eac		; 0ebc  c3 ac 0e	C,.
+	jnz	memDumpByte	; 0eb9  c2 af 0e	B/.	; If not, continue with the byte-dumps
+	jmp	memDumpAddress	; 0ebc  c3 ac 0e	C,.	; If yes, start a new line of print
 ;
 	org	0ec0h
 ;
@@ -1207,18 +1274,18 @@ X0f7e:	dw	X0246		; 0f7e   46 02      F.
 	dw	memSet		; 0f86   7f 03      ..
 	dw	X0d8a		; 0f88   8a 0d      ..
 	dw	jumpToAddress		; 0f8a   a3 0e      #.
-	dw	X0ea7		; 0f8c   a7 0e      '.
+	dw	memDump		; 0f8c   a7 0e      '.
 	dw	X0343		; 0f8e   43 03      C.
 	dw	Xf7cc		; 0f90   cc f7      Lw
 	dw	invert1472		; 0f92   0f 0f      ..
-	dw	X03ca		; 0f94   ca 03      J.
+	dw	memList		; 0f94   ca 03      J.
 	dw	toggleIO7		; 0f96   ef 03      o.
 	dw	X1473		; 0f98   73 14      s.
 	dw	writeProgToUART		; 0f9a   22 03      ".
 	dw	X0ca2		; 0f9c   a2 0c      ".
 	dw	X1473		; 0f9e   73 14      s.
 	dw	X0cca		; 0fa0   ca 0c      J.
-	dw	X0ddf		; 0fa2   df 0d      _.
+	dw	memCopy		; 0fa2   df 0d      _.
 	dw	Xc000		; 0fa4   00 c0      .@
 	dw	X1473		; 0fa6   73 14      s.
 	dw	invert1401		; 0fa8   15 0f      ..

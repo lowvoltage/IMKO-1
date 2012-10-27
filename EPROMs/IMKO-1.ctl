@@ -84,6 +84,15 @@ L 009D fillMemLoop
 ! 00A4 --B
 ! 00A5 Jump back if B != 0
 
+L 00B1 terminateStrD
+! 00B1 Display the value in A, the last char read
+! 00B4 DE <-> HL
+! 00B5 Overwrite the new-line (0Dh) with a space (20h)
+! 00B7 Move to the next memory byte
+! 00B8 4-terminate the string
+! 00BA Reset any flags? TODO
+! 00BB DE <-> HL
+
 L 00BF cmpDH
 # 00BF
 # 00BF 16-bit compare of [D, E] and [H, L]
@@ -238,20 +247,87 @@ L 0224 promptStartEnd
 ! 022F HL := &return, SP := &end, &start
 ! 0230 PC := HL, return to the caller address
 
+L 0231 toMonitorIfDeqH
+# 0231
+# 0231 Compares D and H and "returns" to the monitor if they are equal
+# 0231
+! 0231 Compare
+! 0234 Regular return, if not equal
+! 0235 Jump to the monitor, if equal
+
+L 023F printMemAddrValue
+# 023F
+# 023F Displays the current memory address (H, L),
+# 023F followed by the value of the byte at this address
+# 023F
+! 023F Print (H, L) in hex
+
+L 0242 printMemHexByte
+! 0242 Load the current memory byte into A
+! 0243 Display A in hex
+
+L 0254 printHexHL
+! 0254 First print the upper byte, H
+! 0258 then the lower byte, L (followed by a space)
+
+L 0259 printHexByteSpace
+! 0259 Display A as hex
+! 025C Append a space
+
 L 0275 promptByte
 # 0275
 # 0275 Displays a 'BYTE:' prompt and reads a line of input to memory address 1410h
 # 0275
 ! 0275 Set D to the prompt string of 'BYTE:'
 
-# 02AB
-# 02AB Does something (output) first with the upper nibble of A, then with the lower nibble of A
-# 02AB 
+L 027B readLineTo1410
+# 027B
+# 027B Prompts for keyboard input and stores it at memory address 1410h
+# 027B
+! 027B Prompt char? TODO
+! 027D D := 1410h
+L 0280 showPrompt
+! 0280 Display the prompt char in A
+! 0283 Return if... TODO
+L 0286 readCharToD
+! 0286 Input a single char from the keyboard, into A
+L 0289 handleLastKbdChar
+! 0289 Check for and handle backspace (08h)
+! 028E Store the char into mem[D]
+! 028F Check for a new-line (0Dh)
+! 0291 Terminat the string and return
+! 0294 Prevent buffer overrun (1410h~142Fh), by checking the lower byte of DE
+! 0295 The last non-termination symbol can be stored at 142Eh (E == 2Eh)
+! 0297 Keep overwriting the char at 142Eh with new input
+! 029A Restore the value in A to be the last char read
+! 029B Advance to the next byte in the memory buffer
+L 029F backspaceRead
+! 029F Prevent buffer underrun (1410h~142Fh), by checking the lower byte of DE
+! 02A0 The first symbol is always at 1410h (E == 10h)
+! 02A2 Overwrite the char at 1410h with new input
+! 02A5 Not at 1410h yet, so execute the backspace - take a step back
+! 02A6 A := 08h (backspace)
 
+L 02AB printHexByte
+# 02AB
+# 02AB Displays the value in A as a pair of '0' ~ 'F' ASCII chars
+# 02AB 
+! 02AB Backup A
+! 02AC Shift right four times, the upper nibble takes the place of the lower nibble
+! 02AD and will be displayed first
+! 02B3 Restore A, display the lower nibble
+
+
+L 02B4 printHexNibble
 # 02B4
-# 02B4 Converts the lower nibble of A from 0x00 ~ 0x0F to a '0' ~ 'F' ASCII char. 
-# 02B4 The result remains in A.
+# 02B4 Prints the lower nibble of A as a '0' ~ 'F' ASCII char
 # 02B4
+! 02B4 Set zeros for the upper nibble of A
+! 02B6 00h -> '0' (30h)
+! 02B8 Compare with ':' (3Ah)
+! 02BA If A is smaller, i.e. '0'~'9', display it and return
+! 02BD Shift A to the 'A'~'F' range
+! 02BF Display & return
 
 L 02C2 write1410toUART
 L 02CC write1410CRLoop
@@ -342,17 +418,118 @@ L 039F accumulateMemHex
 ! 03AA Advance to the next memory address
 ! 03AB Loop until the char->hex conversion fails
 
-L 03F6 write80hToIO7
-! 03F6 A := 80h
+L 03C4 printNLHexWord
+# 03C4
+# 03C4 Prints a new line, then the value of (H, L) as a four-char '0'~'F' string
+# 03C4
+! 03C7 Also returns
 
-L 03F8 writeIO7
-! 03F8 Send A to IO-7, store it at memory address 1470
+L 03CA memList
+# 03CA
+# 03CA Prints a memory dump, starting from a given address, listing each byte on a separate line
+# 03CA
+! 03CA Read the start address in H
+
+L 03CD memListPage
+! 03CD Display 15 lines per page
+
+L 03CF memListLine
+! 03CF Print the current memory address H and its contents
+! 03D2 Advance to the next byte
+! 03D4 Loop back if there are more lines to print in this page
+! 03D7 Prompt for input: 'MORE?'
+! 03DD Check for a 'Y'
+! 03DF Print another page, if 'Y'
+! 03E2 TODO. Pop the 0174h from the stack? It'll be pushed again later?
+! 03E3 Use the entered value for the monitor jump-table 
+
+L 03E6 readLoopUART
+# 03E6
+# 03E6 Infinite loop of reading a char from UART and then displaying it
+# 03E6
 
 L 03EF toggleIO7
 # 03EF
 # 03EF Toggles the output to IO-7 between 00h and 80h. 
 # 03EF The new value is also stored at memory address 1470
 # 03EF
+
+L 03F6 write80hToIO7
+! 03F6 A := 80h
+
+L 03F8 writeIO7
+! 03F8 Send A to IO-7, store it at memory address 1470
+
+L 0D40 printRegisters
+# 0D40
+# 0D40 Displays the values of the system registers, as stored in memory (at 1404h ~ 140Fh)
+# 0D40
+! 0D40 Print the register names' header
+! 0D46 Set the current memory address at 1405h
+! 0D49 Iterate the seven single-byte registers: A, C, B, E, D, L and H
+
+L 0D4B printRegH
+! 0D4B Load the current memory byte in A and display it
+! 0D4F Advance to the next memory byte, decrement the loop counter
+! 0D51 Jump back if there are more single-byte registers to print
+! 0D54 HL := mem[140C] - load and display the 16-bit value for SP
+! 0D5A HL := mem[140E] - load and display the 16-bit value for PC
+! 0D60 Display the status flags
+
+L 0D66 printFlagsReg
+# 0D66
+# 0D66 Displays the F-registers flags, which are currently set (as stored in memory, at 1404h)
+# 0D66 These are the 'S', 'Z', 'A', 'P' and 'C' flags
+# 0D66
+! 0D66 Set the memory address to the start of the flags-to-bit array
+! 0D69 Five flags to check
+
+L 0D6B printFlag
+! 0D6B Load the whole status register in A
+! 0D6E AND with the bitmask for the current flag
+! 0D6F Display the flag, if its bit was set
+! 0D72 Advance to the memory location for the next flag
+! 0D75 Jump back, until all flags have been processed
+
+L 0D79 printFlagName
+# 0D79
+# 0D79 Displays the name of the status flag, whose bit-mask is currently being pointed-at by H
+# 0D79 
+! 0D79 The flag name is in the previous byte
+! 0D7A Load the flag name into A and display it
+! 0D7E Restore H to its original value
+
+L 0DDF memCopy
+# 0DDF
+# 0DDF Copies a memory block from one location to another
+# 0DDF To avoid corruption, data is copied forward if &start > &to and backward if &start < &to
+# 0DDF
+! 0DDF Read start & end addresses, put them on the stack
+! 0DE2 Prompt 'TO:' and read the destination address
+! 0DE5 H := &to
+! 0DE8 B := &end
+! 0DE9 D := &start
+! 0DEA Compare &to and &start. Return if equal
+! 0DED Swap B and H. H := &end, B := &to
+! 0DF1 Copy memory backwards
+
+L 0DF4 memCopyForward
+! 0DF4 mem[B] := mem[D]
+! 0DF6 Compare the 'current-from' D with &end H. Return if equal
+! 0DF9 Increment both 'current-from' D and 'current-to' B
+
+L 0DFE setBDestEnd
+# 0DFE Memory will be copied backwards. Change B from 'destination-start' to 'destination-end'
+! 0DFE Backup H
+! 0DFF H := (H - D) = (&end - &start), the legth of the copied block
+! 0E05 H += B, i.e. H := &to + (&end - &start)
+! 0E06 B := H, i.e. B := &to + (&end - &start)
+! 0E08 Restore the original value of H
+
+L 0E09 memCopyBackward
+! 0E09 mem[B] := mem[H]
+! 0E0B Compare the 'current-from' H with &start D. Return if equal
+! 0E0E Decrement both 'current-from' H and 'current-to' B
 
 L 0E13 memToRegisters
 # 0E13
@@ -430,6 +607,24 @@ L 0EA3 jumpToAddress
 # 0EA3
 ! 0EA3 Get the address
 ! 0EA6 PC := HL, jump to the address
+
+L 0EA7 memDump
+# 0EA7
+# 0EA7 Prints a hex dump of a memory region. 
+# 0EA7 Each line starts with a memory address, followed by (up to) 16 bytes of memory data
+# 0EA7
+! 0EA7 Read start & end addresses, put them on the stack
+! 0EAA D := &end
+! 0EAB H := &start
+L 0EAC memDumpAddress
+! 0EAC Print a new-line and the current memory address
+L 0EAF memDumpByte
+! 0EAF Print the current memory byte
+! 0EB2 If D == H, jump to monitor
+! 0EB5 Advance to the next memory address
+! 0EB6 Check if the new address ends in a zero nibble
+! 0EB9 If not, continue with the byte-dumps
+! 0EBC If yes, start a new line of print
 
 L 0F0F invert1472
 # 0F0F
