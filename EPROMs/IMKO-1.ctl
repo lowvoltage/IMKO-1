@@ -69,7 +69,9 @@ L 008F endOfMem
 ! 008C Jump back and redo the check
 ! 008F Set 0x00 to the lower byte of the memory address [H, L] 
 ! 0090 Store the max memory address at mem[1481]
-! 009A TODO: Is this line reachable?
+! 0093 Display a new-page (clear screen)
+! 0094 Display 'ITKROM V1.2' and report the max memory address
+! 009A Jump to the monitor
 
 L 009B fillMem5
 L 009D fillMemLoop
@@ -113,6 +115,24 @@ L 00C9 delay2047Loop
 ! 00CD A := High(D) | Low(D)
 ! 00CF Jump back if D != 0
 ! 00D2 Restore D
+
+L 00D4 printNewPage
+# 00D4
+# 00D4 Displays the new-page char, i.e. clears the screen
+# 00D4
+! 00D4 Backup the value in A
+! 00D5 A := 0Ch, the new-page char
+! 00D7 Display the value in A
+! 00DA Restore the original value of A
+
+L 00DC delayA
+# 00DC
+# 00DC Executes delay1() A times
+# 00DC
+! 00DC Wait
+! 00DF Decrement A
+! 00E0 Jump back until A becomes zero
+! 00E3 Restore the original value of A
 
 L 014A delay1
 L 014D delay1Loop
@@ -266,6 +286,17 @@ L 0242 printMemHexByte
 ! 0242 Load the current memory byte into A
 ! 0243 Display A in hex
 
+L 0246 writeStrToMem
+# 0246
+# 0246 Inputs a 4-terminated string into a specified memory location
+# 0246
+! 0246 Prompt for and input the target memory address in H
+! 0249 Set 04h as a terminator char
+! 024B Input the string in memory
+! 024E Display 'END:' and report the string's end address
+L 0251 printDHexH
+! 0251 Print the string pointed by D, followed by the value of HL
+
 L 0254 printHexHL
 ! 0254 First print the upper byte, H
 ! 0258 then the lower byte, L (followed by a space)
@@ -273,6 +304,19 @@ L 0254 printHexHL
 L 0259 printHexByteSpace
 ! 0259 Display A as hex
 ! 025C Append a space
+
+L 0261 inputToM
+# 0261
+# 0261 Read from keyboard and store the input in memory, until the char in B is entered
+# 0261
+! 0261 Read a char in A
+! 0264 Store the char in memory
+! 0265 Advance to the next memory byte
+! 0266 Check for end-of-string
+! 0267 Return if found
+! 0268 Display the char
+! 026B Check for backspace (08h)
+! 0270 Handle backspace - reduce the memory address by two
 
 L 0275 promptByte
 # 0275
@@ -329,14 +373,13 @@ L 02B4 printHexNibble
 ! 02BD Shift A to the 'A'~'F' range
 ! 02BF Display & return
 
-L 02C2 write1410toUART
-L 02CC write1410CRLoop
+L 02C2 writeUARTHeader
+L 02CC writeCRLoop
 L 02D6 write1410StrLoop
 # 02C2
-# 02C2 Outputs to UART the 4-terminated string, located at memory address 1410
-# 02C2 TODO: What's at 1410? Tape header? TODO: Name: write -> send?
+# 02C2 Prompts for 'Tape Header', reads a string to 1410h  and writes it to UART
 # 02C2
-! 02C2 TODO: What is this?
+! 02C2 Read input to 1410h
 ! 02C5 Wait for a while
 ! 02C8 B := 64
 ! 02CA Write 64 CR (0x0D) characters to UART
@@ -348,13 +391,48 @@ L 02D6 write1410StrLoop
 ! 02DB Was this the string terminator byte (0x04)?
 ! 02DD Jump back if not end-of-string
 
+L 02E1 findProgInUART
+# 02E1
+# 02E1 Inputs a target tape-header string and locates the program body with this header
+# 02E1
+! 02E1 Prompt for a header string, store it at 1410h
+! 02E4 Display 'FILES FOUND:'. All skipped headers will be listed
+
+L 02EA findNextHeader
+! 02ED Set the current memory address to 1410h
+
+L 02F0 findLeading0Ds
+! 02F0 64 ODh chars are written before each header. Find at least 32 (20h)
+
+L 02F2 skipLeading0D
+! 02F2 Read a char from UART
+! 02F5 Check for 0Dh
+! 02F7 If not a 0Dh, restart the search
+! 02FA It's a 0Dh, decrement the target count
+! 02FB Jump back if any more 0Ds need to be found
+
+L 02FE skip0Ds
+! 02FE Skip any remaining 0Ds
+! 0306 The next char of the UART header is in A. Display it
+! 0309 Compare it with the target char at mem[H]
+! 030A Jump if different
+! 030D Advance to the next memory byte
+! 030E Check A for an end-of-string
+! 0310 Jump back if more chars from the tape-header need to match
+
+L 0314 headerMismatch
+! 0314 Check A for an end-of-string
+! 0316 If the UART header is over (and is not the one requested), skip the whole program body
+! 0319 Read and display any remaining chars from the UART header
+! 031F Jump back unitl the current UART header ends
+
 L 0322 writeProgToUART
 L 032C writeProgLoop
 # 0322
-# 0322 Writes to UART the string at 1410 (TODO: some header?), followed by 
+# 0322 Inputs a tape header string, writes it to UART, followed by 
 # 0322 the contents of the program located at memory address 1600
 # 0322
-! 0322 First write some header (TODO)
+! 0322 Prompt for a header string, write it to UART
 ! 0325 Set the memory address to 1600
 ! 0328 (D, E) := (mem[1601], mem[1600]) - the address after the last byte of the program
 ! 032B H is back at 1600. The end-of-program address is stored together with the program itself
@@ -366,6 +444,27 @@ L 032C writeProgLoop
 ! 0337 Timed delay
 
 ! 033A TODO: Now what?
+
+L 0343 readProgFrmUART
+# 0343
+# 0343 Prompts for a tape-header name and loads the program with this name from UART to 1600h in memory
+# 0343
+! 0343 Locate the program start
+! 0346 Set the current memory address to 1600h
+! 0349 Set '?' (3Fh) as the default value for the readUARTSafe() calls
+! 034B Read the first UART byte, store it in E and at mem[1600h]
+! 0350 H := 1601h
+! 0351 Read the second UART byte, store it in D and at mem[1601h]
+! 0354 This way, the program's end address is in both DE and mem[1601h, 1600h]
+! 0356 H := 1602h
+
+L 0357 readProgByte
+! 0357 Read a byte from UART
+! 035A Store it at the current memory location
+! 035B Advance to the next memory byte
+! 035C Check if the end-address D has been reached
+! 035F Jump back if not
+! 0362 TODO
 
 L 0365 readUARTSafe
 # 0365
@@ -459,6 +558,29 @@ L 03F6 write80hToIO7
 
 L 03F8 writeIO7
 ! 03F8 Send A to IO-7, store it at memory address 1470
+
+L 0CA2 memEdit
+# 0CA2
+# 0CA2 Displays and allows for modification of the memory contents, starting at a given address 
+! 0CA2 Input the target starting address
+L 0CA6 memEditNext
+! 0CA6 Advance to the next byte in memory
+L 0CA7 memEditCurrent
+! 0CA7 Display the current address and its contents
+! 0CAA D := 1410h, the start of the keyboard buffer
+! 0CAD Read a single char from the keyboard into A
+! 0CB0 Check for a new-line (0Dh)
+! 0CB2 If equal, move to the next byte
+! 0CB5 Check for '^' (5Eh)
+! 0CB7 If equal, move to the previous byte
+! 0CBA Store A at 1410h and read the rest of the input string
+! 0CBD Backup F
+! 0CBE Convert the input string to a byte
+! 0CC1 Overwrite the current memory location with it
+! 0CC2 Restore the original F
+! 0CC3 Move to the next byte
+L 0CC6 memEditPrev
+! 0CC6 Move to the previous memory address
 
 L 0D40 printRegisters
 # 0D40
@@ -590,6 +712,14 @@ L 0E62 readFromUART
 ! 0E66 Jump back if DAV flag is not set
 ! 0E69 Read UART data byte
 
+L 0E6C promptTapeHeader
+# 0E6C
+# 0E6C Displays a 'TAPE HEADER:' prompt and reads input to the 1410h memory buffer
+# 0E6C
+! 0E6F Display the 'TAPE HEADER:' prompt
+! 0E75 Read the keyboard input
+! 0E78 Also returns
+
 L 0E98 string1410ToByte
 L 0E9B stringDToByte
 # 0E98
@@ -645,6 +775,11 @@ L 0F18 invertMemByte
 ! 0F18 Load memory byte into A
 ! 0F19 Invert A
 ! 0F1A Write back to memory
+
+L 0F78 readLoopKBD
+# 0F78
+# 0F78 Infinite loop of reading a char from the keyboard and then displaying it
+# 0F78
 
 ;
 ; Text areas

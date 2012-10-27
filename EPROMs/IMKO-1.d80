@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/27 13:28
+;  2012/10/27 20:27
 ;
 	org	0
 ;
@@ -8,7 +8,7 @@ RST0:	lxi	sp,X1470	; 0000  31 70 14	1p.	; Set stack base at memory address 1470
 	mvi	a,0aah		; 0003  3e aa		>*	; A := 0xAA
 	jmp	init		; 0005  c3 4e 00	CN.
 ;
-RST1:	jmp	X00d4		; 0008  c3 d4 00	CT.
+RST1:	jmp	printNewPage	; 0008  c3 d4 00	CT.
 ;
 	jmp	X0238		; 000b  c3 38 02	C8.
 ;
@@ -109,10 +109,10 @@ checkMemLoop:
 endOfMem:
 	mov	l,a		; 008f  6f		o	; Set 0x00 to the lower byte of the memory address [H, L] 
 	shld	X1481		; 0090  22 81 14	"..	; Store the max memory address at mem[1481]
-	rst	1		; 0093  cf		O
-	lxi	d,X0fb8		; 0094  11 b8 0f	.8.
-	call	X0251		; 0097  cd 51 02	MQ.
-	rst	7		; 009a  ff		.	; TODO: Is this line reachable?
+	rst	1		; 0093  cf		O	; Display a new-page (clear screen)
+	lxi	d,X0fb8		; 0094  11 b8 0f	.8.	; Display 'ITKROM V1.2' and report the max memory address
+	call	printDHexH	; 0097  cd 51 02	MQ.
+	rst	7		; 009a  ff		.	; Jump to the monitor
 ;
 ; Fills five sets of consecutive memory addresses with "C3 [E] [D]" triplets,
 ; which decode to "JMP [DE]" instructions 
@@ -131,7 +131,7 @@ fillMemLoop:
 	ret			; 00a8  c9		I
 ;
 X00a9:	mvi	b,0dh		; 00a9  06 0d		..
-	call	X0261		; 00ab  cd 61 02	Ma.
+	call	inputToM	; 00ab  cd 61 02	Ma.
 	xchg			; 00ae  eb		k
 	dcx	d		; 00af  1b		.
 	pop	b		; 00b0  c1		A
@@ -173,16 +173,23 @@ delay2047Loop:
 	pop	d		; 00d2  d1		Q	; Restore D
 	ret			; 00d3  c9		I
 ;
-X00d4:	push	psw		; 00d4  f5		u
-	mvi	a,0ch		; 00d5  3e 0c		>.
-	call	X00eb		; 00d7  cd eb 00	Mk.
-	pop	psw		; 00da  f1		q
+;
+; Displays the new-page char, i.e. clears the screen
+;
+printNewPage:
+	push	psw		; 00d4  f5		u	; Backup the value in A
+	mvi	a,0ch		; 00d5  3e 0c		>.	; A := 0Ch, the new-page char
+	call	X00eb		; 00d7  cd eb 00	Mk.	; Display the value in A
+	pop	psw		; 00da  f1		q	; Restore the original value of A
 	ret			; 00db  c9		I
 ;
-X00dc:	call	delay1		; 00dc  cd 4a 01	MJ.
-	dcr	a		; 00df  3d		=
-	jnz	X00dc		; 00e0  c2 dc 00	B\.
-	pop	psw		; 00e3  f1		q
+;
+; Executes delay1() A times
+;
+delayA:	call	delay1		; 00dc  cd 4a 01	MJ.	; Wait
+	dcr	a		; 00df  3d		=	; Decrement A
+	jnz	delayA		; 00e0  c2 dc 00	B\.	; Jump back until A becomes zero
+	pop	psw		; 00e3  f1		q	; Restore the original value of A
 	ret			; 00e4  c9		I
 ;
 X00e5:	call	printNLDString	; 00e5  cd fa 01	Mz.
@@ -457,11 +464,16 @@ printMemHexByte:
 	mov	a,m		; 0242  7e		~	; Load the current memory byte into A
 	jmp	printHexByteSpace; 0243  c3 59 02	CY.	; Display A in hex
 ;
-X0246:	call	promptStartReadH; 0246  cd 08 02	M..
-	mvi	b,4		; 0249  06 04		..
-	call	X0261		; 024b  cd 61 02	Ma.
-	lxi	d,X0fc5		; 024e  11 c5 0f	.E.
-X0251:	call	printNLDString	; 0251  cd fa 01	Mz.
+;
+; Inputs a 4-terminated string into a specified memory location
+;
+writeStrToMem:
+	call	promptStartReadH; 0246  cd 08 02	M..	; Prompt for and input the target memory address in H
+	mvi	b,4		; 0249  06 04		..	; Set 04h as a terminator char
+	call	inputToM	; 024b  cd 61 02	Ma.	; Input the string in memory
+	lxi	d,X0fc5		; 024e  11 c5 0f	.E.	; Display 'END:' and report the string's end address
+printDHexH:
+	call	printNLDString	; 0251  cd fa 01	Mz.	; Print the string pointed by D, followed by the value of HL
 printHexHL:
 	mov	a,h		; 0254  7c		|	; First print the upper byte, H
 	call	printHexByte	; 0255  cd ab 02	M+.
@@ -471,17 +483,21 @@ printHexByteSpace:
 	mvi	a,20h		; 025c  3e 20		> 	; Append a space
 	jmp	X00eb		; 025e  c3 eb 00	Ck.
 ;
-X0261:	call	X0238		; 0261  cd 38 02	M8.
-	mov	m,a		; 0264  77		w
-	inx	h		; 0265  23		#
-	cmp	b		; 0266  b8		8
-	rz			; 0267  c8		H
-	call	X00eb		; 0268  cd eb 00	Mk.
-	cpi	8		; 026b  fe 08		~.
-	jnz	X0261		; 026d  c2 61 02	Ba.
-	dcx	h		; 0270  2b		+
+;
+; Read from keyboard and store the input in memory, until the char in B is entered
+;
+inputToM:
+	call	X0238		; 0261  cd 38 02	M8.	; Read a char in A
+	mov	m,a		; 0264  77		w	; Store the char in memory
+	inx	h		; 0265  23		#	; Advance to the next memory byte
+	cmp	b		; 0266  b8		8	; Check for end-of-string
+	rz			; 0267  c8		H	; Return if found
+	call	X00eb		; 0268  cd eb 00	Mk.	; Display the char
+	cpi	8		; 026b  fe 08		~.	; Check for backspace (08h)
+	jnz	inputToM	; 026d  c2 61 02	Ba.
+	dcx	h		; 0270  2b		+	; Handle backspace - reduce the memory address by two
 	dcx	h		; 0271  2b		+
-	jmp	X0261		; 0272  c3 61 02	Ca.
+	jmp	inputToM	; 0272  c3 61 02	Ca.
 ;
 ;
 ; Displays a 'BYTE:' prompt and reads a line of input to memory address 1410h
@@ -545,18 +561,17 @@ printHexNibble:
 	jmp	X00eb		; 02bf  c3 eb 00	Ck.	; Display & return
 ;
 ;
-; Outputs to UART the 4-terminated string, located at memory address 1410
-; TODO: What's at 1410? Tape header? TODO: Name: write -> send?
+; Prompts for 'Tape Header', reads a string to 1410h  and writes it to UART
 ;
-write1410toUART:
-	call	X0e6c		; 02c2  cd 6c 0e	Ml.	; TODO: What is this?
+writeUARTHeader:
+	call	promptTapeHeader; 02c2  cd 6c 0e	Ml.	; Read input to 1410h
 	call	delay2047	; 02c5  cd c5 00	ME.	; Wait for a while
 	mvi	b,40h		; 02c8  06 40		.@	; B := 64
 	mvi	a,0dh		; 02ca  3e 0d		>.	; Write 64 CR (0x0D) characters to UART
-write1410CRLoop:
+writeCRLoop:
 	call	writeToUART	; 02cc  cd 3e 00	M>.
 	dcr	b		; 02cf  05		.
-	jnz	write1410CRLoop	; 02d0  c2 cc 02	BL.	; Jump back if more CR's need to be written
+	jnz	writeCRLoop	; 02d0  c2 cc 02	BL.	; Jump back if more CR's need to be written
 	lxi	d,X1410		; 02d3  11 10 14	...	; Set D to 1410
 write1410StrLoop:
 	ldax	d		; 02d6  1a		.	; Load the byte at mem[D]
@@ -566,40 +581,49 @@ write1410StrLoop:
 	jnz	write1410StrLoop; 02dd  c2 d6 02	BV.	; Jump back if not end-of-string
 	ret			; 02e0  c9		I
 ;
-X02e1:	call	X0e6c		; 02e1  cd 6c 0e	Ml.
-	lxi	d,X0f02		; 02e4  11 02 0f	...
+;
+; Inputs a target tape-header string and locates the program body with this header
+;
+findProgInUART:
+	call	promptTapeHeader; 02e1  cd 6c 0e	Ml.	; Prompt for a header string, store it at 1410h
+	lxi	d,X0f02		; 02e4  11 02 0f	...	; Display 'FILES FOUND:'. All skipped headers will be listed
 	call	printNLDString	; 02e7  cd fa 01	Mz.
-X02ea:	call	printNL		; 02ea  cd 19 02	M..
-	lxi	h,X1410		; 02ed  21 10 14	!..
-X02f0:	mvi	b,20h		; 02f0  06 20		. 
-X02f2:	call	readFromUART	; 02f2  cd 62 0e	Mb.
-	cpi	0dh		; 02f5  fe 0d		~.
-	jnz	X02f0		; 02f7  c2 f0 02	Bp.
-	dcr	b		; 02fa  05		.
-	jnz	X02f2		; 02fb  c2 f2 02	Br.
-X02fe:	call	readFromUART	; 02fe  cd 62 0e	Mb.
+findNextHeader:
+	call	printNL		; 02ea  cd 19 02	M..
+	lxi	h,X1410		; 02ed  21 10 14	!..	; Set the current memory address to 1410h
+findLeading0Ds:
+	mvi	b,20h		; 02f0  06 20		. 	; 64 ODh chars are written before each header. Find at least 32 (20h)
+skipLeading0D:
+	call	readFromUART	; 02f2  cd 62 0e	Mb.	; Read a char from UART
+	cpi	0dh		; 02f5  fe 0d		~.	; Check for 0Dh
+	jnz	findLeading0Ds	; 02f7  c2 f0 02	Bp.	; If not a 0Dh, restart the search
+	dcr	b		; 02fa  05		.	; It's a 0Dh, decrement the target count
+	jnz	skipLeading0D	; 02fb  c2 f2 02	Br.	; Jump back if any more 0Ds need to be found
+skip0Ds:
+	call	readFromUART	; 02fe  cd 62 0e	Mb.	; Skip any remaining 0Ds
 	cpi	0dh		; 0301  fe 0d		~.
-	jz	X02fe		; 0303  ca fe 02	J~.
-	call	X00eb		; 0306  cd eb 00	Mk.
-	cmp	m		; 0309  be		>
-	jnz	X0314		; 030a  c2 14 03	B..
-	inx	h		; 030d  23		#
-	cpi	4		; 030e  fe 04		~.
-	jnz	X02fe		; 0310  c2 fe 02	B~.
+	jz	skip0Ds		; 0303  ca fe 02	J~.
+	call	X00eb		; 0306  cd eb 00	Mk.	; The next char of the UART header is in A. Display it
+	cmp	m		; 0309  be		>	; Compare it with the target char at mem[H]
+	jnz	headerMismatch	; 030a  c2 14 03	B..	; Jump if different
+	inx	h		; 030d  23		#	; Advance to the next memory byte
+	cpi	4		; 030e  fe 04		~.	; Check A for an end-of-string
+	jnz	skip0Ds		; 0310  c2 fe 02	B~.	; Jump back if more chars from the tape-header need to match
 	ret			; 0313  c9		I
 ;
-X0314:	cpi	4		; 0314  fe 04		~.
-	jz	X02ea		; 0316  ca ea 02	Jj.
-	call	readFromUART	; 0319  cd 62 0e	Mb.
+headerMismatch:
+	cpi	4		; 0314  fe 04		~.	; Check A for an end-of-string
+	jz	findNextHeader	; 0316  ca ea 02	Jj.	; If the UART header is over (and is not the one requested), skip the whole program body
+	call	readFromUART	; 0319  cd 62 0e	Mb.	; Read and display any remaining chars from the UART header
 	call	X00eb		; 031c  cd eb 00	Mk.
-	jmp	X0314		; 031f  c3 14 03	C..
+	jmp	headerMismatch	; 031f  c3 14 03	C..	; Jump back unitl the current UART header ends
 ;
 ;
-; Writes to UART the string at 1410 (TODO: some header?), followed by 
+; Inputs a tape header string, writes it to UART, followed by 
 ; the contents of the program located at memory address 1600
 ;
 writeProgToUART:
-	call	write1410toUART	; 0322  cd c2 02	MB.	; First write some header (TODO)
+	call	writeUARTHeader	; 0322  cd c2 02	MB.	; Prompt for a header string, write it to UART
 	lxi	h,X1600		; 0325  21 00 16	!..	; Set the memory address to 1600
 	mov	e,m		; 0328  5e		^	; (D, E) := (mem[1601], mem[1600]) - the address after the last byte of the program
 	inx	h		; 0329  23		#
@@ -616,23 +640,28 @@ X033a:	call	write00hToIO7	; 033a  cd 4a 00	MJ.	; TODO: Now what?
 X033d:	lxi	d,X0e47		; 033d  11 47 0e	.G.
 	jmp	X0161		; 0340  c3 61 01	Ca.
 ;
-X0343:	call	X02e1		; 0343  cd e1 02	Ma.
-	lxi	h,X1600		; 0346  21 00 16	!..
-	mvi	c,3fh		; 0349  0e 3f		.?
-	call	readUARTSafe	; 034b  cd 65 03	Me.
+;
+; Prompts for a tape-header name and loads the program with this name from UART to 1600h in memory
+;
+readProgFrmUART:
+	call	findProgInUART	; 0343  cd e1 02	Ma.	; Locate the program start
+	lxi	h,X1600		; 0346  21 00 16	!..	; Set the current memory address to 1600h
+	mvi	c,3fh		; 0349  0e 3f		.?	; Set '?' (3Fh) as the default value for the readUARTSafe() calls
+	call	readUARTSafe	; 034b  cd 65 03	Me.	; Read the first UART byte, store it in E and at mem[1600h]
 	mov	e,a		; 034e  5f		_
 	mov	m,a		; 034f  77		w
-	inx	h		; 0350  23		#
-	call	readUARTSafe	; 0351  cd 65 03	Me.
-	mov	d,a		; 0354  57		W
+	inx	h		; 0350  23		#	; H := 1601h
+	call	readUARTSafe	; 0351  cd 65 03	Me.	; Read the second UART byte, store it in D and at mem[1601h]
+	mov	d,a		; 0354  57		W	; This way, the program's end address is in both DE and mem[1601h, 1600h]
 	mov	m,a		; 0355  77		w
-	inx	h		; 0356  23		#
-X0357:	call	readUARTSafe	; 0357  cd 65 03	Me.
-	mov	m,a		; 035a  77		w
-	inx	h		; 035b  23		#
-	call	cmpDH		; 035c  cd bf 00	M?.
-	jnz	X0357		; 035f  c2 57 03	BW.
-	jmp	X0182		; 0362  c3 82 01	C..
+	inx	h		; 0356  23		#	; H := 1602h
+readProgByte:
+	call	readUARTSafe	; 0357  cd 65 03	Me.	; Read a byte from UART
+	mov	m,a		; 035a  77		w	; Store it at the current memory location
+	inx	h		; 035b  23		#	; Advance to the next memory byte
+	call	cmpDH		; 035c  cd bf 00	M?.	; Check if the end-address D has been reached
+	jnz	readProgByte	; 035f  c2 57 03	BW.	; Jump back if not
+	jmp	X0182		; 0362  c3 82 01	C..	; TODO
 ;
 ;
 ; Reads a single char from the UART into A. 
@@ -701,9 +730,9 @@ X03ae:	push	psw		; 03ae  f5		u
 	ani	0fh		; 03af  e6 0f		f.
 	cpi	0ch		; 03b1  fe 0c		~.
 	mvi	a,2ch		; 03b3  3e 2c		>,
-	jz	X00dc		; 03b5  ca dc 00	J\.
+	jz	delayA		; 03b5  ca dc 00	J\.
 	mvi	a,3		; 03b8  3e 03		>.
-	jmp	X00dc		; 03ba  c3 dc 00	C\.
+	jmp	delayA		; 03ba  c3 dc 00	C\.
 ;
 ;
 ; Prints a new line, then the value of (H, L) as a four-char '0'~'F' string
@@ -791,24 +820,30 @@ X07ff:	nop			; 07ff  00		.
 	db	3ch,3dh,87h,7ah,3ch,87h,88h,87h		; 0c98 <=.z<...
 	db	8eh,0					; 0ca0 ..
 ;
-X0ca2:	call	promptStartReadH; 0ca2  cd 08 02	M..
+; Displays and allows for modification of the memory contents, starting at a given address 
+;
+memEdit:
+	call	promptStartReadH; 0ca2  cd 08 02	M..	; Input the target starting address
 	dcx	h		; 0ca5  2b		+
-X0ca6:	inx	h		; 0ca6  23		#
-X0ca7:	call	printMemAddrValue; 0ca7  cd 3f 02	M?.
-	lxi	d,X1410		; 0caa  11 10 14	...
-	call	X0238		; 0cad  cd 38 02	M8.
-	cpi	0dh		; 0cb0  fe 0d		~.
-	jz	X0ca6		; 0cb2  ca a6 0c	J&.
-	cpi	5eh		; 0cb5  fe 5e		~^
-	jz	X0cc6		; 0cb7  ca c6 0c	JF.
-	call	handleLastKbdChar; 0cba  cd 89 02	M..
-	push	psw		; 0cbd  f5		u
-	call	string1410ToByte; 0cbe  cd 98 0e	M..
-	mov	m,a		; 0cc1  77		w
-	pop	psw		; 0cc2  f1		q
-	jnz	X0ca6		; 0cc3  c2 a6 0c	B&.
-X0cc6:	dcx	h		; 0cc6  2b		+
-	jmp	X0ca7		; 0cc7  c3 a7 0c	C'.
+memEditNext:
+	inx	h		; 0ca6  23		#	; Advance to the next byte in memory
+memEditCurrent:
+	call	printMemAddrValue; 0ca7  cd 3f 02	M?.	; Display the current address and its contents
+	lxi	d,X1410		; 0caa  11 10 14	...	; D := 1410h, the start of the keyboard buffer
+	call	X0238		; 0cad  cd 38 02	M8.	; Read a single char from the keyboard into A
+	cpi	0dh		; 0cb0  fe 0d		~.	; Check for a new-line (0Dh)
+	jz	memEditNext	; 0cb2  ca a6 0c	J&.	; If equal, move to the next byte
+	cpi	5eh		; 0cb5  fe 5e		~^	; Check for '^' (5Eh)
+	jz	memEditPrev	; 0cb7  ca c6 0c	JF.	; If equal, move to the previous byte
+	call	handleLastKbdChar; 0cba  cd 89 02	M..	; Store A at 1410h and read the rest of the input string
+	push	psw		; 0cbd  f5		u	; Backup F
+	call	string1410ToByte; 0cbe  cd 98 0e	M..	; Convert the input string to a byte
+	mov	m,a		; 0cc1  77		w	; Overwrite the current memory location with it
+	pop	psw		; 0cc2  f1		q	; Restore the original F
+	jnz	memEditNext	; 0cc3  c2 a6 0c	B&.	; Move to the next byte
+memEditPrev:
+	dcx	h		; 0cc6  2b		+	; Move to the previous memory address
+	jmp	memEditCurrent	; 0cc7  c3 a7 0c	C'.
 ;
 X0cca:	call	X00e8		; 0cca  cd e8 00	Mh.
 	call	printNL		; 0ccd  cd 19 02	M..
@@ -1100,11 +1135,15 @@ readFromUART:
 	in	4		; 0e69  db 04		[.	; Read UART data byte
 	ret			; 0e6b  c9		I
 ;
-X0e6c:	call	write00hToIO7	; 0e6c  cd 4a 00	MJ.
-	lxi	d,X0fd0		; 0e6f  11 d0 0f	.P.
+;
+; Displays a 'TAPE HEADER:' prompt and reads input to the 1410h memory buffer
+;
+promptTapeHeader:
+	call	write00hToIO7	; 0e6c  cd 4a 00	MJ.
+	lxi	d,X0fd0		; 0e6f  11 d0 0f	.P.	; Display the 'TAPE HEADER:' prompt
 	call	printNLDString	; 0e72  cd fa 01	Mz.
-	call	readLineTo1410	; 0e75  cd 7b 02	M{.
-	jmp	write80hToIO7	; 0e78  c3 f6 03	Cv.
+	call	readLineTo1410	; 0e75  cd 7b 02	M{.	; Read the keyboard input
+	jmp	write80hToIO7	; 0e78  c3 f6 03	Cv.	; Also returns
 ;
 X0e7b:	lxi	d,X037a		; 0e7b  11 7a 03	.z.
 X0e7e:	call	printNLDString	; 0e7e  cd fa 01	Mz.
@@ -1261,13 +1300,17 @@ X0f63:	out	0ffh		; 0f63  d3 ff		S.
 X0f72:	lxi	d,X0ec0		; 0f72  11 c0 0e	.@.
 	jmp	X0e7e		; 0f75  c3 7e 0e	C~.
 ;
-X0f78:	call	X00e8		; 0f78  cd e8 00	Mh.
-	jmp	X0f78		; 0f7b  c3 78 0f	Cx.
+;
+; Infinite loop of reading a char from the keyboard and then displaying it
+;
+readLoopKBD:
+	call	X00e8		; 0f78  cd e8 00	Mh.
+	jmp	readLoopKBD	; 0f7b  c3 78 0f	Cx.
 ;
 ;
 ; Jump table with 26 Monitor functions, 'A' to 'Z'
 ;
-X0f7e:	dw	X0246		; 0f7e   46 02      F.
+X0f7e:	dw	writeStrToMem		; 0f7e   46 02      F.
 	dw	X0400		; 0f80   00 04      ..
 	dw	memToRegisters		; 0f82   13 0e      ..
 	dw	printMemString		; 0f84   f6 01      v.
@@ -1275,21 +1318,21 @@ X0f7e:	dw	X0246		; 0f7e   46 02      F.
 	dw	X0d8a		; 0f88   8a 0d      ..
 	dw	jumpToAddress		; 0f8a   a3 0e      #.
 	dw	memDump		; 0f8c   a7 0e      '.
-	dw	X0343		; 0f8e   43 03      C.
+	dw	readProgFrmUART		; 0f8e   43 03      C.
 	dw	Xf7cc		; 0f90   cc f7      Lw
 	dw	invert1472		; 0f92   0f 0f      ..
 	dw	memList		; 0f94   ca 03      J.
 	dw	toggleIO7		; 0f96   ef 03      o.
 	dw	X1473		; 0f98   73 14      s.
 	dw	writeProgToUART		; 0f9a   22 03      ".
-	dw	X0ca2		; 0f9c   a2 0c      ".
+	dw	memEdit		; 0f9c   a2 0c      ".
 	dw	X1473		; 0f9e   73 14      s.
 	dw	X0cca		; 0fa0   ca 0c      J.
 	dw	memCopy		; 0fa2   df 0d      _.
 	dw	Xc000		; 0fa4   00 c0      .@
 	dw	X1473		; 0fa6   73 14      s.
 	dw	invert1401		; 0fa8   15 0f      ..
-	dw	X0f78		; 0faa   78 0f      x.
+	dw	readLoopKBD		; 0faa   78 0f      x.
 	dw	Xe22d		; 0fac   2d e2      -b
 	dw	X1473		; 0fae   73 14      s.
 	dw	X0f1c		; 0fb0   1c 0f      ..
