@@ -103,11 +103,10 @@ L 00BF cmpDH
 ! 00C1 Return if different
 ! 00C2 Compare the lower bytes, E and L
 
-L 00C5 delay2047
-L 00C9 delay2047Loop
+L 00C5 delay6s
+L 00C9 delay6sLoop
 # 00C5
-# 00C5 Performs 2047 calls to delay1()
-# 00C5 TODO: Actual duration in machine cycles / seconds?
+# 00C5 Performs 2047 calls to delay3ms() for a total delay of ~6.1s
 # 00C5
 ! 00C5 Backup D
 ! 00C6 D := 2047
@@ -125,23 +124,27 @@ L 00D4 printNewPage
 ! 00D7 Display the value in A
 ! 00DA Restore the original value of A
 
-L 00DC delayA
+L 00DC delay3Ams
 # 00DC
-# 00DC Executes delay1() A times
+# 00DC Executes delay3ms() A times, for a total delay of ~3*A ms
 # 00DC
 ! 00DC Wait
 ! 00DF Decrement A
 ! 00E0 Jump back until A becomes zero
 ! 00E3 Restore the original value of A
 
-L 014A delay1
-L 014D delay1Loop
+L 014A delay3ms
 # 014A
 # 014A Performs 256 iterations of a 2x NOP loop
-# 014A TODO: Actual duration in machine cycles / seconds?
+# 014A
+# 014A Duration in cycles:
+# 014A CALL + PUSH + MVI + 256 * (DCR + NOP + NOP + JNZ) + POP + RET =
+# 014A = 17 + 11 + 7 + 256 * (5 + 4 + 4 + 10) + 10 + 10 = 5943
+# 014A At 2MHz clock speed, this takes ~3ms at the caller
 # 014A
 ! 014A Backup D
 ! 014B D := 0
+L 014D delay3msNopLoop
 ! 014D --D
 ! 014E 2x NO-OP
 ! 0150 Jump back if D != 0
@@ -153,6 +156,24 @@ L 0155 memHexCharToValue
 # 0155 The result is stored in A. The CARRY flag is set in case of an error.
 # 0155
 ! 0155 A := mem[D]
+
+L 015B monitorNLError
+# 015B
+# 015B Display a new-line, then ' ERROR', then fall-through to the Monitor routine
+# 015B
+! 015B Print a new-line
+L 015E monitorError
+! 015E Set D to the address of ' ERROR'
+L 0161 monitorDMsg
+! 0161 Display the message pointed by D
+L 0164 monitorNoMsg
+! 0164 A := 40h
+! 0166 Output 40h to IO-7
+! 0168 B := 38 (26h)
+L 016A delay3B
+! 016A Call delay3ms() B times in a loop. Total delay ~114ms
+! 0171 A := 00h
+! 0172 Output 00h to IO-7
 
 L 0174 monitor
 # 0174
@@ -190,6 +211,7 @@ L 01B3 delay1402
 L 01B7 delay1402loop
 # 01B3
 # 01B3 Performs mem[1402] iterations of an empty loop
+# 01B3 With the default value of 753 (02F1h) in memory, the delay is ~9ms
 # 01B3
 ! 01B3 Backup [H, L]
 ! 01B4 [H, L] := mem[1402]
@@ -274,6 +296,12 @@ L 0231 toMonitorIfDeqH
 ! 0231 Compare
 ! 0234 Regular return, if not equal
 ! 0235 Jump to the monitor, if equal
+
+L 0238 readKbdNonZero
+# 0238
+# 0238 TODO. Reads from the keyboard a single non-zero byte into A
+# 0238
+! 023B Loop back until a non-zero value is entered
 
 L 023F printMemAddrValue
 # 023F
@@ -441,9 +469,12 @@ L 032C writeProgLoop
 ! 0330 Advance to the next memory address
 ! 0331 Compare the current memory address with the end-of-program address (in DE)
 ! 0334 Jump back if DE has not been reached
-! 0337 Timed delay
+! 0337 Wait for a while
 
-! 033A TODO: Now what?
+L 033A endUART
+L 033D monitorEnd
+! 033D Set D to the address of the '\nEND' string
+! 0340 Display the string in D, then fall-through to the Monitor
 
 L 0343 readProgFrmUART
 # 0343
@@ -517,6 +548,17 @@ L 039F accumulateMemHex
 ! 03AA Advance to the next memory address
 ! 03AB Loop until the char->hex conversion fails
 
+L 03AE delayVideoCtrl
+# 03AE
+# 03AE Executes a delay for the correct processing of the video-control code in A
+# 03AE See the SFF96364 datasheet for timing details
+# 03AE
+! 03AE Backup the original value of A. Restored in delay3Ams()
+! 03AF Clear the first nibble of A
+! 03B1 Check for 0Ch - 'new page' / 'clear screen'
+! 03B3 Delay for 44 * 3ms = 132ms, if the control code is 0Ch
+! 03B8 Delay for 3 * 3ms = 9ms, for any other control code
+
 L 03C4 printNLHexWord
 # 03C4
 # 03C4 Prints a new line, then the value of (H, L) as a four-char '0'~'F' string
@@ -582,6 +624,76 @@ L 0CA7 memEditCurrent
 L 0CC6 memEditPrev
 ! 0CC6 Move to the previous memory address
 
+L 0CCA setMemRegisters
+# 0CCA
+# 0CCA Modifies the registers' in-memory storage values, 1404h ~ 140Fh
+# 0CCA This subroutine does not alter the registers' own values! This is done in memToRegisters().
+# 0CCA
+! 0CCA Input a letter into A TODO: No prompt?
+! 0CD0 Compare A with ' ' (20h)
+! 0CD2 If equal, display current memory values and return
+! 0CD5 Compare A with 'F' (46h)
+! 0CD7 If equal, modify the F memory byte and return
+! 0CDA Position H to the start of the 'HLDEBCA' sequence
+! 0CDD B := 0, C := 7 - the number of register names to check
+
+L 0CE0 checkRegName
+! 0CE0 Compare A with the current memory byte / register name
+! 0CE1 If equal, modify a single register memory byte (A ~ H) and return
+! 0CE4 Advance H to the next register name char
+! 0CE5 Decrement the C counter
+! 0CE9 Set H to the base of the SP memory word
+! 0CEC Compare A with 'S' (53h)
+! 0CEE If equal, modify the SP memory word (currently pointed by H)
+! 0CF1 Compare A with 'P' (50h)
+! 0CF3 If not equal, it's an error
+! 0CF6 Advance H to the memory word for the PC register
+
+L 0CF8 setRegisterWord
+! 0CF8 Store the current memory word in DE
+! 0CFC DE <-> HL, the current value is now in HL, current mem address is in DE
+! 0CFD Backup the current memory address DE
+! 0CFE Display the current register value HL
+! 0D01 Read a new-value word in H
+! 0D04 Restore the current memory address in DE
+! 0D05 DE <-> HL, the new-value is now in DE, the current mem address is in HL
+! 0D06 Store the new-value word (in DE) in memory
+
+L 0D0A setRegisterByte
+! 0D0A Set H to before the start of the A ~ H memory region
+! 0D0D HL := HL + BC. Add the offset for the matched register name
+! 0D0E Display the current register value
+! 0D11 Read a new-value string
+! 0D14 Convert the new-value string to a byte in A
+! 0D17 Store the new-value byte in memory
+
+L 0D19 setFlags
+! 0D19 Display the currently set flags
+! 0D1C Read a string to 1410h
+! 0D1F Set D to the start of the input string
+! 0D22 C := 0, will accumulate the new value for the F register
+
+L 0D24 setSingleFlag
+! 0D24 A := mem[D], the current char from the input string
+! 0D25 Position H to the base of the 'Flag Char' <-> 'BitMask' array
+! 0D28 B := 5, the number of flag-chars to check
+
+L 0D2A checkFlagName
+! 0D2A Compare the current input char A with the current 'Flag Char' in mem[H]
+! 0D2B Always move H to the next byte, which is the bitmask
+! 0D2C If equal, set the flag's bit (to 1)
+! 0D2F Not equal. Move H to the next byte, the next 'Flag Char'
+! 0D30 Decrement B, the number of remaining flag-chars to check
+! 0D31 Loop back if B is non-zero
+! 0D34 The current input char A is not a 'Flag Char'. A := the new flags byte
+! 0D35 mem[1404h] := A, store the new-value byte in memory
+
+L 0D39 setFlagBit
+! 0D39 A := C, the current flags byte
+! 0D3A OR with the bit-mask at mem[H]
+! 0D3B Store the updated flags byte back into C
+! 0D3C Move to and process the next byte of keyboard input
+
 L 0D40 printRegisters
 # 0D40
 # 0D40 Displays the values of the system registers, as stored in memory (at 1404h ~ 140Fh)
@@ -620,6 +732,70 @@ L 0D79 printFlagName
 ! 0D79 The flag name is in the previous byte
 ! 0D7A Load the flag name into A and display it
 ! 0D7E Restore H to its original value
+
+L 0D8A memFind
+# 0D8A
+# 0D8A Finds all ocurrencies of a byte sequence in a given memory range.
+# 0D8A The search sequence is entered as a comma-sequence of hex pairs, stored at 1410h.
+# 0D8A Then this sequence is converted to bytes, stored again at 1410h.
+# 0D8A
+! 0D8A Input start and end address, place them on the stack
+! 0D8D Input a comma-separated list of bytes to search for. Stored at 1410h
+! 0D90 H := 1410h, the address of the keyboard input buffer
+! 0D93 D := 1410h
+! 0D95 C := 00h - counter for the search byte-sequence length
+
+L 0D97 commaListToBytes
+! 0D97 Convert the current pair of hex chars to a byte in A
+! 0D9A Store it at mem[H]
+! 0D9B ++H - position it at the next byte of the search sequnce
+! 0D9C A := mem[D], the latest char of the input string
+! 0D9D ++D - move to the next char of the input string
+! 0D9E ++C - keep the sequence-length updated
+! 0D9F Check A for ',' (2Ch) - the list separator
+! 0DA1 Loop back, if there is another byte listed
+! 0DA4 H := &end
+! 0DA5 H := &start. &end goes to the top of the stack
+! 0DA6 Reset the output items counter
+
+L 0DA9 findAtH
+! 0DA9 Set D to the start of the search-sequence
+! 0DAC B := number-of-bytes-to-search-for
+
+L 0DAD matchDH
+! 0DAD Load the next target byte into A
+! 0DAE Compare with the current mem[H]
+! 0DAF Abort the comparison, in case of a mismatch
+! 0DB2 Increment both H (memory) and D (target)
+! 0DB4 Decrement B, number of remaining bytes to find
+! 0DB5 Loop back if there are more bytes to find
+! 0DB8 Match found. Adjust H to the start of the sequence
+! 0DB9 HL := HL - 0C  (B is zero)
+! 0DBE Display the match address
+! 0DC1 Decrement the output items counter
+
+L 0DC4 findAtNextH
+! 0DC4 DE <-> HL. D := current memory address
+! 0DC5 mem[SP] <-> HL. H := &end
+! 0DC6 "Return" if &current == &end
+! 0DC9 Restore the original values. H := current memory address
+! 0DCB Advance to the next memory address
+! 0DCC Test for a match at the new address
+
+L 0DCF dcr1471
+# 0DCF
+# 0DCF Up to 12 five-byte 'XXXX ' addresses can be displayed on a single line.
+# 0DCF mem[1471h] contains the number of available slots, on the current display line.
+# 0DCF When this counter reaches zero, a new-line is displayed and the counter restarted
+# 0DCF
+! 0DCF Decrement mem[1471h]. A := mem[1471h]
+! 0DD2 --A
+! 0DD3 mem[1471h] := A
+! 0DD6 Return if A is non-zero. Otherwise, reset to 0Ch
+
+L 0DD7 reset1471
+! 0DD7 mem[1471h] := 0Ch
+! 0DDC Print a new-line and return
 
 L 0DDF memCopy
 # 0DDF
@@ -720,6 +896,16 @@ L 0E6C promptTapeHeader
 ! 0E75 Read the keyboard input
 ! 0E78 Also returns
 
+L 0E7B monitorReadError
+# 0E7B
+# 0E7B Display 'READ ERROR' and fall-through to the Monitor
+# 0E7B
+! 0E7B Set D to the address of the 'READ' string
+
+L 0E7E monitorDError
+! 0E7E Print a new-line and the string in D
+! 0E81 Display ' ERROR' and go to monitor
+
 L 0E98 string1410ToByte
 L 0E9B stringDToByte
 # 0E98
@@ -775,6 +961,13 @@ L 0F18 invertMemByte
 ! 0F18 Load memory byte into A
 ! 0F19 Invert A
 ! 0F1A Write back to memory
+
+L 0F72 monitorProgError
+# 0F72
+# 0F72 Display 'PROGRAM ERROR' and fall-through to the Monitor
+# 0F72
+! 0F72 Set D to the address of the 'PROGRAM' string
+! 0F75 Print a new-line, the string in D, ' ERROR' and go to monitor
 
 L 0F78 readLoopKBD
 # 0F78

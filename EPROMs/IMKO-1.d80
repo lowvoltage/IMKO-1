@@ -1,6 +1,6 @@
 ;
 ;  DZ80 V3.4.1 8080 Disassembly of IMKO-1.bin
-;  2012/10/27 20:27
+;  2012/11/03 21:06
 ;
 	org	0
 ;
@@ -10,7 +10,7 @@ RST0:	lxi	sp,X1470	; 0000  31 70 14	1p.	; Set stack base at memory address 1470
 ;
 RST1:	jmp	printNewPage	; 0008  c3 d4 00	CT.
 ;
-	jmp	X0238		; 000b  c3 38 02	C8.
+	jmp	readKbdNonZero	; 000b  c3 38 02	C8.
 ;
 	org	10h
 ;
@@ -81,7 +81,7 @@ init:	sta	X1401		; 004e  32 01 14	2..	; mem[1401] := 0xAA
 	lxi	d,monitor	; 0051  11 74 01	.t.	; Setup jumps to 0x0174 at memory addesses 1430, 1433, 1436, 1439 and 143C
 	lxi	h,X1430		; 0054  21 30 14	!0.
 	call	fillMem5	; 0057  cd 9b 00	M..
-	lxi	d,X015b		; 005a  11 5b 01	.[.	; Setup jumps to 0x015B at memory addesses 1473, 1476 and 1479 (147C and 147F are not used?)
+	lxi	d,monitorNLError; 005a  11 5b 01	.[.	; Setup jumps to 0x015B at memory addesses 1473, 1476 and 1479 (147C and 147F are not used?)
 	lxi	h,X1473		; 005d  21 73 14	!s.
 	call	fillMem5	; 0060  cd 9b 00	M..
 	lxi	h,X01bf		; 0063  21 bf 01	!?.	; mem[1476] actually jumps to 0x01BF
@@ -158,18 +158,17 @@ cmpDH:	mov	a,h		; 00bf  7c		|	; Compare the higher bytes, D and H
 	ret			; 00c4  c9		I
 ;
 ;
-; Performs 2047 calls to delay1()
-; TODO: Actual duration in machine cycles / seconds?
+; Performs 2047 calls to delay3ms() for a total delay of ~6.1s
 ;
-delay2047:
+delay6s:
 	push	d		; 00c5  d5		U	; Backup D
 	lxi	d,X07ff		; 00c6  11 ff 07	...	; D := 2047
-delay2047Loop:
-	call	delay1		; 00c9  cd 4a 01	MJ.
+delay6sLoop:
+	call	delay3ms	; 00c9  cd 4a 01	MJ.
 	dcx	d		; 00cc  1b		.	; --D
 	mov	a,d		; 00cd  7a		z	; A := High(D) | Low(D)
 	ora	e		; 00ce  b3		3
-	jnz	delay2047Loop	; 00cf  c2 c9 00	BI.	; Jump back if D != 0
+	jnz	delay6sLoop	; 00cf  c2 c9 00	BI.	; Jump back if D != 0
 	pop	d		; 00d2  d1		Q	; Restore D
 	ret			; 00d3  c9		I
 ;
@@ -184,21 +183,22 @@ printNewPage:
 	ret			; 00db  c9		I
 ;
 ;
-; Executes delay1() A times
+; Executes delay3ms() A times, for a total delay of ~3*A ms
 ;
-delayA:	call	delay1		; 00dc  cd 4a 01	MJ.	; Wait
+delay3Ams:
+	call	delay3ms	; 00dc  cd 4a 01	MJ.	; Wait
 	dcr	a		; 00df  3d		=	; Decrement A
-	jnz	delayA		; 00e0  c2 dc 00	B\.	; Jump back until A becomes zero
+	jnz	delay3Ams	; 00e0  c2 dc 00	B\.	; Jump back until A becomes zero
 	pop	psw		; 00e3  f1		q	; Restore the original value of A
 	ret			; 00e4  c9		I
 ;
 X00e5:	call	printNLDString	; 00e5  cd fa 01	Mz.
-X00e8:	call	X0238		; 00e8  cd 38 02	M8.
+X00e8:	call	readKbdNonZero	; 00e8  cd 38 02	M8.
 X00eb:	push	psw		; 00eb  f5		u
 	call	X1476		; 00ec  cd 76 14	Mv.
 	cpi	13h		; 00ef  fe 13		~.
 	jnz	X1479		; 00f1  c2 79 14	By.
-X00f4:	call	X0238		; 00f4  cd 38 02	M8.
+X00f4:	call	readKbdNonZero	; 00f4  cd 38 02	M8.
 	cpi	0dh		; 00f7  fe 0d		~.
 	cz	printNL		; 00f9  cc 19 02	L..
 	cpi	11h		; 00fc  fe 11		~.
@@ -243,19 +243,24 @@ X0137:	pop	psw		; 0137  f1		q
 	out	5		; 0142  d3 05		S.
 	cpi	1eh		; 0144  fe 1e		~.
 	rp			; 0146  f0		p
-	jmp	X03ae		; 0147  c3 ae 03	C..
+	jmp	delayVideoCtrl	; 0147  c3 ae 03	C..
 ;
 ;
 ; Performs 256 iterations of a 2x NOP loop
-; TODO: Actual duration in machine cycles / seconds?
 ;
-delay1:	push	d		; 014a  d5		U	; Backup D
+; Duration in cycles:
+; CALL + PUSH + MVI + 256 * (DCR + NOP + NOP + JNZ) + POP + RET =
+; = 17 + 11 + 7 + 256 * (5 + 4 + 4 + 10) + 10 + 10 = 5943
+; At 2MHz clock speed, this takes ~3ms at the caller
+;
+delay3ms:
+	push	d		; 014a  d5		U	; Backup D
 	mvi	d,0		; 014b  16 00		..	; D := 0
-delay1Loop:
+delay3msNopLoop:
 	dcr	d		; 014d  15		.	; --D
 	nop			; 014e  00		.	; 2x NO-OP
 	nop			; 014f  00		.
-	jnz	delay1Loop	; 0150  c2 4d 01	BM.	; Jump back if D != 0
+	jnz	delay3msNopLoop	; 0150  c2 4d 01	BM.	; Jump back if D != 0
 	pop	d		; 0153  d1		Q	; Restore D
 	ret			; 0154  c9		I
 ;
@@ -267,19 +272,27 @@ memHexCharToValue:
 	ldax	d		; 0155  1a		.	; A := mem[D]
 	jmp	hexCharToValue	; 0156  c3 51 0e	CQ.
 ;
+;
+; Display a new-line, then ' ERROR', then fall-through to the Monitor routine
+;
 	org	15bh
 ;
-X015b:	call	printNL		; 015b  cd 19 02	M..
-X015e:	lxi	d,X0ed6		; 015e  11 d6 0e	.V.
-X0161:	call	printDString	; 0161  cd fd 01	M}.
-X0164:	mvi	a,40h		; 0164  3e 40		>@
-	out	7		; 0166  d3 07		S.
-	mvi	b,26h		; 0168  06 26		.&
-X016a:	call	delay1		; 016a  cd 4a 01	MJ.
+monitorNLError:
+	call	printNL		; 015b  cd 19 02	M..	; Print a new-line
+monitorError:
+	lxi	d,X0ed6		; 015e  11 d6 0e	.V.	; Set D to the address of ' ERROR'
+monitorDMsg:
+	call	printDString	; 0161  cd fd 01	M}.	; Display the message pointed by D
+monitorNoMsg:
+	mvi	a,40h		; 0164  3e 40		>@	; A := 40h
+	out	7		; 0166  d3 07		S.	; Output 40h to IO-7
+	mvi	b,26h		; 0168  06 26		.&	; B := 38 (26h)
+delay3B:
+	call	delay3ms	; 016a  cd 4a 01	MJ.	; Call delay3ms() B times in a loop. Total delay ~114ms
 	dcr	b		; 016d  05		.
-	jnz	X016a		; 016e  c2 6a 01	Bj.
-	xra	a		; 0171  af		/
-	out	7		; 0172  d3 07		S.
+	jnz	delay3B		; 016e  c2 6a 01	Bj.
+	xra	a		; 0171  af		/	; A := 00h
+	out	7		; 0172  d3 07		S.	; Output 00h to IO-7
 ;
 ; Entry point for the IMKO-1 system monitor. 
 ; It allows for the execution of 26 predefined functions, by typing 'A' ~ 'Z'
@@ -295,7 +308,7 @@ monitor:
 X0182:	cmc			; 0182  3f		?
 	lxi	b,X8032		; 0183  01 32 80	.2.
 	inr	d		; 0186  14		.
-	jmp	X033a		; 0187  c3 3a 03	C:.
+	jmp	endUART		; 0187  c3 3a 03	C:.
 ;
 	cpi	0dh		; 018a  fe 0d		~.
 	jz	printNL		; 018c  ca 19 02	J..
@@ -313,9 +326,9 @@ monitor2:
 tableJmpA:
 	lxi	d,X0f7e		; 0198  11 7e 0f	.~.	; Base address of the jump table
 	sui	41h		; 019b  d6 41		VA	; 'A' (41h) -> 00h
-	jc	X015b		; 019d  da 5b 01	Z[.	; Negative value after the subtraction is an error
+	jc	monitorNLError	; 019d  da 5b 01	Z[.	; Negative value after the subtraction is an error
 	cpi	1bh		; 01a0  fe 1b		~.	; Compare A with 27 (1Bh)
-	jnc	X015b		; 01a2  d2 5b 01	R[.	; Greater-than-or-equal is an error
+	jnc	monitorNLError	; 01a2  d2 5b 01	R[.	; Greater-than-or-equal is an error
 	mov	l,a		; 01a5  6f		o	; (H, L) := (0, A)
 	mvi	h,0		; 01a6  26 00		&.
 	dad	h		; 01a8  29		)	; (H, L) := (0, 2*A) - the table offset in bytes
@@ -330,6 +343,7 @@ tableJmpA:
 ;
 ;
 ; Performs mem[1402] iterations of an empty loop
+; With the default value of 753 (02F1h) in memory, the delay is ~9ms
 ;
 delay1402:
 	push	h		; 01b3  e5		e	; Backup [H, L]
@@ -448,10 +462,14 @@ promptStartEnd:
 toMonitorIfDeqH:
 	call	cmpDH		; 0231  cd bf 00	M?.	; Compare
 	rnz			; 0234  c0		@	; Regular return, if not equal
-	jmp	X0164		; 0235  c3 64 01	Cd.	; Jump to the monitor, if equal
+	jmp	monitorNoMsg	; 0235  c3 64 01	Cd.	; Jump to the monitor, if equal
 ;
-X0238:	call	X1476		; 0238  cd 76 14	Mv.
-	jz	X0238		; 023b  ca 38 02	J8.
+;
+; TODO. Reads from the keyboard a single non-zero byte into A
+;
+readKbdNonZero:
+	call	X1476		; 0238  cd 76 14	Mv.
+	jz	readKbdNonZero	; 023b  ca 38 02	J8.	; Loop back until a non-zero value is entered
 	ret			; 023e  c9		I
 ;
 ;
@@ -487,7 +505,7 @@ printHexByteSpace:
 ; Read from keyboard and store the input in memory, until the char in B is entered
 ;
 inputToM:
-	call	X0238		; 0261  cd 38 02	M8.	; Read a char in A
+	call	readKbdNonZero	; 0261  cd 38 02	M8.	; Read a char in A
 	mov	m,a		; 0264  77		w	; Store the char in memory
 	inx	h		; 0265  23		#	; Advance to the next memory byte
 	cmp	b		; 0266  b8		8	; Check for end-of-string
@@ -516,7 +534,7 @@ showPrompt:
 	cpi	5eh		; 0283  fe 5e		~^	; Return if... TODO
 	rz			; 0285  c8		H
 readCharToD:
-	call	X0238		; 0286  cd 38 02	M8.	; Input a single char from the keyboard, into A
+	call	readKbdNonZero	; 0286  cd 38 02	M8.	; Input a single char from the keyboard, into A
 handleLastKbdChar:
 	cpi	8		; 0289  fe 08		~.	; Check for and handle backspace (08h)
 	jz	backspaceRead	; 028b  ca 9f 02	J..
@@ -565,7 +583,7 @@ printHexNibble:
 ;
 writeUARTHeader:
 	call	promptTapeHeader; 02c2  cd 6c 0e	Ml.	; Read input to 1410h
-	call	delay2047	; 02c5  cd c5 00	ME.	; Wait for a while
+	call	delay6s		; 02c5  cd c5 00	ME.	; Wait for a while
 	mvi	b,40h		; 02c8  06 40		.@	; B := 64
 	mvi	a,0dh		; 02ca  3e 0d		>.	; Write 64 CR (0x0D) characters to UART
 writeCRLoop:
@@ -635,10 +653,12 @@ writeProgLoop:
 	inx	h		; 0330  23		#	; Advance to the next memory address
 	call	cmpDH		; 0331  cd bf 00	M?.	; Compare the current memory address with the end-of-program address (in DE)
 	jnz	writeProgLoop	; 0334  c2 2c 03	B,.	; Jump back if DE has not been reached
-	call	delay2047	; 0337  cd c5 00	ME.	; Timed delay
-X033a:	call	write00hToIO7	; 033a  cd 4a 00	MJ.	; TODO: Now what?
-X033d:	lxi	d,X0e47		; 033d  11 47 0e	.G.
-	jmp	X0161		; 0340  c3 61 01	Ca.
+	call	delay6s		; 0337  cd c5 00	ME.	; Wait for a while
+endUART:
+	call	write00hToIO7	; 033a  cd 4a 00	MJ.
+monitorEnd:
+	lxi	d,X0e47		; 033d  11 47 0e	.G.	; Set D to the address of the '\nEND' string
+	jmp	monitorDMsg	; 0340  c3 61 01	Ca.	; Display the string in D, then fall-through to the Monitor
 ;
 ;
 ; Prompts for a tape-header name and loads the program with this name from UART to 1600h in memory
@@ -726,13 +746,18 @@ accumulateMemHex:
 	inx	d		; 03aa  13		.	; Advance to the next memory address
 	jmp	accumulateMemHex; 03ab  c3 9f 03	C..	; Loop until the char->hex conversion fails
 ;
-X03ae:	push	psw		; 03ae  f5		u
-	ani	0fh		; 03af  e6 0f		f.
-	cpi	0ch		; 03b1  fe 0c		~.
-	mvi	a,2ch		; 03b3  3e 2c		>,
-	jz	delayA		; 03b5  ca dc 00	J\.
-	mvi	a,3		; 03b8  3e 03		>.
-	jmp	delayA		; 03ba  c3 dc 00	C\.
+;
+; Executes a delay for the correct processing of the video-control code in A
+; See the SFF96364 datasheet for timing details
+;
+delayVideoCtrl:
+	push	psw		; 03ae  f5		u	; Backup the original value of A. Restored in delay3Ams()
+	ani	0fh		; 03af  e6 0f		f.	; Clear the first nibble of A
+	cpi	0ch		; 03b1  fe 0c		~.	; Check for 0Ch - 'new page' / 'clear screen'
+	mvi	a,2ch		; 03b3  3e 2c		>,	; Delay for 44 * 3ms = 132ms, if the control code is 0Ch
+	jz	delay3Ams	; 03b5  ca dc 00	J\.
+	mvi	a,3		; 03b8  3e 03		>.	; Delay for 3 * 3ms = 9ms, for any other control code
+	jmp	delay3Ams	; 03ba  c3 dc 00	C\.
 ;
 ;
 ; Prints a new line, then the value of (H, L) as a four-char '0'~'F' string
@@ -830,7 +855,7 @@ memEditNext:
 memEditCurrent:
 	call	printMemAddrValue; 0ca7  cd 3f 02	M?.	; Display the current address and its contents
 	lxi	d,X1410		; 0caa  11 10 14	...	; D := 1410h, the start of the keyboard buffer
-	call	X0238		; 0cad  cd 38 02	M8.	; Read a single char from the keyboard into A
+	call	readKbdNonZero	; 0cad  cd 38 02	M8.	; Read a single char from the keyboard into A
 	cpi	0dh		; 0cb0  fe 0d		~.	; Check for a new-line (0Dh)
 	jz	memEditNext	; 0cb2  ca a6 0c	J&.	; If equal, move to the next byte
 	cpi	5eh		; 0cb5  fe 5e		~^	; Check for '^' (5Eh)
@@ -845,71 +870,83 @@ memEditPrev:
 	dcx	h		; 0cc6  2b		+	; Move to the previous memory address
 	jmp	memEditCurrent	; 0cc7  c3 a7 0c	C'.
 ;
-X0cca:	call	X00e8		; 0cca  cd e8 00	Mh.
+;
+; Modifies the registers' in-memory storage values, 1404h ~ 140Fh
+; This subroutine does not alter the registers' own values! This is done in memToRegisters().
+;
+setMemRegisters:
+	call	X00e8		; 0cca  cd e8 00	Mh.	; Input a letter into A TODO: No prompt?
 	call	printNL		; 0ccd  cd 19 02	M..
-	cpi	20h		; 0cd0  fe 20		~ 
-	jz	printRegisters	; 0cd2  ca 40 0d	J@.
-	cpi	46h		; 0cd5  fe 46		~F
-	jz	X0d19		; 0cd7  ca 19 0d	J..
-	lxi	h,X0ec8		; 0cda  21 c8 0e	!H.
-	lxi	b,X0007		; 0cdd  01 07 00	...
-X0ce0:	cmp	m		; 0ce0  be		>
-	jz	X0d0a		; 0ce1  ca 0a 0d	J..
-	inx	h		; 0ce4  23		#
-	dcr	c		; 0ce5  0d		.
-	jnz	X0ce0		; 0ce6  c2 e0 0c	B`.
-	lxi	h,X140c		; 0ce9  21 0c 14	!..
-	cpi	53h		; 0cec  fe 53		~S
-	jz	X0cf8		; 0cee  ca f8 0c	Jx.
-	cpi	50h		; 0cf1  fe 50		~P
-	jnz	X015b		; 0cf3  c2 5b 01	B[.
-	inx	h		; 0cf6  23		#
+	cpi	20h		; 0cd0  fe 20		~ 	; Compare A with ' ' (20h)
+	jz	printRegisters	; 0cd2  ca 40 0d	J@.	; If equal, display current memory values and return
+	cpi	46h		; 0cd5  fe 46		~F	; Compare A with 'F' (46h)
+	jz	setFlags	; 0cd7  ca 19 0d	J..	; If equal, modify the F memory byte and return
+	lxi	h,X0ec8		; 0cda  21 c8 0e	!H.	; Position H to the start of the 'HLDEBCA' sequence
+	lxi	b,X0007		; 0cdd  01 07 00	...	; B := 0, C := 7 - the number of register names to check
+checkRegName:
+	cmp	m		; 0ce0  be		>	; Compare A with the current memory byte / register name
+	jz	setRegisterByte	; 0ce1  ca 0a 0d	J..	; If equal, modify a single register memory byte (A ~ H) and return
+	inx	h		; 0ce4  23		#	; Advance H to the next register name char
+	dcr	c		; 0ce5  0d		.	; Decrement the C counter
+	jnz	checkRegName	; 0ce6  c2 e0 0c	B`.
+	lxi	h,X140c		; 0ce9  21 0c 14	!..	; Set H to the base of the SP memory word
+	cpi	53h		; 0cec  fe 53		~S	; Compare A with 'S' (53h)
+	jz	setRegisterWord	; 0cee  ca f8 0c	Jx.	; If equal, modify the SP memory word (currently pointed by H)
+	cpi	50h		; 0cf1  fe 50		~P	; Compare A with 'P' (50h)
+	jnz	monitorNLError	; 0cf3  c2 5b 01	B[.	; If not equal, it's an error
+	inx	h		; 0cf6  23		#	; Advance H to the memory word for the PC register
 	inx	h		; 0cf7  23		#
-X0cf8:	mov	e,m		; 0cf8  5e		^
+setRegisterWord:
+	mov	e,m		; 0cf8  5e		^	; Store the current memory word in DE
 	inx	h		; 0cf9  23		#
 	mov	d,m		; 0cfa  56		V
 	dcx	h		; 0cfb  2b		+
-	xchg			; 0cfc  eb		k
-	push	d		; 0cfd  d5		U
-	call	printNLHexWord	; 0cfe  cd c4 03	MD.
-	call	readAddrInH	; 0d01  cd 0e 02	M..
-	pop	d		; 0d04  d1		Q
-	xchg			; 0d05  eb		k
-	mov	m,e		; 0d06  73		s
+	xchg			; 0cfc  eb		k	; DE <-> HL, the current value is now in HL, current mem address is in DE
+	push	d		; 0cfd  d5		U	; Backup the current memory address DE
+	call	printNLHexWord	; 0cfe  cd c4 03	MD.	; Display the current register value HL
+	call	readAddrInH	; 0d01  cd 0e 02	M..	; Read a new-value word in H
+	pop	d		; 0d04  d1		Q	; Restore the current memory address in DE
+	xchg			; 0d05  eb		k	; DE <-> HL, the new-value is now in DE, the current mem address is in HL
+	mov	m,e		; 0d06  73		s	; Store the new-value word (in DE) in memory
 	inx	h		; 0d07  23		#
 	mov	m,d		; 0d08  72		r
 	ret			; 0d09  c9		I
 ;
-X0d0a:	lxi	h,X1404		; 0d0a  21 04 14	!..
-	dad	b		; 0d0d  09		.
-	call	printMemHexByte	; 0d0e  cd 42 02	MB.
-	call	readLineTo1410	; 0d11  cd 7b 02	M{.
-	call	string1410ToByte; 0d14  cd 98 0e	M..
-	mov	m,a		; 0d17  77		w
+setRegisterByte:
+	lxi	h,X1404		; 0d0a  21 04 14	!..	; Set H to before the start of the A ~ H memory region
+	dad	b		; 0d0d  09		.	; HL := HL + BC. Add the offset for the matched register name
+	call	printMemHexByte	; 0d0e  cd 42 02	MB.	; Display the current register value
+	call	readLineTo1410	; 0d11  cd 7b 02	M{.	; Read a new-value string
+	call	string1410ToByte; 0d14  cd 98 0e	M..	; Convert the new-value string to a byte in A
+	mov	m,a		; 0d17  77		w	; Store the new-value byte in memory
 	ret			; 0d18  c9		I
 ;
-X0d19:	call	printFlagsReg	; 0d19  cd 66 0d	Mf.
-	call	readLineTo1410	; 0d1c  cd 7b 02	M{.
-	lxi	d,X1410		; 0d1f  11 10 14	...
-	mvi	c,0		; 0d22  0e 00		..
-X0d24:	ldax	d		; 0d24  1a		.
-	lxi	h,X0d80		; 0d25  21 80 0d	!..
-	mvi	b,5		; 0d28  06 05		..
-X0d2a:	cmp	m		; 0d2a  be		>
-	inx	h		; 0d2b  23		#
-	jz	X0d39		; 0d2c  ca 39 0d	J9.
-	inx	h		; 0d2f  23		#
-	dcr	b		; 0d30  05		.
-	jnz	X0d2a		; 0d31  c2 2a 0d	B*.
-	mov	a,c		; 0d34  79		y
-	sta	X1404		; 0d35  32 04 14	2..
+setFlags:
+	call	printFlagsReg	; 0d19  cd 66 0d	Mf.	; Display the currently set flags
+	call	readLineTo1410	; 0d1c  cd 7b 02	M{.	; Read a string to 1410h
+	lxi	d,X1410		; 0d1f  11 10 14	...	; Set D to the start of the input string
+	mvi	c,0		; 0d22  0e 00		..	; C := 0, will accumulate the new value for the F register
+setSingleFlag:
+	ldax	d		; 0d24  1a		.	; A := mem[D], the current char from the input string
+	lxi	h,X0d80		; 0d25  21 80 0d	!..	; Position H to the base of the 'Flag Char' <-> 'BitMask' array
+	mvi	b,5		; 0d28  06 05		..	; B := 5, the number of flag-chars to check
+checkFlagName:
+	cmp	m		; 0d2a  be		>	; Compare the current input char A with the current 'Flag Char' in mem[H]
+	inx	h		; 0d2b  23		#	; Always move H to the next byte, which is the bitmask
+	jz	setFlagBit	; 0d2c  ca 39 0d	J9.	; If equal, set the flag's bit (to 1)
+	inx	h		; 0d2f  23		#	; Not equal. Move H to the next byte, the next 'Flag Char'
+	dcr	b		; 0d30  05		.	; Decrement B, the number of remaining flag-chars to check
+	jnz	checkFlagName	; 0d31  c2 2a 0d	B*.	; Loop back if B is non-zero
+	mov	a,c		; 0d34  79		y	; The current input char A is not a 'Flag Char'. A := the new flags byte
+	sta	X1404		; 0d35  32 04 14	2..	; mem[1404h] := A, store the new-value byte in memory
 	ret			; 0d38  c9		I
 ;
-X0d39:	mov	a,c		; 0d39  79		y
-	ora	m		; 0d3a  b6		6
-	mov	c,a		; 0d3b  4f		O
-	inx	d		; 0d3c  13		.
-	jmp	X0d24		; 0d3d  c3 24 0d	C$.
+setFlagBit:
+	mov	a,c		; 0d39  79		y	; A := C, the current flags byte
+	ora	m		; 0d3a  b6		6	; OR with the bit-mask at mem[H]
+	mov	c,a		; 0d3b  4f		O	; Store the updated flags byte back into C
+	inx	d		; 0d3c  13		.	; Move to and process the next byte of keyboard input
+	jmp	setSingleFlag	; 0d3d  c3 24 0d	C$.
 ;
 ;
 ; Displays the values of the system registers, as stored in memory (at 1404h ~ 140Fh)
@@ -968,55 +1005,72 @@ X0d80:	dw	8053h		; 0d80   53 80      S.
 	dw	450h		; 0d86   50 04      P.
 	dw	143h		; 0d88   43 01      C.
 ;
-X0d8a:	call	promptStartEnd	; 0d8a  cd 24 02	M$.
-	call	promptByte	; 0d8d  cd 75 02	Mu.
-	lxi	h,X1410		; 0d90  21 10 14	!..
-	mov	d,h		; 0d93  54		T
+;
+; Finds all ocurrencies of a byte sequence in a given memory range.
+; The search sequence is entered as a comma-sequence of hex pairs, stored at 1410h.
+; Then this sequence is converted to bytes, stored again at 1410h.
+;
+memFind:
+	call	promptStartEnd	; 0d8a  cd 24 02	M$.	; Input start and end address, place them on the stack
+	call	promptByte	; 0d8d  cd 75 02	Mu.	; Input a comma-separated list of bytes to search for. Stored at 1410h
+	lxi	h,X1410		; 0d90  21 10 14	!..	; H := 1410h, the address of the keyboard input buffer
+	mov	d,h		; 0d93  54		T	; D := 1410h
 	mov	e,l		; 0d94  5d		]
-	mvi	c,0		; 0d95  0e 00		..
-X0d97:	call	stringDToByte	; 0d97  cd 9b 0e	M..
-	mov	m,a		; 0d9a  77		w
-	inx	h		; 0d9b  23		#
-	ldax	d		; 0d9c  1a		.
-	inx	d		; 0d9d  13		.
-	inr	c		; 0d9e  0c		.
-	cpi	2ch		; 0d9f  fe 2c		~,
-	jz	X0d97		; 0da1  ca 97 0d	J..
-	pop	h		; 0da4  e1		a
-	xthl			; 0da5  e3		c
-	call	X0dd7		; 0da6  cd d7 0d	MW.
-X0da9:	lxi	d,X1410		; 0da9  11 10 14	...
-	mov	b,c		; 0dac  41		A
-X0dad:	ldax	d		; 0dad  1a		.
-	cmp	m		; 0dae  be		>
-	jnz	X0dc4		; 0daf  c2 c4 0d	BD.
-	inx	h		; 0db2  23		#
+	mvi	c,0		; 0d95  0e 00		..	; C := 00h - counter for the search byte-sequence length
+commaListToBytes:
+	call	stringDToByte	; 0d97  cd 9b 0e	M..	; Convert the current pair of hex chars to a byte in A
+	mov	m,a		; 0d9a  77		w	; Store it at mem[H]
+	inx	h		; 0d9b  23		#	; ++H - position it at the next byte of the search sequnce
+	ldax	d		; 0d9c  1a		.	; A := mem[D], the latest char of the input string
+	inx	d		; 0d9d  13		.	; ++D - move to the next char of the input string
+	inr	c		; 0d9e  0c		.	; ++C - keep the sequence-length updated
+	cpi	2ch		; 0d9f  fe 2c		~,	; Check A for ',' (2Ch) - the list separator
+	jz	commaListToBytes; 0da1  ca 97 0d	J..	; Loop back, if there is another byte listed
+	pop	h		; 0da4  e1		a	; H := &end
+	xthl			; 0da5  e3		c	; H := &start. &end goes to the top of the stack
+	call	reset1471	; 0da6  cd d7 0d	MW.	; Reset the output items counter
+findAtH:
+	lxi	d,X1410		; 0da9  11 10 14	...	; Set D to the start of the search-sequence
+	mov	b,c		; 0dac  41		A	; B := number-of-bytes-to-search-for
+matchDH:
+	ldax	d		; 0dad  1a		.	; Load the next target byte into A
+	cmp	m		; 0dae  be		>	; Compare with the current mem[H]
+	jnz	findAtNextH	; 0daf  c2 c4 0d	BD.	; Abort the comparison, in case of a mismatch
+	inx	h		; 0db2  23		#	; Increment both H (memory) and D (target)
 	inx	d		; 0db3  13		.
-	dcr	b		; 0db4  05		.
-	jnz	X0dad		; 0db5  c2 ad 0d	B-.
-	mov	a,l		; 0db8  7d		}
-	sub	c		; 0db9  91		.
+	dcr	b		; 0db4  05		.	; Decrement B, number of remaining bytes to find
+	jnz	matchDH		; 0db5  c2 ad 0d	B-.	; Loop back if there are more bytes to find
+	mov	a,l		; 0db8  7d		}	; Match found. Adjust H to the start of the sequence
+	sub	c		; 0db9  91		.	; HL := HL - 0C  (B is zero)
 	mov	l,a		; 0dba  6f		o
 	mov	a,h		; 0dbb  7c		|
 	sbb	b		; 0dbc  98		.
 	mov	h,a		; 0dbd  67		g
-	call	printHexHL	; 0dbe  cd 54 02	MT.
-	call	X0dcf		; 0dc1  cd cf 0d	MO.
-X0dc4:	xchg			; 0dc4  eb		k
-	xthl			; 0dc5  e3		c
-	call	toMonitorIfDeqH	; 0dc6  cd 31 02	M1.
-	xthl			; 0dc9  e3		c
+	call	printHexHL	; 0dbe  cd 54 02	MT.	; Display the match address
+	call	dcr1471		; 0dc1  cd cf 0d	MO.	; Decrement the output items counter
+findAtNextH:
+	xchg			; 0dc4  eb		k	; DE <-> HL. D := current memory address
+	xthl			; 0dc5  e3		c	; mem[SP] <-> HL. H := &end
+	call	toMonitorIfDeqH	; 0dc6  cd 31 02	M1.	; "Return" if &current == &end
+	xthl			; 0dc9  e3		c	; Restore the original values. H := current memory address
 	xchg			; 0dca  eb		k
-	inx	h		; 0dcb  23		#
-	jmp	X0da9		; 0dcc  c3 a9 0d	C).
+	inx	h		; 0dcb  23		#	; Advance to the next memory address
+	jmp	findAtH		; 0dcc  c3 a9 0d	C).	; Test for a match at the new address
 ;
-X0dcf:	lda	X1471		; 0dcf  3a 71 14	:q.
-	dcr	a		; 0dd2  3d		=
-	sta	X1471		; 0dd3  32 71 14	2q.
-	rnz			; 0dd6  c0		@
-X0dd7:	mvi	a,0ch		; 0dd7  3e 0c		>.
+;
+; Up to 12 five-byte 'XXXX ' addresses can be displayed on a single line.
+; mem[1471h] contains the number of available slots, on the current display line.
+; When this counter reaches zero, a new-line is displayed and the counter restarted
+;
+dcr1471:
+	lda	X1471		; 0dcf  3a 71 14	:q.	; Decrement mem[1471h]. A := mem[1471h]
+	dcr	a		; 0dd2  3d		=	; --A
+	sta	X1471		; 0dd3  32 71 14	2q.	; mem[1471h] := A
+	rnz			; 0dd6  c0		@	; Return if A is non-zero. Otherwise, reset to 0Ch
+reset1471:
+	mvi	a,0ch		; 0dd7  3e 0c		>.	; mem[1471h] := 0Ch
 	sta	X1471		; 0dd9  32 71 14	2q.
-	jmp	printNL		; 0ddc  c3 19 02	C..
+	jmp	printNL		; 0ddc  c3 19 02	C..	; Print a new-line and return
 ;
 ;
 ; Copies a memory block from one location to another
@@ -1145,9 +1199,14 @@ promptTapeHeader:
 	call	readLineTo1410	; 0e75  cd 7b 02	M{.	; Read the keyboard input
 	jmp	write80hToIO7	; 0e78  c3 f6 03	Cv.	; Also returns
 ;
-X0e7b:	lxi	d,X037a		; 0e7b  11 7a 03	.z.
-X0e7e:	call	printNLDString	; 0e7e  cd fa 01	Mz.
-	jmp	X015e		; 0e81  c3 5e 01	C^.
+;
+; Display 'READ ERROR' and fall-through to the Monitor
+;
+monitorReadError:
+	lxi	d,X037a		; 0e7b  11 7a 03	.z.	; Set D to the address of the 'READ' string
+monitorDError:
+	call	printNLDString	; 0e7e  cd fa 01	Mz.	; Print a new-line and the string in D
+	jmp	monitorError	; 0e81  c3 5e 01	C^.	; Display ' ERROR' and go to monitor
 ;
 X0e84:	mov	a,b		; 0e84  78		x
 	mov	m,a		; 0e85  77		w
@@ -1259,7 +1318,7 @@ X0f29:	call	X0f5f		; 0f29  cd 5f 0f	M_.
 	mov	b,a		; 0f2c  47		G
 	ora	m		; 0f2d  b6		6
 	cmp	b		; 0f2e  b8		8
-	jnz	X0f72		; 0f2f  c2 72 0f	Br.
+	jnz	monitorProgError; 0f2f  c2 72 0f	Br.
 	mvi	a,88h		; 0f32  3e 88		>.
 	mvi	b,8		; 0f34  06 08		..
 	call	X0f63		; 0f36  cd 63 0f	Mc.
@@ -1271,7 +1330,7 @@ X0f39:	in	0feh		; 0f39  db fe		[~
 	jnz	X0f4c		; 0f42  c2 4c 0f	BL.
 	call	X0f5f		; 0f45  cd 5f 0f	M_.
 	cmp	m		; 0f48  be		>
-	jnz	X0e7b		; 0f49  c2 7b 0e	B{.
+	jnz	monitorReadError; 0f49  c2 7b 0e	B{.
 X0f4c:	inx	h		; 0f4c  23		#
 	inx	d		; 0f4d  13		.
 	xthl			; 0f4e  e3		c
@@ -1282,7 +1341,7 @@ X0f4c:	inx	h		; 0f4c  23		#
 	pop	h		; 0f57  e1		a
 	dcr	c		; 0f58  0d		.
 	jnz	X0f24		; 0f59  c2 24 0f	B$.
-	jmp	X033d		; 0f5c  c3 3d 03	C=.
+	jmp	monitorEnd	; 0f5c  c3 3d 03	C=.
 ;
 X0f5f:	mvi	a,98h		; 0f5f  3e 98		>.
 	mvi	b,4		; 0f61  06 04		..
@@ -1297,8 +1356,12 @@ X0f63:	out	0ffh		; 0f63  d3 ff		S.
 	in	0fch		; 0f6f  db fc		[|
 	ret			; 0f71  c9		I
 ;
-X0f72:	lxi	d,X0ec0		; 0f72  11 c0 0e	.@.
-	jmp	X0e7e		; 0f75  c3 7e 0e	C~.
+;
+; Display 'PROGRAM ERROR' and fall-through to the Monitor
+;
+monitorProgError:
+	lxi	d,X0ec0		; 0f72  11 c0 0e	.@.	; Set D to the address of the 'PROGRAM' string
+	jmp	monitorDError	; 0f75  c3 7e 0e	C~.	; Print a new-line, the string in D, ' ERROR' and go to monitor
 ;
 ;
 ; Infinite loop of reading a char from the keyboard and then displaying it
@@ -1315,7 +1378,7 @@ X0f7e:	dw	writeStrToMem		; 0f7e   46 02      F.
 	dw	memToRegisters		; 0f82   13 0e      ..
 	dw	printMemString		; 0f84   f6 01      v.
 	dw	memSet		; 0f86   7f 03      ..
-	dw	X0d8a		; 0f88   8a 0d      ..
+	dw	memFind		; 0f88   8a 0d      ..
 	dw	jumpToAddress		; 0f8a   a3 0e      #.
 	dw	memDump		; 0f8c   a7 0e      '.
 	dw	readProgFrmUART		; 0f8e   43 03      C.
@@ -1327,7 +1390,7 @@ X0f7e:	dw	writeStrToMem		; 0f7e   46 02      F.
 	dw	writeProgToUART		; 0f9a   22 03      ".
 	dw	memEdit		; 0f9c   a2 0c      ".
 	dw	X1473		; 0f9e   73 14      s.
-	dw	X0cca		; 0fa0   ca 0c      J.
+	dw	setMemRegisters		; 0fa0   ca 0c      J.
 	dw	memCopy		; 0fa2   df 0d      _.
 	dw	Xc000		; 0fa4   00 c0      .@
 	dw	X1473		; 0fa6   73 14      s.
