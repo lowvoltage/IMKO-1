@@ -1,6 +1,6 @@
-update=Sat 13 Oct 2012 11:27:35 PM EEST
+update=Sat 03 Nov 2012 10:42:01 PM EET
 version=1
-last_client=cvpcb
+last_client=eeschema
 [general]
 version=1
 [pcbnew]
@@ -35,6 +35,11 @@ LibName11=valves
 LibName12=w_capacitors
 LibName13=IMKO-footprints
 LibDir=./libs
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
 [eeschema]
 version=1
 LibDir=libs
@@ -80,8 +85,4 @@ LibName33=2708
 LibName34=19inch
 LibName35=RO-3-2513
 LibName36=SFF96364
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
+LibName37=AY-5-1013A

@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0  Date: Sat 03 Nov 2012 10:44:11 PM EET
+#
+$CMP AY-5-1013A
+D AY-5-1013A UART
+K UART
+$ENDCMP
+#
+#End Doc Library
