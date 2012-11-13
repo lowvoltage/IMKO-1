@@ -1,0 +1,737 @@
+# EESchema Netlist Version 1.1 created  Tue 13 Nov 2012 11:05:13 PM EET
+(
+ ( /5099754A $noname  U1 KR2376 {Lib=KR2376}
+  (    1 VCC )
+  (    2 /FQB )
+  (    3 /FQC )
+  (    4 /SHIFT )
+  (    5 /CTRL )
+  (    6 VCC )
+  (    7 ? )
+  (    8 ? )
+  (    9 /KBD.D6 )
+  (   10 /KBD.D5 )
+  (   11 /KBD.D4 )
+  (   12 /KBD.D3 )
+  (   13 /KBD.D2 )
+  (   14 /KBD.D1 )
+  (   15 /KBD.D0 )
+  (   16 /KBD.D7 )
+  (   17 GND )
+  (   18 -12V )
+  (   19 /STROBE.CTRL.IN )
+  (   20 GND )
+  (   21 /Y10 )
+  (   22 /Y9 )
+  (   23 /Y8 )
+  (   24 /Y7 )
+  (   25 /Y6 )
+  (   26 /Y5 )
+  (   27 /Y4 )
+  (   28 /Y3 )
+  (   29 /Y2 )
+  (   30 /Y1 )
+  (   31 /Y0 )
+  (   32 /X7 )
+  (   33 /X6 )
+  (   34 /X5 )
+  (   35 /X4 )
+  (   36 /X3 )
+  (   37 /X2 )
+  (   38 ? )
+  (   39 ? )
+  (   40 /FQA )
+ )
+ ( /50997FEE $noname  J1 CONN_KBD {Lib=CONN_8X2}
+  (    1 /RDYIN )
+  (    2 GND )
+  (    3 /KBD3 )
+  (    4 GND )
+  (    5 /KBD5 )
+  (    6 VCC )
+  (    7 /KBD.RESET )
+  (    8 -12V )
+  (    9 /KBD.D0 )
+  (   10 /KBD.D4 )
+  (   11 /KBD.D2 )
+  (   12 /KBD.D5 )
+  (   13 /KBD.D1 )
+  (   14 /KBD.D6 )
+  (   15 /KBD.D3 )
+  (   16 /KBD.D7 )
+ )
+ ( /50998327 $noname  R4 10k {Lib=R}
+  (    1 /CTRL )
+  (    2 GND )
+ )
+ ( /50998334 $noname  R3 10k {Lib=R}
+  (    1 /SHIFT )
+  (    2 GND )
+ )
+ ( /509985C2 $noname  R2 91k {Lib=R}
+  (    1 /FQC )
+  (    2 /FQB )
+ )
+ ( /509985CA $noname  C5 56pF {Lib=C}
+  (    1 /FQC )
+  (    2 /FQA )
+ )
+ ( /509987C6 $noname  C4 3.3nF {Lib=C}
+  (    1 /STROBE.CTRL.IN )
+  (    2 VCC )
+ )
+ ( /509987D5 $noname  R1 680k {Lib=R}
+  (    1 /STROBE.CTRL.IN )
+  (    2 VCC )
+ )
+ ( /50998B89 $noname  C2 22nF {Lib=C}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /50998B96 $noname  C3 22nF {Lib=C}
+  (    1 -12V )
+  (    2 GND )
+ )
+ ( /50998BC5 $noname  C1 47uF {Lib=CP1}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /509BF466 $noname  K5 1 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y8 )
+ )
+ ( /509BF4A8 $noname  K1 F1 {Lib=SPST}
+  (    1 GND )
+  (    2 /KBD.RESET )
+ )
+ ( /509BF4AE $noname  K2 F2 {Lib=SPST}
+  (    1 GND )
+  (    2 /KBD5 )
+ )
+ ( /509BF4E2 $noname  K3 F3 {Lib=SPST}
+  (    1 GND )
+  (    2 /KBD3 )
+ )
+ ( /509BF4F4 $noname  K4 F4 {Lib=SPST}
+  (    1 GND )
+  (    2 /RDYIN )
+ )
+ ( /509BFD1D $noname  K11 7 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y2 )
+ )
+ ( /509C0023 $noname  K10 6 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y3 )
+ )
+ ( /509C00E9 $noname  K9 5 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y4 )
+ )
+ ( /509C00F3 $noname  K8 4 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y5 )
+ )
+ ( /509C01C6 $noname  K7 3 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y6 )
+ )
+ ( /509C01D0 $noname  K6 2 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y7 )
+ )
+ ( /509C13F5 $noname  K12 8 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y1 )
+ )
+ ( /509C140B $noname  K13 9 {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y0 )
+ )
+ ( /509C16AE $noname  K14 0 {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y0 )
+ )
+ ( /509C2035 $noname  K15 : {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y1 )
+ )
+ ( /509C2084 $noname  K16 - {Lib=SPST}
+  (    1 /X2 )
+  (    2 /Y0 )
+ )
+ ( /509C217D $noname  K17 ^ {Lib=SPST}
+  (    1 /X7 )
+  (    2 /Y9 )
+ )
+ ( /509EC589 $noname  K18 ОСВ_/_ESC {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y10 )
+ )
+ ( /509EC5DE $noname  K19 Q {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y8 )
+ )
+ ( /509EC604 $noname  K20 W {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y7 )
+ )
+ ( /509EC627 $noname  K21 E {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y6 )
+ )
+ ( /509EC642 $noname  K22 R {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y5 )
+ )
+ ( /509EC7BA $noname  K23 T {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y4 )
+ )
+ ( /509EC7D1 $noname  K24 Y {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y3 )
+ )
+ ( /509EC897 $noname  K25 U {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y2 )
+ )
+ ( /509EC8AE $noname  K26 I {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y1 )
+ )
+ ( /509EC8C5 $noname  K27 O {Lib=SPST}
+  (    1 /X6 )
+  (    2 /Y0 )
+ )
+ ( /509ED46E $noname  K32 МК_/_Ctrl {Lib=SPST}
+  (    1 VCC )
+  (    2 /CTRL )
+ )
+ ( /509ED4D2 $noname  K33 A {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y8 )
+ )
+ ( /509ED501 $noname  K34 S {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y7 )
+ )
+ ( /509ED51B $noname  K35 D {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y6 )
+ )
+ ( /509ED534 $noname  K36 F {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y5 )
+ )
+ ( /509ED84A $noname  K37 G {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y4 )
+ )
+ ( /509ED854 $noname  K38 H {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y3 )
+ )
+ ( /509ED85E $noname  K39 J {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y2 )
+ )
+ ( /509ED93E $noname  K40 K {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y1 )
+ )
+ ( /509ED948 $noname  K41 L {Lib=SPST}
+  (    1 /X5 )
+  (    2 /Y0 )
+ )
+ ( /509EDA1B $noname  K42 ; {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y0 )
+ )
+ ( /509EDB8C $noname  K28 P {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y2 )
+ )
+ ( /509EDBB0 $noname  K29 @ {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y4 )
+ )
+ ( /509EDC78 $noname  K30 ПРС_/_LF {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y9 )
+ )
+ ( /509EDCD5 $noname  K31 CR {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y8 )
+ )
+ ( /509F94F2 $noname  K43 DEL? {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y3 )
+ )
+ ( /509F9516 $noname  K44 [ {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y6 )
+ )
+ ( /509F9584 $noname  K45 ] {Lib=SPST}
+  (    1 /X3 )
+  (    2 /Y7 )
+ )
+ ( /509FA6B0 $noname  K46 КИР_/_Shift {Lib=SPST}
+  (    1 VCC )
+  (    2 /SHIFT )
+ )
+ ( /509FA6BF $noname  K47 Z {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y10 )
+ )
+ ( /509FA6C9 $noname  K48 X {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y9 )
+ )
+ ( /509FA6D3 $noname  K49 C {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y8 )
+ )
+ ( /509FA6DD $noname  K50 V {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y7 )
+ )
+ ( /509FA6E7 $noname  K51 B {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y6 )
+ )
+ ( /509FA6F1 $noname  K52 N {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y5 )
+ )
+ ( /509FA6FB $noname  K53 M {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y4 )
+ )
+ ( /509FA705 $noname  K54 < {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y3 )
+ )
+ ( /509FA70F $noname  K55 > {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y2 )
+ )
+ ( /509FA719 $noname  K56 ? {Lib=SPST}
+  (    1 /X4 )
+  (    2 /Y1 )
+ )
+ ( /509FA723 $noname  K57 Shift-R {Lib=SPST}
+  (    1 VCC )
+  (    2 /SHIFT )
+ )
+ ( /509FB093 $noname  K58 Space {Lib=SPST}
+  (    1 /X2 )
+  (    2 /Y8 )
+ )
+ ( /509FCF58 $noname  K100 Unknown1 {Lib=SPST}
+  (    1 /TMP1 )
+  (    2 /TMP1 )
+ )
+ ( /50A00516 $noname  R5 240 {Lib=R}
+  (    1 VCC )
+  (    2 N-000012 )
+ )
+ ( /50A00537 $noname  D1 LED {Lib=LED}
+  (    1 N-000012 )
+  (    2 GND )
+ )
+ ( /50A2AB19 $noname  P1 CONN_7X2 {Lib=CONN_7X2}
+  (    1 /TMP2 )
+  (    2 /TMP2 )
+  (    3 /TMP1 )
+  (    4 /TMP4 )
+  (    5 /TMP5 )
+  (    6 /TMP1 )
+  (    7 GND )
+  (    8 /TMP8 )
+  (    9 /TMP8 )
+  (   10 /TMP5 )
+  (   11 /TMP11 )
+  (   12 /TMP1 )
+  (   13 /TMP1 )
+  (   14 VCC )
+ )
+ ( /50A2B4F1 $noname  P2 CONN_9 {Lib=CONN_9}
+  (    1 VCC )
+  (    2 /TMP4 )
+  (    3 /TMP4 )
+  (    4 GND )
+  (    5 /TMP1 )
+  (    6 /TMP11 )
+  (    7 VCC )
+  (    8 /TMP13 )
+  (    9 /TMP2 )
+ )
+ ( /50A2B4FE $noname  P3 CONN_9 {Lib=CONN_9}
+  (    1 /TMP14 )
+  (    2 /TMP15 )
+  (    3 /TMP8 )
+  (    4 /TMP8 )
+  (    5 VCC )
+  (    6 /TMP2 )
+  (    7 /TMP12 )
+  (    8 /TMP12 )
+  (    9 /TMP12 )
+ )
+ ( /50A2C81F $noname  P4 CONN_3 {Lib=CONN_3}
+  (    1 /TMP13 )
+  (    2 /TMP14 )
+  (    3 /TMP15 )
+ )
+)
+*
+{ Allowed footprints by component:
+$component R4
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R3
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C5
+ SM*
+ C?
+ C1-1
+$endlist
+$component C4
+ SM*
+ C?
+ C1-1
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C2
+ SM*
+ C?
+ C1-1
+$endlist
+$component C3
+ SM*
+ C?
+ C1-1
+$endlist
+$component C1
+ CP*
+ SM*
+$endlist
+$component R5
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D1
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "/KBD.D2" "KBD.D2"
+ J1 11
+ U1 13
+Net 2 "/KBD.D1" "KBD.D1"
+ U1 14
+ J1 13
+Net 3 "/KBD.D3" "KBD.D3"
+ U1 12
+ J1 15
+Net 4 "/KBD.D6" "KBD.D6"
+ J1 14
+ U1 9
+Net 5 "/TMP8" "TMP8"
+ P1 8
+ P3 4
+ P1 9
+ P3 3
+Net 6 "/TMP15" "TMP15"
+ P3 2
+ P4 3
+Net 7 "/FQB" "FQB"
+ R2 2
+ U1 2
+Net 11 "-12V" "-12V"
+ J1 8
+ C3 1
+ U1 18
+Net 12 "" ""
+ R5 2
+ D1 1
+Net 13 "GND" "GND"
+ J1 2
+ J1 4
+ P1 7
+ R3 2
+ K4 1
+ K3 1
+ U1 17
+ U1 20
+ P2 4
+ R4 2
+ C1 2
+ C3 2
+ C2 2
+ K2 1
+ K1 1
+ D1 2
+Net 14 "/Y3" "Y3"
+ K10 2
+ K43 2
+ U1 28
+ K54 2
+ K38 2
+ K24 2
+Net 15 "/X4" "X4"
+ K47 1
+ K48 1
+ U1 35
+ K42 1
+ K54 1
+ K49 1
+ K50 1
+ K51 1
+ K52 1
+ K53 1
+ K55 1
+ K56 1
+Net 16 "/Y8" "Y8"
+ K5 2
+ K33 2
+ K49 2
+ K19 2
+ K31 2
+ K58 2
+ U1 23
+Net 17 "/Y7" "Y7"
+ K45 2
+ U1 24
+ K6 2
+ K20 2
+ K50 2
+ K34 2
+Net 18 "/Y6" "Y6"
+ K7 2
+ K44 2
+ K21 2
+ K51 2
+ U1 25
+ K35 2
+Net 19 "/Y5" "Y5"
+ K22 2
+ K8 2
+ K36 2
+ U1 26
+ K52 2
+Net 20 "/Y4" "Y4"
+ U1 27
+ K9 2
+ K23 2
+ K29 2
+ K37 2
+ K53 2
+Net 21 "/Y2" "Y2"
+ K25 2
+ K55 2
+ K39 2
+ K28 2
+ K11 2
+ U1 29
+Net 22 "/Y1" "Y1"
+ K15 2
+ K26 2
+ K12 2
+ U1 30
+ K56 2
+ K40 2
+Net 23 "/SHIFT" "SHIFT"
+ K46 2
+ K57 2
+ U1 4
+ R3 1
+Net 24 "/X2" "X2"
+ K16 1
+ U1 37
+ K58 1
+Net 25 "VCC" "VCC"
+ K57 1
+ C4 2
+ R5 1
+ K46 1
+ P1 14
+ R1 2
+ J1 6
+ U1 6
+ C1 1
+ C2 1
+ P2 1
+ K32 1
+ P3 5
+ P2 7
+ U1 1
+Net 26 "/TMP13" "TMP13"
+ P2 8
+ P4 1
+Net 27 "/TMP14" "TMP14"
+ P4 2
+ P3 1
+Net 28 "/TMP2" "TMP2"
+ P3 6
+ P2 9
+ P1 2
+ P1 1
+Net 29 "/TMP4" "TMP4"
+ P1 4
+ P2 3
+ P2 2
+Net 30 "/TMP11" "TMP11"
+ P2 6
+ P1 11
+Net 31 "/TMP1" "TMP1"
+ K100 2
+ K100 1
+ P2 5
+ P1 6
+ P1 3
+ P1 12
+ P1 13
+Net 32 "/TMP5" "TMP5"
+ P1 5
+ P1 10
+Net 33 "/TMP12" "TMP12"
+ P3 9
+ P3 8
+ P3 7
+Net 34 "/X7" "X7"
+ K8 1
+ K9 1
+ K7 1
+ K6 1
+ K12 1
+ K13 1
+ K10 1
+ K11 1
+ K5 1
+ K17 1
+ U1 32
+Net 35 "/KBD.D4" "KBD.D4"
+ U1 11
+ J1 10
+Net 36 "/KBD.D5" "KBD.D5"
+ J1 12
+ U1 10
+Net 38 "/KBD.D7" "KBD.D7"
+ J1 16
+ U1 16
+Net 39 "/STROBE.CTRL.IN" "STROBE.CTRL.IN"
+ R1 1
+ C4 1
+ U1 19
+Net 40 "/FQA" "FQA"
+ U1 40
+ C5 2
+Net 41 "/FQC" "FQC"
+ U1 3
+ C5 1
+ R2 1
+Net 42 "/Y9" "Y9"
+ K48 2
+ U1 22
+ K17 2
+ K30 2
+Net 43 "/Y10" "Y10"
+ K47 2
+ K18 2
+ U1 21
+Net 44 "/X3" "X3"
+ U1 36
+ K29 1
+ K28 1
+ K45 1
+ K43 1
+ K44 1
+ K30 1
+ K14 1
+ K15 1
+ K31 1
+Net 45 "/X5" "X5"
+ K34 1
+ K33 1
+ K41 1
+ K18 1
+ K35 1
+ K39 1
+ K36 1
+ K40 1
+ U1 34
+ K38 1
+ K37 1
+Net 46 "/X6" "X6"
+ K19 1
+ K26 1
+ K27 1
+ K23 1
+ K22 1
+ K25 1
+ U1 33
+ K21 1
+ K20 1
+ K24 1
+Net 47 "/RDYIN" "RDYIN"
+ K4 2
+ J1 1
+Net 48 "/KBD3" "KBD3"
+ K3 2
+ J1 3
+Net 49 "/KBD5" "KBD5"
+ J1 5
+ K2 2
+Net 50 "/KBD.RESET" "KBD.RESET"
+ J1 7
+ K1 2
+Net 51 "/Y0" "Y0"
+ K41 2
+ K16 2
+ K14 2
+ U1 31
+ K42 2
+ K27 2
+ K13 2
+Net 52 "/KBD.D0" "KBD.D0"
+ U1 15
+ J1 9
+Net 53 "/CTRL" "CTRL"
+ U1 5
+ K32 2
+ R4 1
+}
+#End

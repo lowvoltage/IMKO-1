@@ -1,0 +1,528 @@
+Cmp-Mod V01 Created by CvPcb (2012-oct-18)-testing date = Tue 13 Nov 2012 10:21:57 PM EET
+
+BeginCmp
+TimeStamp = /50998BC5;
+Reference = C1;
+ValeurCmp = 47uF;
+IdModule  = CP_10x13mm;
+EndCmp
+
+BeginCmp
+TimeStamp = /50998B89;
+Reference = C2;
+ValeurCmp = 22nF;
+IdModule  = C2;
+EndCmp
+
+BeginCmp
+TimeStamp = /50998B96;
+Reference = C3;
+ValeurCmp = 22nF;
+IdModule  = C2;
+EndCmp
+
+BeginCmp
+TimeStamp = /509987C6;
+Reference = C4;
+ValeurCmp = 3.3nF;
+IdModule  = cnp_6mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /509985CA;
+Reference = C5;
+ValeurCmp = 56pF;
+IdModule  = cnp_6mm_disc;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A00537;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50997FEE;
+Reference = J1;
+ValeurCmp = CONN_KBD;
+IdModule  = VASCH8x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BF4A8;
+Reference = K1;
+ValeurCmp = F1;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BF4AE;
+Reference = K2;
+ValeurCmp = F2;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BF4E2;
+Reference = K3;
+ValeurCmp = F3;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BF4F4;
+Reference = K4;
+ValeurCmp = F4;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BF466;
+Reference = K5;
+ValeurCmp = 1;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C01D0;
+Reference = K6;
+ValeurCmp = 2;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C01C6;
+Reference = K7;
+ValeurCmp = 3;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C00F3;
+Reference = K8;
+ValeurCmp = 4;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C00E9;
+Reference = K9;
+ValeurCmp = 5;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C0023;
+Reference = K10;
+ValeurCmp = 6;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509BFD1D;
+Reference = K11;
+ValeurCmp = 7;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C13F5;
+Reference = K12;
+ValeurCmp = 8;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C140B;
+Reference = K13;
+ValeurCmp = 9;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C16AE;
+Reference = K14;
+ValeurCmp = 0;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C2035;
+Reference = K15;
+ValeurCmp = :;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C2084;
+Reference = K16;
+ValeurCmp = -;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509C217D;
+Reference = K17;
+ValeurCmp = ^;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC589;
+Reference = K18;
+ValeurCmp = ОСВ_/_ESC;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC5DE;
+Reference = K19;
+ValeurCmp = Q;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC604;
+Reference = K20;
+ValeurCmp = W;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC627;
+Reference = K21;
+ValeurCmp = E;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC642;
+Reference = K22;
+ValeurCmp = R;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC7BA;
+Reference = K23;
+ValeurCmp = T;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC7D1;
+Reference = K24;
+ValeurCmp = Y;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC897;
+Reference = K25;
+ValeurCmp = U;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC8AE;
+Reference = K26;
+ValeurCmp = I;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EC8C5;
+Reference = K27;
+ValeurCmp = O;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EDB8C;
+Reference = K28;
+ValeurCmp = P;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EDBB0;
+Reference = K29;
+ValeurCmp = @;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EDC78;
+Reference = K30;
+ValeurCmp = ПРС_/_LF;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EDCD5;
+Reference = K31;
+ValeurCmp = CR;
+IdModule  = IMKO-Key-Double;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED46E;
+Reference = K32;
+ValeurCmp = МК_/_Ctrl;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED4D2;
+Reference = K33;
+ValeurCmp = A;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED501;
+Reference = K34;
+ValeurCmp = S;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED51B;
+Reference = K35;
+ValeurCmp = D;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED534;
+Reference = K36;
+ValeurCmp = F;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED84A;
+Reference = K37;
+ValeurCmp = G;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED854;
+Reference = K38;
+ValeurCmp = H;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED85E;
+Reference = K39;
+ValeurCmp = J;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED93E;
+Reference = K40;
+ValeurCmp = K;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509ED948;
+Reference = K41;
+ValeurCmp = L;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509EDA1B;
+Reference = K42;
+ValeurCmp = ;;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509F94F2;
+Reference = K43;
+ValeurCmp = DEL?;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509F9516;
+Reference = K44;
+ValeurCmp = [;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509F9584;
+Reference = K45;
+ValeurCmp = ];
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6B0;
+Reference = K46;
+ValeurCmp = КИР_/_Shift;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6BF;
+Reference = K47;
+ValeurCmp = Z;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6C9;
+Reference = K48;
+ValeurCmp = X;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6D3;
+Reference = K49;
+ValeurCmp = C;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6DD;
+Reference = K50;
+ValeurCmp = V;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6E7;
+Reference = K51;
+ValeurCmp = B;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6F1;
+Reference = K52;
+ValeurCmp = N;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA6FB;
+Reference = K53;
+ValeurCmp = M;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA705;
+Reference = K54;
+ValeurCmp = <;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA70F;
+Reference = K55;
+ValeurCmp = >;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA719;
+Reference = K56;
+ValeurCmp = ?;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FA723;
+Reference = K57;
+ValeurCmp = Shift-R;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FB093;
+Reference = K58;
+ValeurCmp = Space;
+IdModule  = IMKO-Key-Space;
+EndCmp
+
+BeginCmp
+TimeStamp = /509FCF58;
+Reference = K100;
+ValeurCmp = Unknown1;
+IdModule  = IMKO-Key-Single;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A2AB19;
+Reference = P1;
+ValeurCmp = CONN_7X2;
+IdModule  = DIP-14__300;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A2B4F1;
+Reference = P2;
+ValeurCmp = CONN_9;
+IdModule  = SIL-9;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A2B4FE;
+Reference = P3;
+ValeurCmp = CONN_9;
+IdModule  = SIL-9;
+EndCmp
+
+BeginCmp
+TimeStamp = /509987D5;
+Reference = R1;
+ValeurCmp = 680k;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /509985C2;
+Reference = R2;
+ValeurCmp = 91k;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50998334;
+Reference = R3;
+ValeurCmp = 10k;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50998327;
+Reference = R4;
+ValeurCmp = 10k;
+IdModule  = R4;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A00516;
+Reference = R5;
+ValeurCmp = 240;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /5099754A;
+Reference = U1;
+ValeurCmp = KR2376;
+IdModule  = DIP-40__600;
+EndCmp
+
+EndListe
