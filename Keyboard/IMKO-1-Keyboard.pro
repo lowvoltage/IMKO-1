@@ -39,7 +39,7 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=../libs/KR2376
+LibName31=KR2376
 [cvpcb]
 version=1
 NetIExt=net
@@ -63,7 +63,7 @@ DrawSegmentWidth=0.2
 BoardOutlineThickness=0.15
 ModuleOutlineThickness=0.15
 [pcbnew/libraries]
-LibDir=
+LibDir=../libs
 LibName1=sockets
 LibName2=connect
 LibName3=discret
@@ -75,5 +75,5 @@ LibName8=led
 LibName9=dip_sockets
 LibName10=pga_sockets
 LibName11=valves
-LibName12=../libs/w_capacitors
-LibName13=../libs/IMKO-footprints
+LibName12=w_capacitors
+LibName13=IMKO-footprints
